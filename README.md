@@ -11,7 +11,7 @@ Trabajo Práctico número 2 de la materia Algoritmos y Programación III de FIUB
 * **Cristian Roldán** - [integrante3]( https://github.com/CrissRM )
 * **Miguel Metz** - [integrante4](https://github.com/MiguelMetz1)
 * **Ramiro Mantero** - [integrante5](https://github.com/ramiromantero)
-* Corrector: **{Corrector}**
+* Corrector: **{Pablo Rodriguez Massuh}**
 
 ## Aplicación
 
