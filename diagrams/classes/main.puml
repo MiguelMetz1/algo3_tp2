@@ -1,0 +1,120 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+
+abstract class Plot {
+    -Coordinate coordinates
+    +{abstract}CanBuild(Defense)
+}
+abstract class Gangway {}
+class GangwayInit
+class GangwayFinal
+class GangwayNormal
+class Rocky {}
+class Ground {
+    +Build(Defense)
+}
+
+Plot <|-- Gangway
+Plot <|-- Rocky
+Plot <|-- Ground
+Gangway <|-- GangwayInit
+Gangway <|-- GangwayFinal
+Gangway <|-- GangwayNormal
+
+class Coordinate {
+    -Int x
+    -Int y
+}
+
+class Life
+class Damage
+class Credits
+class AttackRange
+
+interface Player
+class RealPlayer {
+    -String name
+    -Life life
+    -Credits credits
+    -Array defenses
+    +BuildDefense(Defense)
+}
+class ComputerPlayer {
+    -Array enemies
+}
+Player <|-- RealPlayer
+Player <|-- ComputerPlayer
+
+abstract class Enemy {
+    +Attack()
+}
+class Ant
+class Spider
+
+Enemy <|- Spider
+Enemy <|- Ant
+
+class Map {
+    -Plot[] grid
+    +CanBuild(Defense, Coordinate):bool
+}
+Map *-- Plot
+
+abstract class DefenseStatus {
+    +{abstract}attack(Enemy enemy, Damage damage)
+    -Build()
+}
+class InConstruction {
+    +attack(Enemy enemy, Damage damage)
+}
+class AvailableAttack {
+    +attack(Enemy enemy, Damage damage)
+}
+DefenseStatus <|-- InConstruction
+DefenseStatus <|-- AvailableAttack
+
+abstract class Defense {
+    -AttackRange range
+    -Damage damage
+    -DefenseStatus status
+}
+
+class WhiteTower
+class SilverTower
+
+Defense <-- DefenseStatus
+Defense <|-- WhiteTower
+Defense <|-- SilverTower
+Defense <-- Damage
+Defense <-- AttackRange
+
+RealPlayer <-- Defense
+RealPlayer <-- Life
+RealPlayer <-- Credits
+ComputerPlayer <-- Enemy
+
+Plot <-- Coordinate
+
+abstract class Turn {
+    +{abstract}execute()
+}
+class PlayerTurn
+class ComputerTurn
+Turn <|-- PlayerTurn
+Turn <|-- ComputerTurn
+
+class GameInterface{
+    -Map map
+    -Player RealPlayer
+    -Player ComputerPlayer
+    -Turn Turn
+    +Build(Defense, Coordinate)
+    +ChangeTurn()
+}
+GameInterface <-- Map
+GameInterface <-- Player
+GameInterface <-- Turn
+
+@enduml
