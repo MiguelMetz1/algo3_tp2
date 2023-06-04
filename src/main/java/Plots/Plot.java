@@ -23,4 +23,7 @@ public abstract class Plot {
         return this.buildable.canBuild();
     }
 
+    public abstract String showPlotName();
+
+
 }

@@ -3,7 +3,7 @@ import Attackers.Attack;
 import Builders.Builder;
 import Exceptions.CannotAttack;
 import Exceptions.CannotConstruction;
-import Enemies.Enemy;
+import edu.fiuba.algo3.Enemies.Enemy;
 import TypeData.RangeAttack;
 
 public class FinishedConstruction implements StateDefense {

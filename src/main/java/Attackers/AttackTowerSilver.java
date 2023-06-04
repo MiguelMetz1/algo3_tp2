@@ -1,18 +1,18 @@
 package Attackers;
 
-import Enemies.Enemy;
-import Map.Map;
+import edu.fiuba.algo3.Enemies.Enemy;
+import GameMap.GameMap;
 import TypeData.RangeAttack;
 
 public class AttackTowerSilver implements Attack{
 
     private RangeAttack rangeAttack;
-    private Map map;
+    private GameMap map;
 
 
     public AttackTowerSilver(RangeAttack rangeAttack) {
         this.rangeAttack = rangeAttack;
-        this.map = Map.getMap();
+        this.map = GameMap.getMap();
     }
     @Override
     public void attack(Enemy enemy) {

@@ -3,12 +3,22 @@ package edu.fiuba.algo3.entrega_1;
 
 import Defenses.TowerSilver;
 import Defenses.TowerWhite;
-import Enemies.Spider;
+import Exceptions.CannotBuild;
+import GameMap.GameMap;
+import Plots.FinalGangway;
+import Plots.Ground;
+import TypeData.Coordinate;
+import edu.fiuba.algo3.Enemies.Spider;
 import Exceptions.CannotAttack;
 import Exceptions.CannotConstruction;
 import Exceptions.InsuficientCredits;
 import Players.Player;
+import Plots.Rocky;
+import Plots.Gangway;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+
 
 /*
 Caso de uso 1
@@ -30,7 +40,11 @@ Caso de uso 8
 ●Verificar que al destruir una unidad enemiga, el jugador cobra el crédito que le
 corresponde.
 
-* */import static org.junit.jupiter.api.Assertions.*;
+* */import java.io.*;
+import java.sql.Array;
+import java.util.Iterator;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CasesOfUseTest {
 
@@ -39,16 +53,17 @@ public class CasesOfUseTest {
         //Vida:20     Creditos:100
         Player player = new Player();
 
-        TowerSilver towerSilver = new TowerSilver();
 
         for (int i = 0; i < 5; i++) {
             assertDoesNotThrow(() -> {
-                player.buy(towerSilver);
+                player.buy(new TowerSilver());
             }, "Insuficient Credits");
         }
 
+
+
         assertThrows(InsuficientCredits.class, () -> {
-            player.buy(towerSilver);
+            player.buy(new TowerSilver());
         });
     }
     @Test
@@ -128,7 +143,66 @@ public class CasesOfUseTest {
     public void defensesCanOnlyBeBuiltOnGround(){
         TowerSilver towerSilver = new TowerSilver();
 
-        Ground
+
+        Ground ground = new Ground(new Coordinate(0,0));
+        Rocky rocky = new Rocky(new Coordinate(1,1));
+        FinalGangway finalGangway = new FinalGangway(new Coordinate(3,3));
+        Gangway gangway = new Gangway(new Coordinate(2,2), finalGangway);
+
+
+        assertDoesNotThrow(() ->{ground.build(towerSilver);}, "Can't build in this plot.");
+        assertThrows(CannotBuild.class, () ->  {rocky.build(towerSilver);});
+        assertThrows(CannotBuild.class, () ->  {gangway.build(towerSilver);});
+
     }
 
+
+    @Test
+    public void defensesAttackEnemiesWithinTheExpectedRange(){
+
+
+        String string = "";
+
+        try {
+            String stringActual = "";
+
+            FileReader fileReader = new FileReader("src/mapa.json");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while(stringActual != null){
+                string += stringActual;
+                stringActual = bufferedReader.readLine();
+                System.out.println((stringActual));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        JSONObject jsonObject = new JSONObject(string) ;
+
+        JSONObject gameMap = jsonObject.getJSONObject("Mapa");
+
+
+        Iterator<String> keys = gameMap.keys();
+
+        while(keys.hasNext()) {
+            JSONArray jsonArray = gameMap.getJSONArray(keys.next());
+            Iterator<Object> it = jsonArray.iterator();
+            while (it.hasNext()) {
+                System.out.print(" - " + it.next());
+            }
+            System.out.println();
+
+        }
+
+
+        /* GameMap gameMap = GameMap.getMap();
+
+        gameMap.printMap(); */
+
+
+    }
+
+
 }
+
+

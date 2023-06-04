@@ -10,4 +10,8 @@ public class Rocky extends Plot{
         super(coordinate, new UnbuildablePlot());
     }
 
+    public String showPlotName(){
+        return "Piedra";
+    }
+
 }

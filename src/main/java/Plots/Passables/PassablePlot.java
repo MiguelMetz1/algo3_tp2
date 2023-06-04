@@ -1,6 +1,6 @@
 package Plots.Passables;
 
-import Enemies.Enemy;
+import edu.fiuba.algo3.Enemies.Enemy;
 
 import java.util.List;
 

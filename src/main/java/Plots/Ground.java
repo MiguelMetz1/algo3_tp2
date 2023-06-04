@@ -11,4 +11,8 @@ public class Ground extends Plot{
         super(coordinate, new BuildablePlot());
     }
 
+    public String showPlotName(){
+        return "Tierra";
+    }
+
 }

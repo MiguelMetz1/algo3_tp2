@@ -1,14 +1,14 @@
 package TypeData;
 
-import Enemies.Enemy;
-import Map.Map;
+import edu.fiuba.algo3.Enemies.Enemy;
+import GameMap.GameMap;
 
 public class RangeAttack {
     int range;
     Coordinate coordinate;
-    Map map;
+    GameMap map;
 
-    public RangeAttack(Coordinate coordinate, Map map, int range){
+    public RangeAttack(Coordinate coordinate, GameMap map, int range){
         this.coordinate = coordinate;
         this.map = map;
         this.range = range;

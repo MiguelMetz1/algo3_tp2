@@ -1,6 +1,6 @@
 package Attackers;
 
-import Enemies.Enemy;
+import edu.fiuba.algo3.Enemies.Enemy;
 import TypeData.RangeAttack;
 
 public class AttackTowerWhite implements Attack{
