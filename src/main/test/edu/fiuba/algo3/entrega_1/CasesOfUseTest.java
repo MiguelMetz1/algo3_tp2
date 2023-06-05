@@ -5,15 +5,12 @@ import edu.fiuba.algo3.Defenses.TowerSilver;
 import edu.fiuba.algo3.Defenses.TowerWhite;
 import edu.fiuba.algo3.Enemies.Ant;
 import edu.fiuba.algo3.Enemies.Enemy;
-import edu.fiuba.algo3.Exceptions.CannotBuild;
+import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.FinalGangway;
 import edu.fiuba.algo3.Plots.Ground;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.Enemies.Spider;
-import edu.fiuba.algo3.Exceptions.CannotAttack;
-import edu.fiuba.algo3.Exceptions.CannotConstruction;
-import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Plots.Rocky;
 import edu.fiuba.algo3.Plots.Gangway;
@@ -191,6 +188,8 @@ public class CasesOfUseTest {
 
 
         TowerSilver towerSilver = new TowerSilver();
+
+
         try {
             towerSilver.buy(new Credits(10000));
         } catch (InsuficientCredits e) {
@@ -202,6 +201,7 @@ public class CasesOfUseTest {
         try {
             towerSilver.build();
             towerSilver.build();
+
         } catch (CannotConstruction e) {
             throw new RuntimeException(e);
         }
@@ -209,11 +209,16 @@ public class CasesOfUseTest {
         GameMap.getMap().spawnEnemies();
         try {
             towerSilver.attack();
-        } catch (CannotAttack e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         assertDoesNotThrow(() -> {towerSilver.attack();} , "There's no enemies arround");
+
+        towerSilver.putIn(new Coordinate(7,1));
+        assertThrows(EnemyNotFound.class, () -> {towerSilver.attack();});
+
+
 
 
     }
@@ -240,11 +245,13 @@ public class CasesOfUseTest {
         GameMap.getMap().spawnEnemies();
         try {
             whiteTower.attack();
-        } catch (CannotAttack e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         assertDoesNotThrow(() -> {whiteTower.attack();} , "There's no enemies arround");
+        whiteTower.putIn(new Coordinate(5,1));
+        assertThrows(EnemyNotFound.class, () -> {whiteTower.attack();});
 
 
     }

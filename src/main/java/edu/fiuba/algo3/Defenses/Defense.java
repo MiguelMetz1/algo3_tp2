@@ -31,7 +31,7 @@ public abstract class Defense {
         this.placeable = new NotBoughtDefensePlacer();
     }
 
-    public  void attack() throws CannotAttack{
+    public  void attack() throws CannotAttack, EnemyNotFound {
         if( attackRange == null){
             throw new CannotAttack("The tower hasn't a position.");
         }
@@ -40,7 +40,7 @@ public abstract class Defense {
         try {
             enemy = attackRange.findEnemy();
         } catch (EnemyNotFound e) {
-            throw new CannotAttack(e.getMessage());
+            throw new EnemyNotFound(e.getMessage());
         }
         this.attacker.attack(enemy);
     }
