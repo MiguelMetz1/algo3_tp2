@@ -299,7 +299,38 @@ public class CasesOfUseTest {
         assert(myCredits.sameCredits(expectedCredits));*/
     }
 
+    //Verificar que las unidades enemigas solo se muevan por la parcela autorizada.
+    @Test
+    public void enemiesMoveToTheAuthorizedPlot(){
+        TowerWhite whiteTower = new TowerWhite();
+        try {
+            whiteTower.buy(new Credits(10));
+        } catch (InsuficientCredits e) {
+            throw new RuntimeException(e);
+        }
 
+        whiteTower.putIn(new Coordinate(2,8));
+
+        try {
+            whiteTower.build();
+        } catch (CannotConstruction e) {
+            throw new RuntimeException(e);
+        }
+
+        GameMap.getMap().spawnEnemies();
+
+        assertThrows(EnemyNotFound.class, ()->{whiteTower.attack();});
+
+        GameMap.getMap().advanceEnemies();
+        GameMap.getMap().advanceEnemies();
+        GameMap.getMap().advanceEnemies();
+        GameMap.getMap().advanceEnemies();
+        GameMap.getMap().advanceEnemies();
+
+        assertDoesNotThrow(()->{whiteTower.attack();},"There's no enemies arround");
+
+
+    }
 
 }
 
