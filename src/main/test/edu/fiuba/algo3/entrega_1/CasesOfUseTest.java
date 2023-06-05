@@ -3,6 +3,8 @@ package edu.fiuba.algo3.entrega_1;
 
 import edu.fiuba.algo3.Defenses.TowerSilver;
 import edu.fiuba.algo3.Defenses.TowerWhite;
+import edu.fiuba.algo3.Enemies.Ant;
+import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.CannotBuild;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.FinalGangway;
@@ -40,6 +42,9 @@ Caso de uso 8
 corresponde.
 
 * */
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -79,7 +84,6 @@ public class CasesOfUseTest {
         assertEquals(true, player.isDead());
 
 
-        //assertEquals("Hello world!", message.greet("us"));
     }
 
     /*  Verificar que cada defensa tarde en construirse lo que dice que tarda y que recién están
@@ -165,14 +169,54 @@ public class CasesOfUseTest {
 
     }
 
-
-
     @Test
-    public void defensesAttackEnemiesWithinTheExpectedRange(){
-        TowerSilver towerSilver = new TowerSilver();
-        GameMap.getMap();
+    public void defensesAttackEnemiesWithinTheExpectedRange() {
+        Coordinate coord = new Coordinate(0,0);
+        ArrayList<Coordinate> around =  coord.getAround(5);
+        Iterator<Coordinate> coordinateIterator = around.iterator();
+
+        while (coordinateIterator.hasNext()) {
+            Coordinate uajhsu = coordinateIterator.next();
+            uajhsu.showCoords();
+        }
 
     }
+
+
+/*    @Test
+    public void defensesAttackEnemiesWithinTheExpectedRange(){
+
+
+
+        TowerSilver towerSilver = new TowerSilver();
+        try {
+            towerSilver.buy(new Credits(10000));
+        } catch (InsuficientCredits e) {
+            throw new RuntimeException(e);
+        }
+
+        towerSilver.putIn(new Coordinate(3,1));
+
+        try {
+            towerSilver.build();
+            towerSilver.build();
+        } catch (CannotConstruction e) {
+            throw new RuntimeException(e);
+        }
+
+        GameMap.getMap().spawnEnemies();
+        try {
+            towerSilver.attack();
+        } catch (CannotAttack e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }*/
+
+
+
+    /* Verificar que las unidades enemigas son dañadas acorde al ataque recibido. */
 
 
 }

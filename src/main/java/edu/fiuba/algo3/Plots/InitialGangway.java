@@ -25,8 +25,8 @@ public class InitialGangway extends Gangway {
         return true;
     }
 
-    public void spawnEnemies() throws UnespawnablePlace {
+    public void spawnEnemies() {
 
-        throw new UnespawnablePlace("Enemies cant be spawned in this place.");
+        this.enemies = enemiesToSpawn.poll();
     }
 }

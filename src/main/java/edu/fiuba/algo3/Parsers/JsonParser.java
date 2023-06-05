@@ -21,7 +21,7 @@ public abstract class JsonParser implements Parser{
             while (stringActual != null) {
                 string += stringActual;
                 stringActual = bufferedReader.readLine();
-                System.out.println((stringActual));
+                /*System.out.println((stringActual));*/
             }
             fileReader.close();
         } catch (Exception e) {

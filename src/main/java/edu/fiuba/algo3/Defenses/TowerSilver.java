@@ -13,7 +13,7 @@ public class TowerSilver extends Defense {
 
     public TowerSilver() throws CannotBuild {
 
-        //ESTO HAY QUE CAMBIARLO
+
         super(new Damage(2),
                 new Credits(20),
                 new UnderConstruction(2, new FinishedConstruction()),

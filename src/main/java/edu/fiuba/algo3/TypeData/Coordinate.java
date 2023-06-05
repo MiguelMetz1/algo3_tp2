@@ -6,7 +6,7 @@ public class Coordinate {
     int x;
     int y;
 
-    public Coordinate(int x, int y){
+    public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -14,7 +14,7 @@ public class Coordinate {
 
     @Override
     public boolean equals(Object coordinate) {
-        return ((this.x == ((Coordinate)coordinate).x) && (this.y == ((Coordinate)coordinate).y));
+        return ((this.x == ((Coordinate) coordinate).x) && (this.y == ((Coordinate) coordinate).y));
     }
 
     @Override
@@ -25,11 +25,15 @@ public class Coordinate {
     public ArrayList<Coordinate> getAround(int distance) {
         ArrayList<Coordinate> tmpCoordinates = new ArrayList<Coordinate>();
 
-        for (int i=this.x-distance; i<=this.x+distance; i++){
-            for (int j=this.y-distance; j<=this.y+distance; j++){
+        for (int i = this.x - distance; i <= this.x + distance; i++) {
+            for (int j = this.y - distance; j <= this.y + distance; j++) {
                 tmpCoordinates.add(new Coordinate(i, j));
             }
         }
         return tmpCoordinates;
     }
+    public void showCoords(){
+        System.out.println(this.x + " - " +this.y);
+    }
+
 }

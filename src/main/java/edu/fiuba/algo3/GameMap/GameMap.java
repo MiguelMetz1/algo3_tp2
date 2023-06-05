@@ -3,6 +3,7 @@ package edu.fiuba.algo3.GameMap;
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.CannotBuild;
+import edu.fiuba.algo3.Exceptions.UnespawnablePlace;
 import edu.fiuba.algo3.Parsers.EnemiesJsonParser;
 import edu.fiuba.algo3.Parsers.MapJsonParser;
 import edu.fiuba.algo3.Plots.InitialGangway;
@@ -47,8 +48,11 @@ public class GameMap {
         ArrayList<Coordinate> coordinates = coordinate.getAround(distance);
 
         Iterator <Coordinate> coordinateIterator = coordinates.iterator();
+
         while (coordinateIterator.hasNext()){
-            Plot tmpPlot = this.map.get(coordinateIterator.next());
+            Coordinate coord = coordinateIterator.next();
+            coord.showCoords();
+            Plot tmpPlot = this.map.get(coord);
             if (tmpPlot != null) {
                 plotList.add(tmpPlot);
             }
@@ -69,12 +73,18 @@ public class GameMap {
         initialGangway.advanceEnemies();
     }
 
-    /*public void imprimirMapa(){
+    public void spawnEnemies(){
+
+        initialGangway.spawnEnemies();
+
+    }
+
+    public void imprimirMapa(){
         for(int i = 1; i <= 15; i++){
             for(int j = 1; j <= 15; j++){
                 System.out.print(" "+map.get(new Coordinate(i,j)).showPlotName());
             }
             System.out.println();
         }
-    }*/
+    }
 }

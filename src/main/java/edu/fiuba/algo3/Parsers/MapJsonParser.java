@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.Parsers;
 
+import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import org.json.JSONArray;
@@ -20,22 +21,24 @@ public class MapJsonParser extends JsonParser {
     private Plot createPlot(String plotName, Coordinate coordinate) {
         switch (plotName) {
             case "Rocoso":
-                System.out.println("Rocoso");
+                /*System.out.println("Rocoso");*/
                 return new Rocky(coordinate);
 
             case "Pasarela":
-                System.out.println("Pasarela");
+
                 if (this.previousGangway == null) {
+                    /*System.out.println("Init");*/
                     InitialGangway gangwayBeginning = new InitialGangway(coordinate);
                     this.previousGangway = gangwayBeginning;
                     return gangwayBeginning;
                 }
+                /*System.out.println("Pasarela");*/
                 Gangway gangway = new Gangway(coordinate, this.previousGangway);
                 this.previousGangway = gangway;
                 return gangway;
 
             default:
-                System.out.println("Tierra");
+                /*System.out.println("Tierra");*/
                 return new Ground(coordinate);
         }
     }
@@ -50,9 +53,11 @@ public class MapJsonParser extends JsonParser {
         JSONObject gameMapJson = jsonObject.getJSONObject("Mapa");
         Iterator<String> gameMapKeys = gameMapJson.keys();
 
-        while (gameMapKeys.hasNext()) {
-            String rowString = gameMapKeys.next();
-            int rowNumber = Integer.parseInt(rowString);
+
+
+        for(int rowNumber = 1; rowNumber <= gameMapJson.length(); rowNumber++){
+
+            String rowString = Integer.toString(rowNumber);
             JSONArray rowArray = gameMapJson.getJSONArray(rowString);
             Iterator<Object> plotName = rowArray.iterator();
 
@@ -63,7 +68,7 @@ public class MapJsonParser extends JsonParser {
                 map.put(coordinate, this.createPlot(plotName.next().toString(), coordinate));
                 columnNumber ++;
             }
-            System.out.println();
+            /*System.out.println();*/
         }
         return map;
     }

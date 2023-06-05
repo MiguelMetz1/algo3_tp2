@@ -12,6 +12,7 @@ public class Gangway extends Plot{
     protected Gangway previousGangway;
     protected ArrayList <Enemy> enemies;
 
+
     public Gangway(Coordinate coordinate){
         super(coordinate, new UnbuildablePlot());
     }
