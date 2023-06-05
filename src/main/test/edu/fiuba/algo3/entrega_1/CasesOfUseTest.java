@@ -4,6 +4,7 @@ package edu.fiuba.algo3.entrega_1;
 import edu.fiuba.algo3.Defenses.TowerSilver;
 import edu.fiuba.algo3.Defenses.TowerWhite;
 import edu.fiuba.algo3.Exceptions.CannotBuild;
+import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.FinalGangway;
 import edu.fiuba.algo3.Plots.Ground;
 import edu.fiuba.algo3.TypeData.Coordinate;
@@ -14,6 +15,7 @@ import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Plots.Rocky;
 import edu.fiuba.algo3.Plots.Gangway;
+import edu.fiuba.algo3.TypeData.Credits;
 import org.junit.jupiter.api.Test;
 
 
@@ -86,7 +88,12 @@ public class CasesOfUseTest {
     @Test
     public void whiteTowerConstructionTimeIsCorrect(){
         TowerWhite towerWhite = new TowerWhite();
-
+        try {
+            towerWhite.buy(new Credits(100));
+        } catch (InsuficientCredits e) {
+            throw new RuntimeException(e);
+        }
+        towerWhite.putIn(new Coordinate(2,1));
         //Intentar construir y que no tire error
 
         assertThrows(CannotAttack.class,()->{towerWhite.attack();});
@@ -152,18 +159,13 @@ public class CasesOfUseTest {
     }
 
 
-    /*
+
     @Test
     public void defensesAttackEnemiesWithinTheExpectedRange(){
+        TowerSilver towerSilver = new TowerSilver();
+        GameMap.getMap();
 
-
-
-        /* GameMap gameMap = GameMap.getMap();
-
-        gameMap.printMap(); */
-
-
-    //}
+    }
 
 
 }

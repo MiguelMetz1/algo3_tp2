@@ -1,17 +1,19 @@
 package edu.fiuba.algo3.Plots;
 
 import edu.fiuba.algo3.Enemies.Enemy;
+import edu.fiuba.algo3.Exceptions.EnemyNotFound;
 import edu.fiuba.algo3.TypeData.Coordinate;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Gangway extends Plot{
-    Gangway nextGangway;
-    Gangway previousGangway;
-    ArrayList <Enemy> enemies;
+    protected Gangway nextGangway;
+    protected Gangway previousGangway;
+    protected ArrayList <Enemy> enemies;
 
     public Gangway(Coordinate coordinate){
-        this(coordinate, null);
+        super(coordinate, new UnbuildablePlot());
     }
     public Gangway(Coordinate coordinate, Gangway previousGangway){
         super(coordinate, new UnbuildablePlot());
@@ -33,10 +35,10 @@ public class Gangway extends Plot{
         };
         nextGangway.advanceEnemies();
         for (Enemy enemy: enemies) {
-            avanceEnemy(enemy);
+            advanceEnemy(enemy);
         }
     }
-    public void avanceEnemy(Enemy enemy){
+    private void advanceEnemy(Enemy enemy){
         Gangway gangway = nextGangway;
        while(enemy.shouldAdvance()){
            gangway.addEnemy(enemy);
@@ -44,11 +46,16 @@ public class Gangway extends Plot{
        }
     }
 
+    public Enemy returnEnemy() throws EnemyNotFound {
+        Iterator<Enemy> enemiesIterator = enemies.iterator();
+        while( enemiesIterator.hasNext() ){
+            return enemiesIterator.next();
+        }
+        throw new EnemyNotFound("No enemies in this plot.");
+    }
+
     public void addEnemy(Enemy enemy){
         enemies.add(enemy);
     }
 
-    public String showPlotName(){
-        return "Pasarela";
-    }
 }

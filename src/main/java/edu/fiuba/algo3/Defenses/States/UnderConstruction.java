@@ -1,29 +1,27 @@
 package edu.fiuba.algo3.Defenses.States;
-import edu.fiuba.algo3.Attackers.Attack;
-import edu.fiuba.algo3.Builders.Builder;
-import edu.fiuba.algo3.Exceptions.CannotAttack;
-import edu.fiuba.algo3.TypeData.RangeAttack;
 
-public class UnderConstruction implements StateDefense {
+public class UnderConstruction implements Builder {
 
-    private Builder builder;
+    int timeofConstruction;
+    private Builder finalizedState;
 
-    public UnderConstruction (Builder builder) {
-        this.builder = builder;
-    }
-    @Override
-    public void attack(Attack attacker, RangeAttack rangeAttack) throws CannotAttack {
-        //TODO: Implement a dictionary for the message
-        throw new CannotAttack("The defense isn't available to attack");
+    public UnderConstruction (int timeOfConstruction, Builder finalizedState) {
+
+        this.timeofConstruction = timeOfConstruction;
+        this.finalizedState = finalizedState;
     }
 
     @Override
-    public void build(){
-        this.builder.progress();
-    };
+    public Builder nextBuild(){
+        this.timeofConstruction -= 1;
+        if( this.buildFinished() ){
+            return this.finalizedState;
+        }
+        return this;
+    }
 
     @Override
     public boolean buildFinished() {
-        return this.builder.finished();
+         return (timeofConstruction <= 0);
     }
 }

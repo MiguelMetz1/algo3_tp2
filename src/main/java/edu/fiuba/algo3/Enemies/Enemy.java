@@ -23,4 +23,7 @@ public abstract class Enemy {
     }
 
 
+    public void takeDamage(Damage damage) {
+        damage.applyDamage(this.energy);
+    }
 }

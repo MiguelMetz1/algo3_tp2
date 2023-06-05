@@ -7,7 +7,7 @@ public class Damage {
         this.damage = damage;
     }
 
-    public void applyDamage(Life life) {
-        life.reduceLife(this.damage);
+    public void applyDamage(Reducible reducible) {
+        reducible.reduce(this.damage);
     }
 }
