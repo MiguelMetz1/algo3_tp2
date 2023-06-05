@@ -51,7 +51,7 @@ public class GameMap {
 
         while (coordinateIterator.hasNext()){
             Coordinate coord = coordinateIterator.next();
-            coord.showCoords();
+            /*coord.showCoords();*/
             Plot tmpPlot = this.map.get(coord);
             if (tmpPlot != null) {
                 plotList.add(tmpPlot);

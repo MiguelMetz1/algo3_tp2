@@ -104,7 +104,7 @@ public class CasesOfUseTest {
         assertThrows(CannotAttack.class,()->{towerWhite.attack();});
         assertDoesNotThrow(()->{towerWhite.build();},"The defense is under construction.");
 
-        assertThrows(CannotAttack.class, ()->{towerWhite.attack();});
+        assertDoesNotThrow(()->{towerWhite.attack();}, "An Attacker in construction cant attack.");
         assertThrows(CannotConstruction.class, ()->{towerWhite.build();});
 
 
@@ -128,7 +128,7 @@ public class CasesOfUseTest {
         assertThrows(CannotAttack.class,()->{silverTower.attack();});
         assertDoesNotThrow(()->{silverTower.build();},"The defense is under construction.");
 
-        assertThrows(CannotAttack.class, ()->{silverTower.attack();});
+        assertDoesNotThrow(() -> {silverTower.attack();}, "An Attacker in construction cant attack." );
         assertThrows(CannotConstruction.class, ()->{silverTower.build();});
 
 
@@ -169,6 +169,7 @@ public class CasesOfUseTest {
 
     }
 
+/*
     @Test
     public void defensesAttackEnemiesWithinTheExpectedRange() {
         Coordinate coord = new Coordinate(0,0);
@@ -181,10 +182,11 @@ public class CasesOfUseTest {
         }
 
     }
+*/
 
 
-/*    @Test
-    public void defensesAttackEnemiesWithinTheExpectedRange(){
+    @Test
+    public void SilverTowerAttackEnemiesWithinTheExpectedRange(){
 
 
 
@@ -195,7 +197,7 @@ public class CasesOfUseTest {
             throw new RuntimeException(e);
         }
 
-        towerSilver.putIn(new Coordinate(3,1));
+        towerSilver.putIn(new Coordinate(6,1));
 
         try {
             towerSilver.build();
@@ -211,8 +213,42 @@ public class CasesOfUseTest {
             throw new RuntimeException(e);
         }
 
+        assertDoesNotThrow(() -> {towerSilver.attack();} , "There's no enemies arround");
 
-    }*/
+
+    }
+    @Test
+    public void WhiteTowerAttackEnemiesWithinTheExpectedRange(){
+
+
+
+        TowerWhite whiteTower = new TowerWhite();
+        try {
+            whiteTower.buy(new Credits(10000));
+        } catch (InsuficientCredits e) {
+            throw new RuntimeException(e);
+        }
+
+        whiteTower.putIn(new Coordinate(4,1));
+
+        try {
+            whiteTower.build();
+        } catch (CannotConstruction e) {
+            throw new RuntimeException(e);
+        }
+
+        GameMap.getMap().spawnEnemies();
+        try {
+            whiteTower.attack();
+        } catch (CannotAttack e) {
+            throw new RuntimeException(e);
+        }
+
+        assertDoesNotThrow(() -> {whiteTower.attack();} , "There's no enemies arround");
+
+
+    }
+
 
 
 

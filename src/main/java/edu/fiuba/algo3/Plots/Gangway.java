@@ -47,11 +47,12 @@ public class Gangway extends Plot{
        }
     }
 
+    public boolean hasEnemies(){
+        return (enemies.size() > 0);
+    }
     public Enemy returnEnemy() throws EnemyNotFound {
-        Iterator<Enemy> enemiesIterator = enemies.iterator();
-        while( enemiesIterator.hasNext() ){
-            return enemiesIterator.next();
-        }
+        if(enemies.size() > 0)
+            return enemies.get(0);
         throw new EnemyNotFound("No enemies in this plot.");
     }
 
