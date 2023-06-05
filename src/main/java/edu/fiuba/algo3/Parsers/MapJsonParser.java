@@ -20,9 +20,11 @@ public class MapJsonParser extends JsonParser {
     private Plot createPlot(String plotName, Coordinate coordinate) {
         switch (plotName) {
             case "Rocoso":
+                System.out.println("Rocoso");
                 return new Rocky(coordinate);
 
             case "Pasarela":
+                System.out.println("Pasarela");
                 if (this.previousGangway == null) {
                     InitialGangway gangwayBeginning = new InitialGangway(coordinate);
                     this.previousGangway = gangwayBeginning;
@@ -33,6 +35,7 @@ public class MapJsonParser extends JsonParser {
                 return gangway;
 
             default:
+                System.out.println("Tierra");
                 return new Ground(coordinate);
         }
     }
@@ -47,26 +50,20 @@ public class MapJsonParser extends JsonParser {
         JSONObject gameMapJson = jsonObject.getJSONObject("Mapa");
         Iterator<String> gameMapKeys = gameMapJson.keys();
 
-        int rowNumber = 1;
-
         while (gameMapKeys.hasNext()) {
-            JSONArray rowArray = gameMapJson.getJSONArray(gameMapKeys.next());
+            String rowString = gameMapKeys.next();
+            int rowNumber = Integer.parseInt(rowString);
+            JSONArray rowArray = gameMapJson.getJSONArray(rowString);
             Iterator<Object> plotName = rowArray.iterator();
-
-            //ArrayList < Plot > tempRow = new ArrayList<Plot>();
-            //map.add(tempRow);
 
             int columnNumber = 1;
 
             while (plotName.hasNext()) {
                 Coordinate coordinate = new Coordinate(rowNumber, columnNumber);
                 map.put(coordinate, this.createPlot(plotName.next().toString(), coordinate));
-                //System.out.print(" - " + plotName.next());
-                //tempRow.add(this.createPlot(plotName.next().toString()));
                 columnNumber ++;
             }
-            //System.out.println();
-            rowNumber ++;
+            System.out.println();
         }
         return map;
     }

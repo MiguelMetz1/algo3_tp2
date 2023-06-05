@@ -58,4 +58,8 @@ public class Gangway extends Plot{
         enemies.add(enemy);
     }
 
+    public String showPlotName(){
+        return "Pasarela";
+    }
+
 }

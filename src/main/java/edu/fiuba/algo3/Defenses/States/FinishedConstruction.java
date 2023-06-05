@@ -5,7 +5,7 @@ public class FinishedConstruction implements Builder {
 
     public Builder nextBuild() throws CannotConstruction {
         //TODO: Implement a dictionary for the message
-        throw new CannotConstruction("The defense completed its construction");
+        throw new CannotConstruction("The defense is under construction.");
     }
 
     @Override

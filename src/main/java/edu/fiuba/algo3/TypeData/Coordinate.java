@@ -11,11 +11,14 @@ public class Coordinate {
         this.y = y;
     }
 
-    public boolean equals(Coordinate coordinate) {
-        return ((this.x == coordinate.x) && (this.y == coordinate.y));
+
+    @Override
+    public boolean equals(Object coordinate) {
+        return ((this.x == ((Coordinate)coordinate).x) && (this.y == ((Coordinate)coordinate).y));
     }
 
-    public int hashCode() {
+    @Override
+    public final int hashCode() {
         return (this.x * 10000) + this.y;
     }
 

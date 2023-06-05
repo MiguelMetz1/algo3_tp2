@@ -93,13 +93,14 @@ public class CasesOfUseTest {
         } catch (InsuficientCredits e) {
             throw new RuntimeException(e);
         }
-        towerWhite.putIn(new Coordinate(2,1));
+
+        towerWhite.putIn(new Coordinate(3,1));
         //Intentar construir y que no tire error
 
         assertThrows(CannotAttack.class,()->{towerWhite.attack();});
-        assertDoesNotThrow(()->{towerWhite.build();},"The defense completed its construction");
+        assertDoesNotThrow(()->{towerWhite.build();},"The defense is under construction.");
 
-        assertDoesNotThrow(()->{towerWhite.attack();},"The defense isn't available to attack");
+        assertThrows(CannotAttack.class, ()->{towerWhite.attack();});
         assertThrows(CannotConstruction.class, ()->{towerWhite.build();});
 
 
@@ -107,18 +108,24 @@ public class CasesOfUseTest {
 
     @Test
     public void silverTowerConstructionTimeIsCorrect(){
-        TowerSilver towerSilver= new TowerSilver();
+        TowerSilver silverTower = new TowerSilver();
+        try {
+            silverTower.buy(new Credits(100));
+        } catch (InsuficientCredits e) {
+            throw new RuntimeException(e);
+        }
 
+        silverTower.putIn(new Coordinate(3,1));
         //Intentar construir y que no tire error
 
-        assertThrows(CannotAttack.class,()->{towerSilver.attack();});
-        assertDoesNotThrow(()->{towerSilver.build();},"The defense completed its construction");
+        assertThrows(CannotAttack.class,()->{silverTower.attack();});
+        assertDoesNotThrow(()->{silverTower.build();},"The defense is under construction.");
 
-        assertThrows(CannotAttack.class,()->{towerSilver.attack();});
-        assertDoesNotThrow(()->{towerSilver.build();},"The defense completed its construction");
+        assertThrows(CannotAttack.class,()->{silverTower.attack();});
+        assertDoesNotThrow(()->{silverTower.build();},"The defense is under construction.");
 
-        assertDoesNotThrow(()->{towerSilver.attack();},"The defense isn't available to attack");
-        assertThrows(CannotConstruction.class, ()->{towerSilver.build();});
+        assertThrows(CannotAttack.class, ()->{silverTower.attack();});
+        assertThrows(CannotConstruction.class, ()->{silverTower.build();});
 
 
 

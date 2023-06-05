@@ -40,4 +40,6 @@ public abstract class Plot {
     public void spawnEnemies() throws UnespawnablePlace {
         throw new UnespawnablePlace("Enemies cant be spawned in this place.");
     }
+
+    public abstract String showPlotName();
 }

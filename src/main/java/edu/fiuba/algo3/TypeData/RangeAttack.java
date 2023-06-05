@@ -25,7 +25,7 @@ public class RangeAttack {
             }
         }
         if( enemy == null){
-            throw ( new EnemyNotFound("There no enemies around.") );
+            throw ( new EnemyNotFound("There's no enemies around.") );
         }
 
         return enemy;
