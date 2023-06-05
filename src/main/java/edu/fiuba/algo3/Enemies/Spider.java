@@ -1,11 +1,11 @@
 package edu.fiuba.algo3.Enemies;
 
 
-import Advancer.SpiderAdvancer;
-import Players.Player;
-import TypeData.Damage;
-import TypeData.Energy;
-import TypeData.Life;
+import edu.fiuba.algo3.Advancer.SpiderAdvancer;
+import edu.fiuba.algo3.Players.Player;
+import edu.fiuba.algo3.TypeData.Damage;
+import edu.fiuba.algo3.TypeData.Energy;
+import edu.fiuba.algo3.TypeData.Life;
 
 
 public class Spider extends Enemy{

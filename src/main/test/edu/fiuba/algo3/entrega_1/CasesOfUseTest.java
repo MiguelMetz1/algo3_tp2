@@ -1,22 +1,19 @@
 package edu.fiuba.algo3.entrega_1;
 
 
-import Defenses.TowerSilver;
-import Defenses.TowerWhite;
-import Exceptions.CannotBuild;
-import GameMap.GameMap;
-import Plots.FinalGangway;
-import Plots.Ground;
-import TypeData.Coordinate;
+import edu.fiuba.algo3.Defenses.TowerSilver;
+import edu.fiuba.algo3.Defenses.TowerWhite;
+import edu.fiuba.algo3.Exceptions.CannotBuild;
+import edu.fiuba.algo3.Plots.FinalGangway;
+import edu.fiuba.algo3.Plots.Ground;
+import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.Enemies.Spider;
-import Exceptions.CannotAttack;
-import Exceptions.CannotConstruction;
-import Exceptions.InsuficientCredits;
-import Players.Player;
-import Plots.Rocky;
-import Plots.Gangway;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import edu.fiuba.algo3.Exceptions.CannotAttack;
+import edu.fiuba.algo3.Exceptions.CannotConstruction;
+import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Players.Player;
+import edu.fiuba.algo3.Plots.Rocky;
+import edu.fiuba.algo3.Plots.Gangway;
 import org.junit.jupiter.api.Test;
 
 
@@ -40,9 +37,7 @@ Caso de uso 8
 ●Verificar que al destruir una unidad enemiga, el jugador cobra el crédito que le
 corresponde.
 
-* */import java.io.*;
-import java.sql.Array;
-import java.util.Iterator;
+* */
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -157,42 +152,10 @@ public class CasesOfUseTest {
     }
 
 
+    /*
     @Test
     public void defensesAttackEnemiesWithinTheExpectedRange(){
 
-
-        String string = "";
-
-        try {
-            String stringActual = "";
-
-            FileReader fileReader = new FileReader("src/mapa.json");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            while(stringActual != null){
-                string += stringActual;
-                stringActual = bufferedReader.readLine();
-                System.out.println((stringActual));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        JSONObject jsonObject = new JSONObject(string) ;
-
-        JSONObject gameMap = jsonObject.getJSONObject("Mapa");
-
-
-        Iterator<String> keys = gameMap.keys();
-
-        while(keys.hasNext()) {
-            JSONArray jsonArray = gameMap.getJSONArray(keys.next());
-            Iterator<Object> it = jsonArray.iterator();
-            while (it.hasNext()) {
-                System.out.print(" - " + it.next());
-            }
-            System.out.println();
-
-        }
 
 
         /* GameMap gameMap = GameMap.getMap();
@@ -200,7 +163,7 @@ public class CasesOfUseTest {
         gameMap.printMap(); */
 
 
-    }
+    //}
 
 
 }

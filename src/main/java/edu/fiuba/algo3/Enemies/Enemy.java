@@ -1,8 +1,8 @@
 package edu.fiuba.algo3.Enemies;
 
-import Advancer.Advancer;
-import TypeData.Damage;
-import TypeData.Energy;
+import edu.fiuba.algo3.Advancer.Advancer;
+import edu.fiuba.algo3.TypeData.Damage;
+import edu.fiuba.algo3.TypeData.Energy;
 
 public abstract class Enemy {
     Damage damage;
