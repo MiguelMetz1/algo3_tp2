@@ -8,12 +8,22 @@ public class Credits {
 
     public void wasteCredits(Credits credits) {
         this.credits -= credits.credits;
-        //Si la torre ya se constryo, si se quiere volver a construir,
-        // no va a gastar creditos porque ya esta construida
-        credits.credits = 0;
+        //credits.credits = 0;
+    }
+
+    public void transferCreditsTo(Credits credits){
+        credits.credits += this.credits;
+        this.credits = 0;
     }
 
     public boolean lowerCredits(Credits credits) {
         return (credits.credits < this.credits);
     }
+
+    public boolean sameCredits(Credits otherCredits){
+        return (this.credits == otherCredits.credits);
+    }
+
+
+
 }

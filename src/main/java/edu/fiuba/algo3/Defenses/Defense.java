@@ -2,7 +2,6 @@ package edu.fiuba.algo3.Defenses;
 import edu.fiuba.algo3.Attackers.Attack;
 import edu.fiuba.algo3.Attackers.AttackerReadyToAttack;
 import edu.fiuba.algo3.Defenses.States.Builder;
-import edu.fiuba.algo3.Defenses.States.FinishedConstruction;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.TypeData.Coordinate;
@@ -13,7 +12,8 @@ import edu.fiuba.algo3.TypeData.Damage;
 
 public abstract class Defense {
 
-    Credits credits;
+    Credits ticketCredits;
+    Credits cost;
     protected Attack attacker;
     protected RangeAttack attackRange;
 
@@ -24,11 +24,12 @@ public abstract class Defense {
 
     public Defense(Damage damage, Credits credits, Builder builder, Attack attacker) {
         this.attackRange = null;
-        this.credits = credits;
+        this.cost = credits;
         this.builder = builder;
         this.attacker = attacker;
         this.damage = damage;
         this.placeable = new NotBoughtDefensePlacer();
+        this.ticketCredits = new Credits(0);
     }
 
     public  void attack() throws CannotAttack, EnemyNotFound {
@@ -43,6 +44,11 @@ public abstract class Defense {
             throw new EnemyNotFound(e.getMessage());
         }
         this.attacker.attack(enemy);
+
+        if(enemy.isDead()){
+            System.out.print(enemy.returnName());
+            enemy.returnCredits().transferCreditsTo(this.ticketCredits);
+        }
     }
     public void build() throws CannotConstruction {
         this.builder = this.builder.nextBuild();
@@ -63,7 +69,8 @@ public abstract class Defense {
         if(!canBuy(credits)){
             throw (new InsuficientCredits("Insuficient Credits"));
         }
-        credits.wasteCredits(this.credits);
+        credits.wasteCredits(this.cost);
+        this.cost = new Credits(0);
 
         this.placeable = new BoughtDefensePlacer();
     }
@@ -74,10 +81,15 @@ public abstract class Defense {
     }
 
     private boolean canBuy(Credits credits) {
-        return !(this.credits.lowerCredits(credits));
+        return !(this.cost.lowerCredits(credits));
     }
 
     protected abstract int range();
+
+    public void transferPickedCreditsTo(Credits credits){
+        this.ticketCredits.transferCreditsTo(credits);
+    }
+
 
 
 }

@@ -18,4 +18,14 @@ public class Spider extends Enemy{
     public void attack(Player player) {
         player.receiveAttack(this.damage);
     }
+
+    protected int amountOfCredits(){
+        int random = (int) Math.round(Math.random());
+        return 10*(random);
+    }
+
+    public String returnName(){
+        return "Spider";
+    }
+
 }

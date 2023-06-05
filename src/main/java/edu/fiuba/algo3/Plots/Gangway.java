@@ -51,8 +51,11 @@ public class Gangway extends Plot{
         return (enemies.size() > 0);
     }
     public Enemy returnEnemy() throws EnemyNotFound {
-        if(enemies.size() > 0)
+        if (enemies.get(0).isDead())
+            enemies.remove(0);
+        if(enemies.size() > 0) {
             return enemies.get(0);
+        }
         throw new EnemyNotFound("No enemies in this plot.");
     }
 

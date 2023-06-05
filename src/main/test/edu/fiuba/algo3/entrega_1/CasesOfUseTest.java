@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1;
 
 
+import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Defenses.TowerSilver;
 import edu.fiuba.algo3.Defenses.TowerWhite;
 import edu.fiuba.algo3.Enemies.Ant;
@@ -255,11 +256,49 @@ public class CasesOfUseTest {
 
 
     }
+    @Test
+    public void enemiesAreDamagedAcordingToRecievesAttack(){
 
+        TowerWhite whiteTower = new TowerWhite();
+        try {
+            whiteTower.buy(new Credits(10));
+        } catch (InsuficientCredits e) {
+            throw new RuntimeException(e);
+        }
 
+        whiteTower.putIn(new Coordinate(4,1));
 
+        try {
+            whiteTower.build();
+        } catch (CannotConstruction e) {
+            throw new RuntimeException(e);
+        }
 
-    /* Verificar que las unidades enemigas son dañadas acorde al ataque recibido. */
+        GameMap.getMap().spawnEnemies();
+        try {
+            //Mata dos hormigas
+            whiteTower.attack();
+            GameMap.getMap().spawnEnemies();
+            whiteTower.attack();
+            //Mata una arania
+            whiteTower.attack();
+            whiteTower.attack();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        assertThrows(EnemyNotFound.class,()-> {whiteTower.attack();});
+
+/*
+        Credits expectedCredits = new Credits(4);
+
+        Credits myCredits = new Credits(0);
+
+        whiteTower.transferPickedCreditsTo(myCredits);
+
+        assert(myCredits.sameCredits(expectedCredits));*/
+    }
+
 
 
 }
