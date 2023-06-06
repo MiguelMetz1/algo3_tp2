@@ -1,0 +1,367 @@
+@startuml
+
+class AlgoDefense{
+   -turns: List<Turn>
+   +startGame()
+   -getPlayerName(name:String)
+   -nextTurn()
+}
+
+AlgoDefense <..GameInterface
+AlgoDefense o-- Turn
+
+interface Turn{
+    +executeTurn()
+}
+class PlayerTurn{ /'A lo mejor debería cambiar el nombre a RealPlayerTurn o UserTurn para este caso'/
+    -playerInterface: PlayerInterface
+    +executeTurn()
+}
+
+class ComputerTurn{
+    -computerInterface: ComputerInterface
+    +executeTurn()
+}
+
+Turn <|-- PlayerTurn
+Turn <|-- ComputerTurn
+
+PlayerTurn <-- PlayerInterface
+ComputerTurn <-- ComputerInterface
+
+interface PlayerInterface{
+    +requireAction()
+}
+
+interface ComputerInterface{
+    +makeDefensesAttack()
+    +buildDefenses()
+    +advanceEnemies()
+}
+
+PlayerInterface <|.. GameInterface
+ComputerInterface <|.. GameInterface
+
+interface Turnable{
+    +turnChanged():Bool
+}
+
+Turnable <|-- PlayerInterface
+Turnable <|-- ComputerInterface
+
+
+class GameInterface{
+    -map:Map
+    -defenses: Collection
+    -player: Player
+    - turner: Turner /'Se puede reemplazar facilmente con un bool, pero podría tener una utilidad'/
+    +requireAction()
+    -build(defense: Defense, coordinate: Coordinate)
+    +makeDefensesAttack()
+    +buildDefenses()
+    +advanceEnemies()
+    -changeTurn()
+    +turnChanged():Bool
+}
+
+GameInterface o-- Turner
+GameInterface o-- Map
+GameInterface o-- Player
+
+interface Buildable{
+    +canBuild(defense: Defense):Bool
+    +build(defense: Defense)
+}
+
+class BuildablePlot{
+    -defense: Defense
+    -hasAnyBuild():Bool
+    +canBuild(defense: Defense):Bool
+    +build(defense: Defense)
+}
+
+class NotBuildablePlot{
+    +canBuild(defense: Defense):Bool
+    +build(defense: Defense)
+}
+
+Buildable <|.. BuildablePlot
+Buildable <|.. NotBuildablePlot
+
+/'interface Passable{
+    +theresCharacters():Bool
+}
+
+interface PassableByEnemies{
+    +returnEnemy(): Enemy
+}
+
+class PassablePlot{
+    -enemies: Enemy
+    +theresCharacters():Bool
+    +returnEnemy(): Enemy
+}
+
+class NotPassablePlot{
+    +theresCharacters():Bool
+    +returnEnemy(): Enemy
+}
+
+Passable <|-- PassableByEnemies
+
+PassableByEnemies <|.. PassablePlot
+PassableByEnemies <|.. NotPassablePlot
+'/
+abstract class Plot {
+    -coordinates: Coordinate
+    -buildable: Buildable
+    -passable: PassableByEnemies
+    +theresEnemies():Bool
+    +returnEnemy():Enemy/'Fijarse como hacer esto, se deberían poder separar las parcelas que acptan enemigos de las que no'/
+    +{abstract}build()
+    +{abstract}canBuild(Defense):Bool/'Fijarse como modelar esto para que no se necesite que todos respondan el mensaje'/
+}
+
+/'Plot <-- PassableByEnemies'/
+Plot <-- Buildable
+
+ class Gangway {
+    -enemies: Collection
+    -nextGangway: Gangway
+    #advanceEnemies()
+    +theresCharacters():Bool
+    +addEnemy(enemy: Enemy)
+    +build()
+    +canBuild(Defense):Bool
+    +returnEnemy():Enemy
+}
+
+class InitGangway{
+    -enemiesToSpawn: Queue<Collection<Enemy>>
+    +advanceEnemies()
+    -spawnEnemies()
+    +thereMoreEnemiesIncoming():Bool
+}
+
+class FinalGangway{
+    -player: Player
+    +advanceEnemies()
+    -makeEnemiesAttack()
+}
+class Rocky {
+    +build()
+    +canBuild(Defense):Bool
+}
+
+class Ground {
+    +build(Defense)
+    +CanBuild(Defense):Bool
+}
+
+Plot <|-- Gangway
+Plot <|-- Rocky
+Plot <|-- Ground
+Gangway <|-- InitGangway
+Gangway <|-- FinalGangway
+
+class Coordinate {
+    -x: int
+    -y: int
+}
+
+class Damage{
+    -amountOfDamage: int
+    +applyDamage(life:Life)
+}
+class Credits{
+    -amountOfCredits: int
+    +add(credits:Credit)
+    +spendCredits(credits:Credit)
+    +transferCreditsTo(credits:Credit)
+}
+
+interface Attackable{
+    +takeDamage(damage:Damage)
+}
+
+class Player {
+    -name: String
+    -life: Life
+    -credits: Credits
+    +addCredits(credits:Credits)
+    +canBought(defense: Defense): Bool
+    +bought(defense: Defense)
+    +takeDamage(damage:Damage)
+    +isDead():Bool
+}
+
+Attackable <|.. Player
+
+abstract class Advancer{
+    -mustAdvanceAmount: int
+    -actualAdvance: int
+    +{abstract}advance()
+    +mustToAdvance(): Bool
+}
+
+class SpiderAdvancer{
+    +advance()
+}
+class AntAdvancer{
+    +advance()
+}
+
+Advancer <|-- SpiderAdvancer
+Advancer <|-- AntAdvancer
+
+
+abstract class Enemy {
+        -life: Life
+        -attacker: Attacker
+        -advancer: Advancer
+        -damage: Damage
+        +Attack(target: Attackable)
+        +takeDamage(damage:Damage)
+        +isDead():Bool
+        +advance()
+        +mustToAdvance():Bool
+        +returnCredits():Credit /'Debe lanzar una excepcion en caso de que el enemigo no este muerto'/
+        -{abstract}creditsAmount():int
+}
+
+Attackable <|.. Enemy
+
+class Life{
+    -amountOfLife: int
+    +reduceLife( pointsToReduce: int )
+    +isEmpty():Bool
+
+}
+
+Damage <.. Life
+Enemy o-- Life
+class Ant{
+    -creditsAmount():int
+}
+class Spider{
+    -creditsAmount():int
+}
+
+Enemy o-- Advancer
+Enemy <|- Spider
+Enemy <|- Ant
+
+class Range{
+    -around: List<PassableByEnemies>
+    +theresEnemies():Bool
+    +returnEnemy():Enemy
+}
+
+class Map {
+    - grid: HashMap< Coordinate, Plot >
+    - spawner: InitGangway
+    +CanBuild(Defense, Coordinate):bool
+    +spawnEnemies()
+    +canSpawn():Bool
+    +returnAround(coordinate: Coordinate, distance: int): Range
+}
+Map *-- Plot
+Map <.. Range
+interface Attacker {
+    +attack(target: Attackable)
+}
+
+interface DefenseAttacker{
+    +isReadyToAttack():Bool
+}
+
+class EnemyAttacker{
+    -damage: Damage
+    +attack( target: Attackable )
+}
+
+Attacker <|.. EnemyAttacker
+
+Attacker <|-- DefenseAttacker
+
+EnemyAttacker o-- Damage
+
+interface Builder{
+    +build()
+    +isBuilding():Bool
+}
+class InBuild{
+    -amountOfTurnsToFinalize:int
+    +build()
+    +isBuilding():Bool
+}
+class NotInBuild{
+    +build()
+    +isBuilding():Bool
+}
+class AttackerInConstruction {
+     +attack( target: Attackable )
+     +isReadyToAttack():Bool
+}
+class AttackerAvailable {
+    -damage: Damage
+    +attack(target: Attackable )
+    +isReadyToAttack():Bool
+}
+DefenseAttacker <|.. AttackerInConstruction
+DefenseAttacker <|.. AttackerAvailable
+
+abstract class Defense {
+    -builder: Builder
+    -attackRange : Range
+    -attacker: DefenseAttacker
+    -pickedCredits:Credit
+    -cost: Credit
+    +tryToBuild()
+    -{abstract}returnAmountOfDamage():int
+    +tryToAttack()
+    +transferPickedCreditsTo( credits:Credits )
+    +reachWith(credits:Credit):Bool /' Se debería implementar el operador menor igual en Credit'/
+    +spendCredits(credits:Credit)
+}
+
+class WhiteTower{
+    -returnAmountOfDamage():int
+}
+class SilverTower{
+    -returnAmountOfDamage():int
+}
+
+Defense o-- Attacker
+Defense <|-- WhiteTower
+Defense <|-- SilverTower
+AttackerAvailable o-- Damage
+Defense o-- Range
+Builder <|.. InBuild
+Builder <|.. NotInBuild
+Defense o-- Builder
+
+Player <.. Defense
+Player o-- Life
+Player <-- Credits
+
+Plot o-- Coordinate
+
+interface Turner{
+    +turnChanged()
+}
+
+class ChangedTurn{
+    +turnChanged()
+}
+
+class NotChangedTurn{
+    +turnChanged()
+}
+
+Turner <|.. ChangedTurn
+Turner <|.. NotChangedTurn
+Enemy o-- Attacker
+Gangway o-- Enemy
+
+@enduml

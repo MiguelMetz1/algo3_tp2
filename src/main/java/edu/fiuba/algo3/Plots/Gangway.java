@@ -32,7 +32,7 @@ public class Gangway extends Plot{
             return;
         };
         nextGangway.advanceEnemies();
-        if( enemies.size() > 0)
+        if( enemies != null && enemies.size() > 0 )
             advanceEnemy(enemies.get(0));
 
     }

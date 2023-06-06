@@ -1,12 +1,15 @@
 package edu.fiuba.algo3.entrega_1;
 
 
+import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
 import edu.fiuba.algo3.Defenses.TowerSilver;
 import edu.fiuba.algo3.Defenses.TowerWhite;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.GameMap.GameMap;
+import edu.fiuba.algo3.Interface.GameInterface;
 import edu.fiuba.algo3.Plots.FinalGangway;
 import edu.fiuba.algo3.Plots.Ground;
+import edu.fiuba.algo3.Turn.ComputerTurn;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.Enemies.Spider;
 import edu.fiuba.algo3.Players.Player;
@@ -45,7 +48,7 @@ public class CasesOfUseTest {
     @Test
     public void playerStartsWithCorrespondingCredits() {
         //Vida:20     Creditos:100
-        Player player = new Player();
+        Player player = new Player("Juan");
 
 
         for (int i = 0; i < 5; i++) {
@@ -62,7 +65,7 @@ public class CasesOfUseTest {
     }
     @Test
     public void playerStartsWithCorrespondingLife() {
-        Player player = new Player();
+        Player player = new Player("Juan");
 
         Spider spider = new Spider();
 
@@ -131,7 +134,7 @@ public class CasesOfUseTest {
 
      @Test
      public void amountOfCreditsIsSuficientToBuy(){
-        Player player = new Player();
+        Player player = new Player("Juan");
 
         TowerSilver towerSilver = new TowerSilver();
 
@@ -160,23 +163,6 @@ public class CasesOfUseTest {
         assertThrows(CannotBuild.class, () ->  {gangway.build(towerSilver);});
 
     }
-
-/*
-    @Test
-    public void defensesAttackEnemiesWithinTheExpectedRange() {
-        Coordinate coord = new Coordinate(0,0);
-        ArrayList<Coordinate> around =  coord.getAround(5);
-        Iterator<Coordinate> coordinateIterator = around.iterator();
-
-        while (coordinateIterator.hasNext()) {
-            Coordinate uajhsu = coordinateIterator.next();
-            uajhsu.showCoords();
-        }
-
-
-    }
-*/
-
 
     @Test
     public void SilverTowerAttackEnemiesWithinTheExpectedRange(){
@@ -282,14 +268,6 @@ public class CasesOfUseTest {
 
         GameMap.resetMap();
 
-/*
-        Credits expectedCredits = new Credits(4);
-
-        Credits myCredits = new Credits(0);
-
-        whiteTower.transferPickedCreditsTo(myCredits);
-
-        assert(myCredits.sameCredits(expectedCredits));*/
     }
 
     //Verificar que las unidades enemigas solo se muevan por la parcela autorizada.
@@ -331,7 +309,6 @@ public class CasesOfUseTest {
     @Test
     public void DestroyEnemiesGivesTheCorrectAmountOfCreditsToThePlayer(){
 
-        GameMap.resetMap();
         TowerWhite whiteTower = new TowerWhite();
         try {
             whiteTower.buy(new Credits(10));
@@ -385,6 +362,25 @@ public class CasesOfUseTest {
         GameMap.resetMap();
     }
 
+    @Test
+    public void whenPassingTurnEnemiesMoveAccordingToTheirSpeed(){
+        Player player = new Player("Juan");
+        GameInterface gameInterface = new GameInterface(player);
+
+        ComputerTurn computerTurn = new ComputerTurn(gameInterface);
+
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+
+
+
+        assert(GameMap.getMap().plotHasEnemies(new Coordinate(2,7)));
+
+        GameMap.resetMap();
+    }
 
 
 

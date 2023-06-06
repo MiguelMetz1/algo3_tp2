@@ -11,7 +11,8 @@ public class Player {
     Credits credits;
     String name;
 
-    public Player(){
+    public Player(String name){
+        this.name = name;
         this.life = new Life(20);
         this.credits = new Credits(100);
     }

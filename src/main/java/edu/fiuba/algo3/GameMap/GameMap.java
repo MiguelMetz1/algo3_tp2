@@ -67,6 +67,10 @@ public class GameMap {
         plotInBuild.build(defense);
     }
 
+    public boolean canBuild(Defense defense, Coordinate coordinate){
+        return map.get(coordinate).canBuild();
+    }
+
     public static GameMap getMap() {
         return instance;
     }
@@ -83,6 +87,11 @@ public class GameMap {
 
     public static void resetMap(){
         instance = new GameMap("src/mapa.json");
+    }
+
+    public boolean plotHasEnemies(Coordinate coordinate){
+        return (map.get(coordinate)).hasEnemies();
+
     }
 
     public void imprimirMapa(){
