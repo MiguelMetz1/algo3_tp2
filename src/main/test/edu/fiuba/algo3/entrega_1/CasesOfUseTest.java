@@ -1,11 +1,8 @@
 package edu.fiuba.algo3.entrega_1;
 
 
-import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Defenses.TowerSilver;
 import edu.fiuba.algo3.Defenses.TowerWhite;
-import edu.fiuba.algo3.Enemies.Ant;
-import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.FinalGangway;
@@ -40,9 +37,6 @@ Caso de uso 8
 corresponde.
 
 * */
-
-import java.util.ArrayList;
-import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -332,8 +326,67 @@ public class CasesOfUseTest {
 
         GameMap.resetMap();
 
-
     }
+
+    @Test
+    public void DestroyEnemiesGivesTheCorrectAmountOfCreditsToThePlayer(){
+
+        GameMap.resetMap();
+        TowerWhite whiteTower = new TowerWhite();
+        try {
+            whiteTower.buy(new Credits(10));
+        } catch (InsuficientCredits e) {
+            throw new RuntimeException(e);
+        }
+
+        whiteTower.putIn(new Coordinate(1,4));
+
+        try {
+            whiteTower.build();
+        } catch (CannotConstruction e) {
+            throw new RuntimeException(e);
+        }
+
+        GameMap.getMap().spawnEnemies();
+        try {
+            //Mata una hormigas
+            whiteTower.attack();
+            GameMap.getMap().spawnEnemies();
+            //Mata una hormigas
+            whiteTower.attack();
+            //Mata una arania
+            whiteTower.attack();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+        Credits expectedCredits = new Credits(2);
+
+        Credits myCredits = new Credits(0);
+
+        whiteTower.transferPickedCreditsTo(myCredits);
+
+        assert(myCredits.sameCredits(expectedCredits));
+
+        try {
+            whiteTower.attack();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        Credits newExpectedCredits = new Credits(13);
+        whiteTower.transferPickedCreditsTo(myCredits);
+
+        assert(newExpectedCredits.higherCredits(myCredits));
+
+
+        GameMap.resetMap();
+    }
+
+
+
 
 }
 

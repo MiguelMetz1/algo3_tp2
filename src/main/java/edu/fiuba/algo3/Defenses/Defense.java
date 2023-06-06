@@ -81,7 +81,7 @@ public abstract class Defense {
     }
 
     private boolean canBuy(Credits credits) {
-        return !(this.cost.lowerCredits(credits));
+        return !(this.cost.higherCredits(credits));
     }
 
     protected abstract int range();

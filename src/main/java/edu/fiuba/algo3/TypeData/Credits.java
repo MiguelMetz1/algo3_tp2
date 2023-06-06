@@ -16,7 +16,7 @@ public class Credits {
         this.credits = 0;
     }
 
-    public boolean lowerCredits(Credits credits) {
+    public boolean higherCredits(Credits credits) {
         return (credits.credits < this.credits);
     }
 
