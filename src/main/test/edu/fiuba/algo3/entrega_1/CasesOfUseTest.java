@@ -2,6 +2,7 @@ package edu.fiuba.algo3.entrega_1;
 
 
 import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
+import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Defenses.TowerSilver;
 import edu.fiuba.algo3.Defenses.TowerWhite;
 import edu.fiuba.algo3.Exceptions.*;
@@ -10,6 +11,7 @@ import edu.fiuba.algo3.Interface.GameInterface;
 import edu.fiuba.algo3.Plots.FinalGangway;
 import edu.fiuba.algo3.Plots.Ground;
 import edu.fiuba.algo3.Turn.ComputerTurn;
+import edu.fiuba.algo3.Turn.PlayerTurn;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.Enemies.Spider;
 import edu.fiuba.algo3.Players.Player;
@@ -375,14 +377,55 @@ public class CasesOfUseTest {
         computerTurn.executeTurn();
         computerTurn.executeTurn();
 
-
-
         assert(GameMap.getMap().plotHasEnemies(new Coordinate(2,7)));
 
         GameMap.resetMap();
     }
 
+    @Test
+    public void whenAllEnemiesAreKilledTheUserWinsTheGame() {
 
+        Player player = new Player("Juan");
+        GameInterface gameInterface = new GameInterface(player);
+
+        ComputerTurn computerTurn = new ComputerTurn(gameInterface);
+
+        PlayerTurn playerTurn = new PlayerTurn(gameInterface);
+
+        gameInterface.build(new TowerSilver(), new Coordinate(3,2));
+        gameInterface.build(new TowerSilver(), new Coordinate(3,3));
+        gameInterface.build(new TowerSilver(), new Coordinate(3,4));
+        gameInterface.build(new TowerSilver(), new Coordinate(4,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(5,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(6,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(7,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(3,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(10,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(11,7));
+
+        playerTurn.executeTurn();
+
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        //computerTurn.executeTurn();
+        //computerTurn.executeTurn();
+        //computerTurn.executeTurn();
+
+        GameMap.resetMap();
+
+        assertEquals(gameInterface.gameWon(), "You Won");
+
+    }
 
 }
 

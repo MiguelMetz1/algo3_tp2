@@ -20,11 +20,10 @@ public class GameMap {
     private InitialGangway initialGangway;
 
     private GameMap(String json) {
-
         MapJsonParser mapParser = new MapJsonParser(json);
         this.map = mapParser.get();
-        initialGangway = this.returnSpawnPoint();
 
+        initialGangway = this.returnSpawnPoint();
     }
 
     private InitialGangway returnSpawnPoint() {
@@ -94,12 +93,25 @@ public class GameMap {
 
     }
 
-    public void imprimirMapa(){
+/*    public void imprimirMapa(){
         for(int i = 1; i <= 15; i++){
             for(int j = 1; j <= 15; j++){
                 System.out.print(" "+map.get(new Coordinate(i,j)).showPlotName());
             }
             System.out.println();
         }
+    }*/
+
+    public boolean MapHasEnemies() {
+        Set<Coordinate> plots = this.map.keySet();
+        Iterator <Coordinate> coordinateIterator = plots.iterator();
+
+        while (coordinateIterator.hasNext()) {
+            Coordinate currentCoordinate = coordinateIterator.next();
+            if (this.map.get(currentCoordinate).hasEnemies()){
+                return true;
+            }
+        }
+        return false;
     }
 }

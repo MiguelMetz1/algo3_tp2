@@ -16,7 +16,7 @@ public class ComputerTurn implements Turn{
 
         computerInterface.advanceEnemies();
         computerInterface.spawnEnemies();
-        //computerInterface.makeDefensesAttack();
+        computerInterface.makeDefensesAttack();
         computerInterface.buildDefenses();
 
 

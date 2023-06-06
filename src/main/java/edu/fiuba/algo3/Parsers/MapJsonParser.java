@@ -8,11 +8,14 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class MapJsonParser extends JsonParser {
     private Gangway previousGangway;
+    int numberOfColumns;
+    int numberOfRows;
 
     public MapJsonParser(String fileName) {
         super(fileName);
@@ -53,7 +56,7 @@ public class MapJsonParser extends JsonParser {
         JSONObject gameMapJson = jsonObject.getJSONObject("Mapa");
         Iterator<String> gameMapKeys = gameMapJson.keys();
 
-
+        this.numberOfRows = gameMapJson.length();
 
         for(int rowNumber = 1; rowNumber <= gameMapJson.length(); rowNumber++){
 
@@ -68,8 +71,10 @@ public class MapJsonParser extends JsonParser {
                 map.put(coordinate, this.createPlot(plotName.next().toString(), coordinate));
                 columnNumber ++;
             }
+            this.numberOfColumns = columnNumber;
             /*System.out.println();*/
         }
         return map;
     }
+
 }

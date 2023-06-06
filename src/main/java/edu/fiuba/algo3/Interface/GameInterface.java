@@ -58,13 +58,13 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
                 //throw new RuntimeException(e);
             }
         }
+        this.checkGameStatus();
     }
     public void advanceEnemies(){
         GameMap.getMap().advanceEnemies();
     }
     public void changeTurn(){
         this.turner = this.turner.returnTurn();
-
     }
 
     public boolean turnChanged(){
@@ -90,5 +90,17 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
         }
     }
 
+    private boolean checkGameStatus(){
+        if ( !GameMap.getMap().MapHasEnemies() && ! this.player.isDead() ) {
+            return true;
+        }
+        return false;
+    }
 
+    public String gameWon() {
+        if (this.checkGameStatus()) {
+            return "You Won";
+        }
+        return "Game Over";
+    }
 }

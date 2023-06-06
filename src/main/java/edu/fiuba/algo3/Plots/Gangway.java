@@ -14,6 +14,7 @@ public class Gangway extends Plot{
 
     public Gangway(Coordinate coordinate){
         super(coordinate, new UnbuildablePlot());
+        enemies = new ArrayList<Enemy>();
     }
     public Gangway(Coordinate coordinate, Gangway previousGangway){
         super(coordinate, new UnbuildablePlot());
@@ -38,7 +39,7 @@ public class Gangway extends Plot{
     }
     private void advanceEnemy(Enemy enemy){
         Gangway gangway = this.nextGangway;
-        System.out.println(enemy.returnName()+": "+gangway.coordinate.returnCoordinate());
+        //System.out.println(enemy.returnName()+": "+gangway.coordinate.returnCoordinate());
        while(enemy.shouldAdvance()){
            if( gangway != null ) {
                gangway.addEnemy(enemy);
