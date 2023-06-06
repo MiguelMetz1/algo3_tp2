@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 public class Gangway extends Plot{
     protected Gangway nextGangway;
+    protected Gangway previousGangway;
     protected ArrayList <Enemy> enemies;
 
 
@@ -19,11 +20,12 @@ public class Gangway extends Plot{
     public Gangway(Coordinate coordinate, Gangway previousGangway){
         super(coordinate, new UnbuildablePlot());
         previousGangway.setNext(this);
+        this.previousGangway = previousGangway;
         this.enemies = new ArrayList<Enemy>();
         nextGangway = null;
     }
 
-    private void setNext(Gangway gangway){
+    protected void setNext(Gangway gangway){
         this.nextGangway = gangway;
     }
 
@@ -31,23 +33,28 @@ public class Gangway extends Plot{
     public void advanceEnemies(){
         if (nextGangway == null){
             return;
-        };
+        }
         nextGangway.advanceEnemies();
-        if( enemies != null && enemies.size() > 0 )
+        if( enemies != null && !enemies.isEmpty() )
             advanceEnemy(enemies.get(0));
     }
+
     private void advanceEnemy(Enemy enemy){
-        Gangway gangway = this.nextGangway;
-        //System.out.println(enemy.returnName()+": "+gangway.coordinate.returnCoordinate());
-       while(enemy.shouldAdvance()){
-           if( gangway != null ) {
-               gangway.addEnemy(enemy);
-               enemies.remove(enemy);
-               gangway = gangway.nextGangway;
-               enemy.advance();
-           }
-       }
-      if( enemies.size() > 0){
+        Gangway actualGangway = this;
+        Gangway actualNextGangway = this.nextGangway;
+        //System.out.println(enemy.returnName()+": "+actualNextGangway.coordinate.returnCoordinate());
+
+        while( enemy.shouldAdvance() ){
+            if( actualNextGangway != null ) {
+                actualNextGangway.addEnemy(enemy);
+                actualGangway.enemies.remove(enemy);
+                //enemies.remove(enemy);
+                actualGangway = actualNextGangway;
+                actualNextGangway = actualNextGangway.nextGangway;
+            }
+            enemy.advance();
+        }
+      if( !enemies.isEmpty() ){
           advanceEnemy(enemies.get(0));
       }
 

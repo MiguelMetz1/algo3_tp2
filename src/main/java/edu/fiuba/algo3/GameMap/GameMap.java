@@ -63,8 +63,7 @@ public class GameMap {
     }
 
     public void build(Defense defense, Coordinate coordinate) throws CannotBuild {
-        Plot plotInBuild = this.map.get(coordinate);
-        plotInBuild.build(defense);
+        this.map.get(coordinate).build(defense);
     }
 
     public boolean canBuild(Defense defense, Coordinate coordinate){

@@ -14,7 +14,6 @@ public class Player {
     String name;
 
     public Player(){
-        //this.name = name;
         this.life = new Life(20);
         this.credits = new Credits(100);
     }
@@ -39,7 +38,6 @@ public class Player {
 
     public void receiveAttack(Damage damage) {
         damage.applyDamage(this.life);
-        System.out.println("Vida del jugador" + this.life.getLife());
     }
 
     public boolean isDead() {
@@ -50,5 +48,4 @@ public class Player {
         instance = registerPlayer();
     }
 
-    public int getLife(){return this.life.getLife();}
 }

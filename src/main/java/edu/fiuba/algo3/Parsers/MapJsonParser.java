@@ -77,7 +77,8 @@ public class MapJsonParser extends JsonParser {
             this.numberOfColumns = columnNumber;
             /*System.out.println();*/
         }
-        map.put(this.finalGangwayCoordinate, new FinalGangway(this.finalGangwayCoordinate));
+        Gangway actualFinalGangway = (Gangway) map.get(this.finalGangwayCoordinate);
+        map.put(this.finalGangwayCoordinate, new FinalGangway(this.finalGangwayCoordinate, actualFinalGangway));
         return map;
     }
 

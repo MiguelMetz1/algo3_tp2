@@ -22,8 +22,6 @@ public class EnemiesJsonParser extends JsonParser{
         String fileContent = this.readJson();
         JSONArray enemiesOnTurnArray = new JSONArray(fileContent);
 
-
-
         for(int i = 0; i < enemiesOnTurnArray.length();i++){
             ArrayList<Enemy> enemiesList = new ArrayList<>();
             enemiesQueue.add(enemiesList);
@@ -31,36 +29,24 @@ public class EnemiesJsonParser extends JsonParser{
             JSONObject enemies = (JSONObject) turnAndEnemies.get("enemigos");
             int ant =  enemies.getInt("hormiga");
             int spider =  enemies.getInt("arana");
-/*
-            System.out.println("cant hormiga: " + ant);
-            System.out.println("cant arania: " + spider);*/
-
-
-
-            /*while (enemiesKeys.hasNext()) {*/
             enemiesList.addAll(this.createEnemies("hormiga", ant));
             enemiesList.addAll(this.createEnemies("arana", spider));
-
-           /* }*/
         }
         return enemiesQueue;
     }
 
     private ArrayList<Enemy> createEnemies(String enemy, int amountOfEnemyType) {
         ArrayList<Enemy> enemies = new ArrayList<>();
-        /*System.out.println(enemy);*/
         switch (enemy) {
             case "hormiga":
 
                 for(int i = 0; i < amountOfEnemyType; i++) {
-                    /*System.out.println("Hormiga");*/
                     enemies.add( new Ant() );
                 }
                 break;
             default:
 
                 for(int i = 0; i < amountOfEnemyType; i++) {
-                    /*System.out.println("Arania");*/
                     enemies.add( new Spider() );
                 }
         }

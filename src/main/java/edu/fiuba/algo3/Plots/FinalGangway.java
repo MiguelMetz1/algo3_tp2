@@ -9,8 +9,9 @@ import java.util.ArrayList;
 
 public class FinalGangway extends Gangway {
 
-    public  FinalGangway(Coordinate coordinate){
+    public  FinalGangway(Coordinate coordinate, Gangway finalGangway){
         super(coordinate);
+        finalGangway.previousGangway.setNext(this);
     }
 
     @Override

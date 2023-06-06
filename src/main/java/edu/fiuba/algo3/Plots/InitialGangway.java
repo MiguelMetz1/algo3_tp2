@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.Plots;
 
 import edu.fiuba.algo3.Enemies.Enemy;
-import edu.fiuba.algo3.Exceptions.UnespawnablePlace;
 import edu.fiuba.algo3.TypeData.Coordinate;
 
 import java.util.ArrayList;
@@ -22,10 +21,7 @@ public class InitialGangway extends Gangway {
         this.nextGangway = gangway.nextGangway;
         this.enemiesToSpawn = enemiesToSpawn;
     }
-    public  InitialGangway(Coordinate coordinate, Queue<ArrayList<Enemy>> enemiesToSpawn){
-        super(coordinate);
-        this.enemiesToSpawn = enemiesToSpawn;
-    }
+
     public Boolean canSpawnEnemies(){
         return true;
     }

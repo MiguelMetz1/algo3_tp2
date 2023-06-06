@@ -128,8 +128,7 @@ public class CasesOfUseTest {
         //assertDoesNotThrow(() -> {silverTower.attack();}, "An Attacker in construction cant attack." );
         assertThrows(CannotConstruction.class, ()->{silverTower.build();});
 
-
-
+        
     }
 
     //Verificar que se disponga de credito para realizar las construcciones
@@ -153,17 +152,17 @@ public class CasesOfUseTest {
     public void defensesCanOnlyBeBuiltOnGround(){
         TowerSilver towerSilver = new TowerSilver();
 
+        try {
+            Player.getPlayer().buy(towerSilver);
+        } catch (InsuficientCredits e) {
+            throw new RuntimeException(e);
+        }
 
-        Ground ground = new Ground(new Coordinate(0,0));
-        Rocky rocky = new Rocky(new Coordinate(1,1));
-        FinalGangway finalGangway = new FinalGangway(new Coordinate(3,3));
-        Gangway gangway = new Gangway(new Coordinate(2,2), finalGangway);
+        assertDoesNotThrow(() ->{towerSilver.putIn(new Coordinate(3,1));}, "Can't build in this plot.");
+        assertThrows(CannotBuild.class, () ->  {towerSilver.putIn(new Coordinate(1,1));});
+        assertThrows(CannotBuild.class, () ->  {towerSilver.putIn(new Coordinate(2,1));});
 
-
-        assertDoesNotThrow(() ->{ground.build(towerSilver);}, "Can't build in this plot.");
-        assertThrows(CannotBuild.class, () ->  {rocky.build(towerSilver);});
-        assertThrows(CannotBuild.class, () ->  {gangway.build(towerSilver);});
-
+        Player.resetplayer();
     }
 
     @Test
@@ -381,16 +380,15 @@ public class CasesOfUseTest {
         Player.resetplayer();
     }
 
-/*
+
+
     @Test
-    public void whenAllEnemiesAreKilledTheUserWinsTheGame() {
+    public void whenAllEnemiesAreDeadTheUserWinsTheGame() {
         Player.resetplayer();
 
         GameInterface gameInterface = new GameInterface(Player.getPlayer());
 
         ComputerTurn computerTurn = new ComputerTurn(gameInterface);
-
-        PlayerTurn playerTurn = new PlayerTurn(gameInterface);
 
         gameInterface.build(new TowerSilver(), new Coordinate(3,2));
         gameInterface.build(new TowerSilver(), new Coordinate(3,3));
@@ -411,12 +409,11 @@ public class CasesOfUseTest {
         gameInterface.build(new TowerWhite(), new Coordinate(12,14));
         gameInterface.build(new TowerWhite(), new Coordinate(12,15));
 
-        playerTurn.executeTurn();
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 37; i++) {
             computerTurn.executeTurn();
         }
 
-        assertEquals(gameInterface.gameWon(), "You Won");
+        assertEquals("You Won", gameInterface.gameWon());
 
         GameMap.resetMap();
         Player.resetplayer();
@@ -430,8 +427,6 @@ public class CasesOfUseTest {
 
         ComputerTurn computerTurn = new ComputerTurn(gameInterface);
 
-        PlayerTurn playerTurn = new PlayerTurn(gameInterface);
-
         gameInterface.build(new TowerSilver(), new Coordinate(3,2));
         gameInterface.build(new TowerSilver(), new Coordinate(3,3));
         gameInterface.build(new TowerSilver(), new Coordinate(3,4));
@@ -443,32 +438,44 @@ public class CasesOfUseTest {
         gameInterface.build(new TowerWhite(), new Coordinate(10,8));
         gameInterface.build(new TowerWhite(), new Coordinate(11,7));
 
-        playerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
+        computerTurn.executeTurn();
 
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        computerTurn.executeTurn();
-        //computerTurn.executeTurn();
-        //computerTurn.executeTurn();
-        //computerTurn.executeTurn();
-
-        assertEquals(gameInterface.gameWon(), "You Won");
+        assertEquals("You Won", gameInterface.gameWon());
 
         GameMap.resetMap();
         Player.resetplayer();
 
     }
 
-*/
+    @Test
+    public void whenEnemiesReachTheGoalAndKillThePlayerThePlayerDies() {
+
+        GameInterface gameInterface = new GameInterface(Player.getPlayer());
+
+        ComputerTurn computerTurn = new ComputerTurn(gameInterface);
+
+        for (int i = 0; i < 37; i++) {
+            computerTurn.executeTurn();
+        }
+
+        assertEquals("Game Over", gameInterface.gameWon());
+
+        GameMap.resetMap();
+        Player.resetplayer();
+
+    }
+
+
 
 }
 

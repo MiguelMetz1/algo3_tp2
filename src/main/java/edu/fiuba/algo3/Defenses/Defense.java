@@ -46,7 +46,6 @@ public abstract class Defense {
         this.attacker.attack(enemy);
 
         if(enemy.isDead()){
-            System.out.print(enemy.returnName());
             enemy.returnCredits().transferCreditsTo(this.ticketCredits);
         }
     }
@@ -61,10 +60,6 @@ public abstract class Defense {
         //TODO: Implement code to inform the player
     }
 
-    protected void setState(Builder state) {
-        this.builder = state;
-    }
-
     public void buy(Credits credits) throws InsuficientCredits {
         if(!canBuy(credits)){
             throw (new InsuficientCredits("Insuficient Credits"));
@@ -77,7 +72,7 @@ public abstract class Defense {
 
     public void putIn(Coordinate coordinate) throws CannotBuild {
         this.placeable.putIn(this, coordinate);
-        this.attackRange = new RangeAttack( coordinate, this.range());
+        this.attackRange = new RangeAttack( coordinate, this.range() );
     }
 
     private boolean canBuy(Credits credits) {

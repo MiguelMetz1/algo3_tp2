@@ -15,5 +15,5 @@ public class Life implements Reducible{
         return (this.life <= 0);
     }
 
-    public int getLife(){return this.life;}
+    //public int getLife(){return this.life;}
 }

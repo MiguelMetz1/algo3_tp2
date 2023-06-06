@@ -3,7 +3,9 @@ package edu.fiuba.algo3.Interface;
 
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.CannotAttack;
+import edu.fiuba.algo3.Exceptions.CannotBuild;
 import edu.fiuba.algo3.Exceptions.EnemyNotFound;
+import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Turn.ChangedTurn;
@@ -45,8 +47,15 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
 
     public void build(Defense defense, Coordinate coordinate) {
         if (GameMap.getMap().canBuild(defense, coordinate)){
-            defenses.add(defense);
-            GameMap.getMap().build(defense, coordinate);
+            try {
+                player.buy(defense);
+                defense.putIn(coordinate);
+                defenses.add(defense);
+            } catch (InsuficientCredits e) {
+                //Send message to Graphic interface : "You haven't got sufficient credits."
+            } catch (CannotBuild e){
+                //Send message to Graphic interface : "You cant build in this plot."
+            }
         }
     }
 
