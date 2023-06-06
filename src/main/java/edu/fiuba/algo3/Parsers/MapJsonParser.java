@@ -25,27 +25,23 @@ public class MapJsonParser extends JsonParser {
     private Plot createPlot(String plotName, Coordinate coordinate) {
         switch (plotName) {
             case "Rocoso":
-                /*System.out.println("Rocoso");*/
-                return new Rocky(coordinate);
+                return new Rocky();
 
             case "Pasarela":
 
                 if (this.previousGangway == null) {
-                    /*System.out.println("Init");*/
-                    InitialGangway gangwayBeginning = new InitialGangway(coordinate);
+                    InitialGangway gangwayBeginning = new InitialGangway();
                     this.previousGangway = gangwayBeginning;
                     return gangwayBeginning;
                 }
-                /*System.out.println("Pasarela");*/
-                Gangway gangway = new Gangway(coordinate, this.previousGangway);
+                Gangway gangway = new Gangway(this.previousGangway);
 
                 this.finalGangwayCoordinate = coordinate;
                 this.previousGangway = gangway;
                 return gangway;
 
             default:
-                /*System.out.println("Tierra");*/
-                return new Ground(coordinate);
+                return new Ground();
         }
     }
 
@@ -57,7 +53,6 @@ public class MapJsonParser extends JsonParser {
         JSONObject jsonObject = new JSONObject(fileContent);
 
         JSONObject gameMapJson = jsonObject.getJSONObject("Mapa");
-        Iterator<String> gameMapKeys = gameMapJson.keys();
 
         this.numberOfRows = gameMapJson.length();
 
@@ -75,10 +70,9 @@ public class MapJsonParser extends JsonParser {
                 columnNumber ++;
             }
             this.numberOfColumns = columnNumber;
-            /*System.out.println();*/
         }
         Gangway actualFinalGangway = (Gangway) map.get(this.finalGangwayCoordinate);
-        map.put(this.finalGangwayCoordinate, new FinalGangway(this.finalGangwayCoordinate, actualFinalGangway));
+        map.put(this.finalGangwayCoordinate, new FinalGangway(actualFinalGangway));
         return map;
     }
 

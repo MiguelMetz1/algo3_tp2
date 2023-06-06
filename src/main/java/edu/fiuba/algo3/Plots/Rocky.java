@@ -4,8 +4,8 @@ import edu.fiuba.algo3.TypeData.Coordinate;
 
 public class Rocky extends Plot{
 
-    public Rocky(Coordinate coordinate){
-        super(coordinate, new UnbuildablePlot());
+    public Rocky(){
+        super(new UnbuildablePlot());
     }
 
     public String showPlotName(){

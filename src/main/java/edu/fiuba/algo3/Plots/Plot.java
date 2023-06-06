@@ -5,15 +5,14 @@ import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.CannotBuild;
 import edu.fiuba.algo3.Exceptions.EnemyNotFound;
 import edu.fiuba.algo3.Exceptions.UnespawnablePlace;
-import edu.fiuba.algo3.TypeData.Coordinate;
 
 public abstract class Plot {
-    Coordinate coordinate;
+    //Coordinate coordinate;
     Buildable buildable;
 
 
-    public Plot(Coordinate coordinate, Buildable buildable) {
-        this.coordinate = coordinate;
+    public Plot(Buildable buildable) {
+        //this.coordinate = coordinate;
         this.buildable = buildable;
     }
 

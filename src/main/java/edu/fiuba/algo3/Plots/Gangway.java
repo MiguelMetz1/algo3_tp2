@@ -13,12 +13,12 @@ public class Gangway extends Plot{
     protected ArrayList <Enemy> enemies;
 
 
-    public Gangway(Coordinate coordinate){
-        super(coordinate, new UnbuildablePlot());
+    public Gangway(){
+        super( new UnbuildablePlot() );
         this.enemies = new ArrayList<Enemy>();
     }
-    public Gangway(Coordinate coordinate, Gangway previousGangway){
-        super(coordinate, new UnbuildablePlot());
+    public Gangway(Gangway previousGangway){
+        super(new UnbuildablePlot());
         previousGangway.setNext(this);
         this.previousGangway = previousGangway;
         this.enemies = new ArrayList<Enemy>();
@@ -42,7 +42,6 @@ public class Gangway extends Plot{
     private void advanceEnemy(Enemy enemy){
         Gangway actualGangway = this;
         Gangway actualNextGangway = this.nextGangway;
-        //System.out.println(enemy.returnName()+": "+actualNextGangway.coordinate.returnCoordinate());
 
         while( enemy.shouldAdvance() ){
             if( actualNextGangway != null ) {
