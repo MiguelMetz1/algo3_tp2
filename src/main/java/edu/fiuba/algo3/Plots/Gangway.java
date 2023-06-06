@@ -9,7 +9,6 @@ import java.util.Iterator;
 
 public class Gangway extends Plot{
     protected Gangway nextGangway;
-    protected Gangway previousGangway;
     protected ArrayList <Enemy> enemies;
 
 
@@ -18,9 +17,7 @@ public class Gangway extends Plot{
     }
     public Gangway(Coordinate coordinate, Gangway previousGangway){
         super(coordinate, new UnbuildablePlot());
-        //this.nextGangway = nextGangway;
-        this.previousGangway = previousGangway;
-        this.previousGangway.setNext(this);
+        previousGangway.setNext(this);
         this.enemies = new ArrayList<Enemy>();
 
     }
@@ -35,16 +32,24 @@ public class Gangway extends Plot{
             return;
         };
         nextGangway.advanceEnemies();
-        for (Enemy enemy: enemies) {
-            advanceEnemy(enemy);
-        }
+        if( enemies.size() > 0)
+            advanceEnemy(enemies.get(0));
+
     }
     private void advanceEnemy(Enemy enemy){
-        Gangway gangway = nextGangway;
+        Gangway gangway = this.nextGangway;
+        System.out.println(enemy.returnName()+": "+gangway.coordinate.returnCoordinate());
        while(enemy.shouldAdvance()){
-           gangway.addEnemy(enemy);
-           gangway = gangway.nextGangway;
+           if( gangway != null ) {
+               gangway.addEnemy(enemy);
+               enemies.remove(enemy);
+               gangway = gangway.nextGangway;
+               enemy.advance();
+           }
        }
+      if( enemies.size() > 0){
+          advanceEnemy(enemies.get(0));
+      }
     }
 
     public boolean hasEnemies(){

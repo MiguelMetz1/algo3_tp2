@@ -7,8 +7,6 @@ import edu.fiuba.algo3.TypeData.Coordinate;
 import java.util.ArrayList;
 
 public class Ground extends Plot{
-
-    Defense defense;
     public Ground(Coordinate coordinate){
         super(coordinate, new BuildablePlot());
     }

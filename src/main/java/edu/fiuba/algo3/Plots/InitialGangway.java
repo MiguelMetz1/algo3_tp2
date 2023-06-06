@@ -17,6 +17,11 @@ public class InitialGangway extends Gangway {
         this.enemiesToSpawn = new LinkedList<>();
     }
 
+    public InitialGangway(Gangway gangway, Queue<ArrayList<Enemy>> enemiesToSpawn){
+        super(gangway.coordinate);
+        this.nextGangway = gangway.nextGangway;
+        this.enemiesToSpawn = enemiesToSpawn;
+    }
     public  InitialGangway(Coordinate coordinate, Queue<ArrayList<Enemy>> enemiesToSpawn){
         super(coordinate);
         this.enemiesToSpawn = enemiesToSpawn;

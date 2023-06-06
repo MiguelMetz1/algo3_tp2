@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Exceptions.CannotBuild;
 import edu.fiuba.algo3.Exceptions.UnespawnablePlace;
 import edu.fiuba.algo3.Parsers.EnemiesJsonParser;
 import edu.fiuba.algo3.Parsers.MapJsonParser;
+import edu.fiuba.algo3.Plots.Gangway;
 import edu.fiuba.algo3.Plots.InitialGangway;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Coordinate;
@@ -36,7 +37,8 @@ public class GameMap {
             Coordinate actualCoordinate = coordinateIterator.next();
             Plot actualPlot = this.map.get(actualCoordinate);
             if (actualPlot.canSpawnEnemies()) {
-                spawn = new InitialGangway(actualCoordinate, enemiesToSpawn);
+                Gangway actualGangway = (Gangway) actualPlot;
+                spawn = new InitialGangway(actualGangway, enemiesToSpawn);
                 this.map.replace(actualCoordinate, spawn);
             }
         }
@@ -77,6 +79,10 @@ public class GameMap {
 
         initialGangway.spawnEnemies();
 
+    }
+
+    public static void resetMap(){
+        instance = new GameMap("src/mapa.json");
     }
 
     public void imprimirMapa(){

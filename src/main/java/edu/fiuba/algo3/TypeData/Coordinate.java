@@ -32,8 +32,8 @@ public class Coordinate {
         }
         return tmpCoordinates;
     }
-    public void showCoords(){
-        System.out.println(this.x + " - " +this.y);
+    public String returnCoordinate(){
+        return ("("+this.x+","+this.y+")");
     }
 
 }

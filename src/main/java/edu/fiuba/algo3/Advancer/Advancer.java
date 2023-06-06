@@ -2,8 +2,6 @@ package edu.fiuba.algo3.Advancer;
 
 public abstract class Advancer {
 
-
-
     protected int mustAdvanceAmount;
     protected int actualPosition;
 
@@ -16,11 +14,12 @@ public abstract class Advancer {
         initialPosition = 0;
         finalPosition = mustAdvanceAmount;
     }
-    public abstract void advancePosition();
-
+    public void advancePosition(){
+        this.actualPosition += 1;
+    }
 
     public boolean shouldAdvance(){
-        boolean canAdvance = (actualPosition == finalPosition);
+        boolean canAdvance = (actualPosition != finalPosition);
         if (canAdvance == false) {
              finalPosition += mustAdvanceAmount;
         }

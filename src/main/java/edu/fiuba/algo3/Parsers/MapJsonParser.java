@@ -64,7 +64,7 @@ public class MapJsonParser extends JsonParser {
             int columnNumber = 1;
 
             while (plotName.hasNext()) {
-                Coordinate coordinate = new Coordinate(rowNumber, columnNumber);
+                Coordinate coordinate = new Coordinate(columnNumber, rowNumber);
                 map.put(coordinate, this.createPlot(plotName.next().toString(), coordinate));
                 columnNumber ++;
             }

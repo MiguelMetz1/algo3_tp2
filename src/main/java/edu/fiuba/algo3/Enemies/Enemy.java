@@ -39,4 +39,9 @@ public abstract class Enemy {
     protected abstract int amountOfCredits();
 
     public abstract String returnName();
+
+    public void advance() {
+        advancer.advancePosition();
+    }
+
 }

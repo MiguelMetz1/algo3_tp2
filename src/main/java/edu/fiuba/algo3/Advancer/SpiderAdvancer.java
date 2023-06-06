@@ -8,8 +8,4 @@ public class SpiderAdvancer extends Advancer {
         super(2);
     }
 
-    public void advancePosition(){
-        this.actualPosition += 1;
-    }
-
 }

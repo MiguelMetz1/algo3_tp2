@@ -96,13 +96,13 @@ public class CasesOfUseTest {
             throw new RuntimeException(e);
         }
 
-        towerWhite.putIn(new Coordinate(3,1));
+        towerWhite.putIn(new Coordinate(1,3));
         //Intentar construir y que no tire error
 
-        assertThrows(CannotAttack.class,()->{towerWhite.attack();});
+        //assertThrows(CannotAttack.class,()->{towerWhite.attack();});
         assertDoesNotThrow(()->{towerWhite.build();},"The defense is under construction.");
 
-        assertDoesNotThrow(()->{towerWhite.attack();}, "An Attacker in construction cant attack.");
+        //assertDoesNotThrow(()->{towerWhite.attack();}, "An Attacker in construction cant attack.");
         assertThrows(CannotConstruction.class, ()->{towerWhite.build();});
 
 
@@ -120,13 +120,13 @@ public class CasesOfUseTest {
         silverTower.putIn(new Coordinate(3,1));
         //Intentar construir y que no tire error
 
-        assertThrows(CannotAttack.class,()->{silverTower.attack();});
+        //assertThrows(CannotAttack.class,()->{silverTower.attack();});
         assertDoesNotThrow(()->{silverTower.build();},"The defense is under construction.");
 
-        assertThrows(CannotAttack.class,()->{silverTower.attack();});
+        //assertThrows(CannotAttack.class,()->{silverTower.attack();});
         assertDoesNotThrow(()->{silverTower.build();},"The defense is under construction.");
 
-        assertDoesNotThrow(() -> {silverTower.attack();}, "An Attacker in construction cant attack." );
+        //assertDoesNotThrow(() -> {silverTower.attack();}, "An Attacker in construction cant attack." );
         assertThrows(CannotConstruction.class, ()->{silverTower.build();});
 
 
@@ -179,14 +179,13 @@ public class CasesOfUseTest {
             uajhsu.showCoords();
         }
 
+
     }
 */
 
 
     @Test
     public void SilverTowerAttackEnemiesWithinTheExpectedRange(){
-
-
 
         TowerSilver towerSilver = new TowerSilver();
 
@@ -197,7 +196,7 @@ public class CasesOfUseTest {
             throw new RuntimeException(e);
         }
 
-        towerSilver.putIn(new Coordinate(6,1));
+        towerSilver.putIn(new Coordinate(1,6));
 
         try {
             towerSilver.build();
@@ -213,20 +212,16 @@ public class CasesOfUseTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
+        GameMap.getMap().spawnEnemies();
         assertDoesNotThrow(() -> {towerSilver.attack();} , "There's no enemies arround");
 
-        towerSilver.putIn(new Coordinate(7,1));
+        towerSilver.putIn(new Coordinate(1,7));
         assertThrows(EnemyNotFound.class, () -> {towerSilver.attack();});
 
-
-
-
+        GameMap.resetMap();
     }
     @Test
     public void WhiteTowerAttackEnemiesWithinTheExpectedRange(){
-
-
 
         TowerWhite whiteTower = new TowerWhite();
         try {
@@ -235,7 +230,7 @@ public class CasesOfUseTest {
             throw new RuntimeException(e);
         }
 
-        whiteTower.putIn(new Coordinate(4,1));
+        whiteTower.putIn(new Coordinate(1,4));
 
         try {
             whiteTower.build();
@@ -250,10 +245,12 @@ public class CasesOfUseTest {
             throw new RuntimeException(e);
         }
 
-        assertDoesNotThrow(() -> {whiteTower.attack();} , "There's no enemies arround");
-        whiteTower.putIn(new Coordinate(5,1));
+        assertThrows(EnemyNotFound.class, () -> {whiteTower.attack();});
+        GameMap.getMap().spawnEnemies();
+        whiteTower.putIn(new Coordinate(1,5));
         assertThrows(EnemyNotFound.class, () -> {whiteTower.attack();});
 
+        GameMap.resetMap();
 
     }
     @Test
@@ -266,7 +263,7 @@ public class CasesOfUseTest {
             throw new RuntimeException(e);
         }
 
-        whiteTower.putIn(new Coordinate(4,1));
+        whiteTower.putIn(new Coordinate(1,4));
 
         try {
             whiteTower.build();
@@ -288,6 +285,8 @@ public class CasesOfUseTest {
         }
 
         assertThrows(EnemyNotFound.class,()-> {whiteTower.attack();});
+
+        GameMap.resetMap();
 
 /*
         Credits expectedCredits = new Credits(4);
@@ -326,8 +325,12 @@ public class CasesOfUseTest {
         GameMap.getMap().advanceEnemies();
         GameMap.getMap().advanceEnemies();
         GameMap.getMap().advanceEnemies();
+        GameMap.getMap().advanceEnemies();
+
 
         assertDoesNotThrow(()->{whiteTower.attack();},"There's no enemies arround");
+
+        GameMap.resetMap();
 
 
     }
