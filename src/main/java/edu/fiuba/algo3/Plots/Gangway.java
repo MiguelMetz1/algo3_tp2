@@ -14,13 +14,13 @@ public class Gangway extends Plot{
 
     public Gangway(Coordinate coordinate){
         super(coordinate, new UnbuildablePlot());
-        enemies = new ArrayList<Enemy>();
+        this.enemies = new ArrayList<Enemy>();
     }
     public Gangway(Coordinate coordinate, Gangway previousGangway){
         super(coordinate, new UnbuildablePlot());
         previousGangway.setNext(this);
         this.enemies = new ArrayList<Enemy>();
-
+        nextGangway = null;
     }
 
     private void setNext(Gangway gangway){
@@ -35,7 +35,6 @@ public class Gangway extends Plot{
         nextGangway.advanceEnemies();
         if( enemies != null && enemies.size() > 0 )
             advanceEnemy(enemies.get(0));
-
     }
     private void advanceEnemy(Enemy enemy){
         Gangway gangway = this.nextGangway;
@@ -51,10 +50,11 @@ public class Gangway extends Plot{
       if( enemies.size() > 0){
           advanceEnemy(enemies.get(0));
       }
+
     }
 
     public boolean hasEnemies(){
-        return (enemies.size() > 0);
+        return ( enemies.size() > 0);
     }
     public Enemy returnEnemy() throws EnemyNotFound {
         if (enemies.get(0).isDead())
@@ -72,5 +72,6 @@ public class Gangway extends Plot{
     public String showPlotName(){
         return "Pasarela";
     }
+
 
 }

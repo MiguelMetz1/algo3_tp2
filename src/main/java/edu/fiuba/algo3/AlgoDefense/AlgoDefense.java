@@ -13,8 +13,6 @@ public class AlgoDefense {
     GameInterface gameInterface;
 
     public void startGame(){
-        String name = "Pepe";
-        Player player = new Player("Juan");
-        this.gameInterface = new GameInterface(player);
+        this.gameInterface = new GameInterface(Player.getPlayer());
     }
 }

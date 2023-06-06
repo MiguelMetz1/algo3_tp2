@@ -31,7 +31,9 @@ public class InitialGangway extends Gangway {
     }
 
     public void spawnEnemies() {
-
         this.enemies = enemiesToSpawn.poll();
+        if (this.enemies == null){
+            this.enemies = new ArrayList<Enemy>();
+        }
     }
 }

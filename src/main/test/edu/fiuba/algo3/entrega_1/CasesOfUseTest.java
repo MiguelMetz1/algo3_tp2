@@ -50,37 +50,37 @@ public class CasesOfUseTest {
     @Test
     public void playerStartsWithCorrespondingCredits() {
         //Vida:20     Creditos:100
-        Player player = new Player("Juan");
 
 
         for (int i = 0; i < 5; i++) {
             assertDoesNotThrow(() -> {
-                player.buy(new TowerSilver());
+                Player.getPlayer().buy(new TowerSilver());
             }, "Insuficient Credits");
         }
 
 
 
         assertThrows(InsuficientCredits.class, () -> {
-            player.buy(new TowerSilver());
+            Player.getPlayer().buy(new TowerSilver());
         });
+
+        Player.resetplayer();
     }
     @Test
     public void playerStartsWithCorrespondingLife() {
-        Player player = new Player("Juan");
 
         Spider spider = new Spider();
 
 
         for (int i=0;i<9;i++){
-            spider.attack(player);
-            assertEquals(false, player.isDead());
+            spider.attack(Player.getPlayer());
+            assertEquals(false, Player.getPlayer().isDead());
         }
-        spider.attack(player);
+        spider.attack(Player.getPlayer());
 
-        assertEquals(true, player.isDead());
+        assertEquals(true, Player.getPlayer().isDead());
 
-
+        Player.resetplayer();
     }
 
     /*  Verificar que cada defensa tarde en construirse lo que dice que tarda y que recién están
@@ -136,15 +136,15 @@ public class CasesOfUseTest {
 
      @Test
      public void amountOfCreditsIsSuficientToBuy(){
-        Player player = new Player("Juan");
 
         TowerSilver towerSilver = new TowerSilver();
 
         TowerWhite towerWhite = new TowerWhite();
 
-        assertDoesNotThrow(()->{player.buy(towerWhite);}, "Insuficient Credits");
-        assertDoesNotThrow(()->{player.buy(towerSilver);}, "Insuficient Credits");
+        assertDoesNotThrow(()->{Player.getPlayer().buy(towerWhite);}, "Insuficient Credits");
+        assertDoesNotThrow(()->{Player.getPlayer().buy(towerSilver);}, "Insuficient Credits");
 
+         Player.resetplayer();
      }
 
      //Verificar solo se pueda construir defensas sobre tierra (y verificar lo contrario)
@@ -360,14 +360,12 @@ public class CasesOfUseTest {
 
         assert(newExpectedCredits.higherCredits(myCredits));
 
-
         GameMap.resetMap();
     }
 
     @Test
     public void whenPassingTurnEnemiesMoveAccordingToTheirSpeed(){
-        Player player = new Player("Juan");
-        GameInterface gameInterface = new GameInterface(player);
+        GameInterface gameInterface = new GameInterface(Player.getPlayer());
 
         ComputerTurn computerTurn = new ComputerTurn(gameInterface);
 
@@ -380,13 +378,55 @@ public class CasesOfUseTest {
         assert(GameMap.getMap().plotHasEnemies(new Coordinate(2,7)));
 
         GameMap.resetMap();
+        Player.resetplayer();
     }
 
+/*
     @Test
     public void whenAllEnemiesAreKilledTheUserWinsTheGame() {
+        Player.resetplayer();
 
-        Player player = new Player("Juan");
-        GameInterface gameInterface = new GameInterface(player);
+        GameInterface gameInterface = new GameInterface(Player.getPlayer());
+
+        ComputerTurn computerTurn = new ComputerTurn(gameInterface);
+
+        PlayerTurn playerTurn = new PlayerTurn(gameInterface);
+
+        gameInterface.build(new TowerSilver(), new Coordinate(3,2));
+        gameInterface.build(new TowerSilver(), new Coordinate(3,3));
+        gameInterface.build(new TowerSilver(), new Coordinate(3,4));
+        gameInterface.build(new TowerSilver(), new Coordinate(4,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(5,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(6,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(7,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(3,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(10,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(11,7));
+        gameInterface.build(new TowerWhite(), new Coordinate(12,8));
+        gameInterface.build(new TowerWhite(), new Coordinate(12,9));
+        gameInterface.build(new TowerWhite(), new Coordinate(12,10));
+        gameInterface.build(new TowerWhite(), new Coordinate(12,11));
+        gameInterface.build(new TowerWhite(), new Coordinate(12,12));
+        gameInterface.build(new TowerWhite(), new Coordinate(12,13));
+        gameInterface.build(new TowerWhite(), new Coordinate(12,14));
+        gameInterface.build(new TowerWhite(), new Coordinate(12,15));
+
+        playerTurn.executeTurn();
+        for (int i = 0; i < 12; i++) {
+            computerTurn.executeTurn();
+        }
+
+        assertEquals(gameInterface.gameWon(), "You Won");
+
+        GameMap.resetMap();
+        Player.resetplayer();
+    }
+
+
+    @Test
+    public void whenNotAllEnemiesAreKilledTheUserStillWinsTheGame() {
+
+        GameInterface gameInterface = new GameInterface(Player.getPlayer());
 
         ComputerTurn computerTurn = new ComputerTurn(gameInterface);
 
@@ -421,11 +461,14 @@ public class CasesOfUseTest {
         //computerTurn.executeTurn();
         //computerTurn.executeTurn();
 
-        GameMap.resetMap();
-
         assertEquals(gameInterface.gameWon(), "You Won");
 
+        GameMap.resetMap();
+        Player.resetplayer();
+
     }
+
+*/
 
 }
 

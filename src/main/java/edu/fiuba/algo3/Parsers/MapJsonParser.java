@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 public class MapJsonParser extends JsonParser {
     private Gangway previousGangway;
+    private Coordinate finalGangwayCoordinate;
     int numberOfColumns;
     int numberOfRows;
 
@@ -37,6 +38,8 @@ public class MapJsonParser extends JsonParser {
                 }
                 /*System.out.println("Pasarela");*/
                 Gangway gangway = new Gangway(coordinate, this.previousGangway);
+
+                this.finalGangwayCoordinate = coordinate;
                 this.previousGangway = gangway;
                 return gangway;
 
@@ -74,6 +77,7 @@ public class MapJsonParser extends JsonParser {
             this.numberOfColumns = columnNumber;
             /*System.out.println();*/
         }
+        map.put(this.finalGangwayCoordinate, new FinalGangway(this.finalGangwayCoordinate));
         return map;
     }
 

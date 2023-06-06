@@ -14,4 +14,6 @@ public class Life implements Reducible{
     public boolean isEmpty() {
         return (this.life <= 0);
     }
+
+    public int getLife(){return this.life;}
 }

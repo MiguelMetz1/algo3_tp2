@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Exceptions.CannotBuild;
 import edu.fiuba.algo3.Exceptions.UnespawnablePlace;
 import edu.fiuba.algo3.Parsers.EnemiesJsonParser;
 import edu.fiuba.algo3.Parsers.MapJsonParser;
+import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Plots.Gangway;
 import edu.fiuba.algo3.Plots.InitialGangway;
 import edu.fiuba.algo3.Plots.Plot;
@@ -90,7 +91,6 @@ public class GameMap {
 
     public boolean plotHasEnemies(Coordinate coordinate){
         return (map.get(coordinate)).hasEnemies();
-
     }
 
 /*    public void imprimirMapa(){
@@ -114,4 +114,5 @@ public class GameMap {
         }
         return false;
     }
+
 }

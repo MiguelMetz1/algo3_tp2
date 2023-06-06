@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameInterface implements ComputerInterface, PlayerInterface{
-
     ArrayList<Defense> defenses;
     Player player;
     Turner turner;
@@ -50,6 +49,7 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
             GameMap.getMap().build(defense, coordinate);
         }
     }
+
     public void makeDefensesAttack(){
         for (Defense defense:defenses) {
             try {
@@ -60,9 +60,11 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
         }
         this.checkGameStatus();
     }
+
     public void advanceEnemies(){
         GameMap.getMap().advanceEnemies();
     }
+
     public void changeTurn(){
         this.turner = this.turner.returnTurn();
     }
@@ -70,7 +72,6 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
     public boolean turnChanged(){
         return turner.turnChanged();
     }
-
 
     public Turner returnTurn(){
         return turner.returnTurn();
@@ -91,7 +92,7 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
     }
 
     private boolean checkGameStatus(){
-        if ( !GameMap.getMap().MapHasEnemies() && ! this.player.isDead() ) {
+        if ( (!GameMap.getMap().MapHasEnemies()) && (!this.player.isDead()) ) {
             return true;
         }
         return false;
@@ -103,4 +104,5 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
         }
         return "Game Over";
     }
+
 }
