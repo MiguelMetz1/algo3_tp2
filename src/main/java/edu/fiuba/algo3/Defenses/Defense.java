@@ -1,8 +1,7 @@
 package edu.fiuba.algo3.Defenses;
-import edu.fiuba.algo3.Attackers.Attack;
-import edu.fiuba.algo3.Attackers.AttackerReadyToAttack;
+import edu.fiuba.algo3.Manager.Manager;
+import edu.fiuba.algo3.Manager.AttackManager;
 import edu.fiuba.algo3.Defenses.States.Builder;
-import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.TypeData.Credits;
@@ -14,45 +13,38 @@ public abstract class Defense {
 
     Credits ticketCredits;
     Credits cost;
-    protected Attack attacker;
-    protected RangeAttack attackRange;
-
-    private Damage damage;
+    protected Manager manager;
+    protected RangeAttack rangeAttack;
+    protected int range;
+    private final Damage damage;
     protected Builder builder;
-
     private Placeable placeable;
 
-    public Defense(Damage damage, Credits credits, Builder builder, Attack attacker) {
-        this.attackRange = null;
+    public Defense(Damage damage, Credits credits, Builder builder, Manager manager, int range) {
+        this.range = range;
         this.cost = credits;
         this.builder = builder;
-        this.attacker = attacker;
+        this.manager = manager;
         this.damage = damage;
         this.placeable = new NotBoughtDefensePlacer();
         this.ticketCredits = new Credits(0);
     }
 
-    public  void attack() throws CannotAttack, EnemyNotFound {
-        if( attackRange == null){
-            throw new CannotAttack("The tower hasn't a position.");
-        }
+    public  void attack() throws Exception {
 
-        Enemy enemy = null;
-        try {
-            enemy = attackRange.findEnemy();
-        } catch (EnemyNotFound e) {
-            throw new EnemyNotFound(e.getMessage());
-        }
-        this.attacker.attack(enemy);
+        manager.attackWithin(rangeAttack);
 
-        if(enemy.isDead()){
+
+
+
+       /* if(enemy.isDead()){
             enemy.returnCredits().transferCreditsTo(this.ticketCredits);
-        }
+        }*/
     }
     public void build() throws CannotConstruction {
         this.builder = this.builder.nextBuild();
         if (builder.buildFinished()){
-            this.attacker = new AttackerReadyToAttack(this.damage);
+            this.manager = new AttackManager(this.damage);
         }
     }
 
@@ -61,9 +53,11 @@ public abstract class Defense {
     }
 
     public void buy(Credits credits) throws InsuficientCredits {
+
         if(!canBuy(credits)){
             throw (new InsuficientCredits("Insuficient Credits"));
         }
+
         credits.wasteCredits(this.cost);
         this.cost = new Credits(0);
 
@@ -71,17 +65,20 @@ public abstract class Defense {
     }
 
     public void putIn(Coordinate coordinate) throws CannotBuild {
+
         this.placeable.putIn(this, coordinate);
-        this.attackRange = new RangeAttack( coordinate, this.range() );
+        this.rangeAttack = new RangeAttack( coordinate, this.range() );
     }
 
     private boolean canBuy(Credits credits) {
+
         return !(this.cost.higherCredits(credits));
     }
 
     protected abstract int range();
 
     public void transferPickedCreditsTo(Credits credits){
+
         this.ticketCredits.transferCreditsTo(credits);
     }
 

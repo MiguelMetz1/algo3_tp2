@@ -1,25 +1,24 @@
 package edu.fiuba.algo3.Defenses;
-import edu.fiuba.algo3.Attackers.AttackerInConstruction;
+import edu.fiuba.algo3.Manager.ConstructionManager;
 import edu.fiuba.algo3.Defenses.States.FinishedConstruction;
 import edu.fiuba.algo3.Defenses.States.UnderConstruction;
-import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.TypeData.Credits;
 import edu.fiuba.algo3.TypeData.Damage;
-import edu.fiuba.algo3.TypeData.RangeAttack;
-import edu.fiuba.algo3.Attackers.Attack;
+import edu.fiuba.algo3.Manager.Manager;
 
 public class TowerWhite extends Defense {
-    private Attack attacker;
+    private Manager attacker;
 
     public TowerWhite(){
         super(new Damage(1),
                 new Credits(10),
                 new UnderConstruction(1, new FinishedConstruction()),
-                new AttackerInConstruction());
+                new ConstructionManager(),
+                3);
     }
 
     protected int range(){
-        return 3;
+        return (this.range);
     }
 
     /*public TowerWhite (RangeAttack rangeAttack, Damage damage, int timeConstruction) {
