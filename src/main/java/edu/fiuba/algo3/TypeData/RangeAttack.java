@@ -11,14 +11,23 @@ import java.util.Iterator;
 public class RangeAttack {
     ArrayList<Plot> around;
 
+
+
+
     public RangeAttack(Coordinate coordinate, int range){
+
         this.around = GameMap.getMap().getAround(coordinate, range);
     }
     public Enemy findEnemy() throws EnemyNotFound {
+
         Enemy enemy = null;
+
         Iterator<Plot> aroundIterator = around.iterator();
+
         while( aroundIterator.hasNext() ){
+
             Plot actualPlot = aroundIterator.next();
+
             if( actualPlot.hasEnemies() ){
                 enemy = actualPlot.returnEnemy();
                 break;

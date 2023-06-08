@@ -24,28 +24,42 @@ public abstract class Enemy {
 
     }
 
-
     public void takeDamage(Damage damage) {
+
         damage.applyDamage(this.energy);
+        if(isDead()){
+            Credits creditsToGive = returnCredits();
+            Player.getPlayer().giveCredits(creditsToGive);
+        }
+
     }
 
+
+    //TODO PONER isDead En Private
     public boolean isDead(){
         return (energy.isEmpty());
     }
 
     public Credits returnCredits(){
+
         return new Credits(this.amountOfCredits());
     }
 
     protected abstract int amountOfCredits();
 
+
+
     public abstract String returnName();
 
     public void advance() {
+
         advancer.advancePosition();
     }
 
     public void attack(Player player) {
+
         player.receiveAttack(this.damage);
     }
+
+
 }

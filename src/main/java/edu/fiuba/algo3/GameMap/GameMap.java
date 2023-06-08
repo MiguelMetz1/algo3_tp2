@@ -85,10 +85,12 @@ public class GameMap {
     }
 
     public static void resetMap(){
+
         instance = new GameMap("src/mapa.json");
     }
 
     public boolean plotHasEnemies(Coordinate coordinate){
+
         return (map.get(coordinate)).hasEnemies();
     }
 
@@ -102,6 +104,7 @@ public class GameMap {
     }*/
 
     public boolean MapHasEnemies() {
+
         Set<Coordinate> plots = this.map.keySet();
         Iterator <Coordinate> coordinateIterator = plots.iterator();
 
@@ -111,6 +114,7 @@ public class GameMap {
                 return true;
             }
         }
+
         return false;
     }
 
