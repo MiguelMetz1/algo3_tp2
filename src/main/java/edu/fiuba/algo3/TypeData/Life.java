@@ -10,6 +10,9 @@ public class Life implements Reducible{
     public void reduce(int life) {
         this.life -= life;
     }
+    public int returnLife() {
+        return this.life;
+    }
 
     public boolean isEmpty() {
         return (this.life <= 0);
