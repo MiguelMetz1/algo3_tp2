@@ -3,10 +3,7 @@ package edu.fiuba.algo3.GameMap;
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.CannotBuild;
-import edu.fiuba.algo3.Exceptions.UnespawnablePlace;
-import edu.fiuba.algo3.Parsers.EnemiesJsonParser;
-import edu.fiuba.algo3.Parsers.MapJsonParser;
-import edu.fiuba.algo3.Players.Player;
+import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Plots.Gangway;
 import edu.fiuba.algo3.Plots.InitialGangway;
 import edu.fiuba.algo3.Plots.Plot;
@@ -15,24 +12,35 @@ import edu.fiuba.algo3.TypeData.Coordinate;
 import java.util.*;
 
 public class GameMap {
-    private static GameMap instance = new GameMap("src/mapa.json");
+    private static GameMap instance = new GameMap();
     private HashMap< Coordinate, Plot > map;
 
     private InitialGangway initialGangway;
 
-    private GameMap(String json) {
-        MapJsonParser mapParser = new MapJsonParser(json);
-        this.map = mapParser.get();
-
+    private GameMap() throws RuntimeException {
+        ExternalResources resources = new ExternalResources();
+        try {
+            this.map = resources.getMap();
+        }
+        catch ( RuntimeException e ) {
+            throw new RuntimeException(e.getMessage());
+        }
         initialGangway = this.returnSpawnPoint();
     }
 
-    private InitialGangway returnSpawnPoint() {
+    private InitialGangway returnSpawnPoint() throws RuntimeException {
         InitialGangway spawn = null;
         Set<Coordinate> plots = this.map.keySet();
         Iterator <Coordinate> coordinateIterator = plots.iterator();
-        EnemiesJsonParser enemiesParser = new EnemiesJsonParser("src/enemigos.json");
-        Queue< ArrayList<Enemy> > enemiesToSpawn = enemiesParser.get();
+
+        ExternalResources resources = new ExternalResources();
+        Queue< ArrayList<Enemy> > enemiesToSpawn;
+        try {
+            enemiesToSpawn = resources.getEnemies();
+        } catch ( RuntimeException e ) {
+            throw new RuntimeException(e.getMessage());
+        }
+
         while (coordinateIterator.hasNext()){
             Coordinate actualCoordinate = coordinateIterator.next();
             Plot actualPlot = this.map.get(actualCoordinate);
@@ -85,8 +93,7 @@ public class GameMap {
     }
 
     public static void resetMap(){
-
-        instance = new GameMap("src/mapa.json");
+        instance = new GameMap();
     }
 
     public boolean plotHasEnemies(Coordinate coordinate){

@@ -3,24 +3,27 @@ package edu.fiuba.algo3.Parsers;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public abstract class JsonParser implements Parser{
+public class JsonParser {
+
     protected String fileName;
 
     public JsonParser(String fileName){
         this.fileName = fileName;
     }
+
     protected String readJson() {
-        String string = "";
 
-        FileReader fileReader;
+        String completeString = "";
+
         try {
-            String stringActual = "";
+            String currentLine = "";
 
-            fileReader = new FileReader(this.fileName);
+            FileReader fileReader = new FileReader(this.fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            while (stringActual != null) {
-                string += stringActual;
-                stringActual = bufferedReader.readLine();
+
+            while (currentLine != null) {
+                completeString += currentLine;
+                currentLine = bufferedReader.readLine();
             }
             fileReader.close();
         } catch (Exception e) {
@@ -30,6 +33,7 @@ public abstract class JsonParser implements Parser{
             //fileReader.close();
         }
 
-        return string;
+        return completeString;
     }
+
 }
