@@ -1,87 +1,57 @@
 package edu.fiuba.algo3.Defenses;
-import edu.fiuba.algo3.Manager.Manager;
-import edu.fiuba.algo3.Manager.AttackManager;
+import edu.fiuba.algo3.Defenses.States.NullAttackerBuilder;
+import edu.fiuba.algo3.Enemies.Target;
+import edu.fiuba.algo3.Attacker.Attacker;
+import edu.fiuba.algo3.Defenses.States.UnderConstructionAttacker;
 import edu.fiuba.algo3.Defenses.States.Builder;
+import edu.fiuba.algo3.Enemies.Placeable;
 import edu.fiuba.algo3.Exceptions.*;
-import edu.fiuba.algo3.TypeData.Coordinate;
-import edu.fiuba.algo3.TypeData.Credits;
-import edu.fiuba.algo3.TypeData.RangeAttack;
-import edu.fiuba.algo3.TypeData.Damage;
+import edu.fiuba.algo3.Attacker.NullAttacker;
+import edu.fiuba.algo3.Plots.NullPlot;
+import edu.fiuba.algo3.Plots.Plot;
+import edu.fiuba.algo3.TypeData.*;
 
 
-public abstract class Defense {
+public abstract class Defense implements Placeable {
 
-    Credits ticketCredits;
-    Credits cost;
-    protected Manager manager;
-    protected RangeAttack rangeAttack;
-    protected int range;
-    private final Damage damage;
-    protected Builder builder;
-    private Placeable placeable;
+    protected Attacker attacker;
+    protected Builder<Attacker> builder;
+    protected Plot position;
 
-    public Defense(Damage damage, Credits credits, Builder builder, Manager manager, int range) {
-        this.range = range;
-        this.cost = credits;
-        this.builder = builder;
-        this.manager = manager;
-        this.damage = damage;
-        this.placeable = new NotBoughtDefensePlacer();
-        this.ticketCredits = new Credits(0);
+    public Defense() {
+        this.builder = new NullAttackerBuilder();
+        this.position = new NullPlot();
+        this.attacker = new NullAttacker();
     }
 
-    public  void attack() throws Exception {
-
-        manager.attackWithin(rangeAttack);
-
-
-
-
-       /* if(enemy.isDead()){
-            enemy.returnCredits().transferCreditsTo(this.ticketCredits);
-        }*/
-    }
-    public void build() throws CannotConstruction {
-        this.builder = this.builder.nextBuild();
-        if (builder.buildFinished()){
-            this.manager = new AttackManager(this.damage);
-        }
+    public void attack(Target enemy){
+        this.attacker.attack(enemy);
     }
 
-    public void notifyPlayer () {
-        //TODO: Implement code to inform the player
+    public void continueWithTheConstruction() {
+        this.attacker = this.builder.actualState();
     }
 
-    public void buy(Credits credits) throws InsuficientCredits {
+    @Override
+    public void locateIn(Plot plot) throws IncorrectPlaceable {
 
-        if(!canBuy(credits)){
-            throw (new InsuficientCredits("Insuficient Credits"));
-        }
+        plot.receive(this);
+        this.position = plot;
+        this.builder = new UnderConstructionAttacker(
+                timeOfConstruction(),
+                new Damage(damage()),
+                plot,
+                new Distance(range())
+        );
 
-        credits.wasteCredits(this.cost);
-        this.cost = new Credits(0);
-
-        this.placeable = new BoughtDefensePlacer();
-    }
-
-    public void putIn(Coordinate coordinate) throws CannotBuild {
-
-        this.placeable.putIn(this, coordinate);
-        this.rangeAttack = new RangeAttack( coordinate, this.range() );
-    }
-
-    private boolean canBuy(Credits credits) {
-
-        return !(this.cost.higherCredits(credits));
     }
 
     protected abstract int range();
 
-    public void transferPickedCreditsTo(Credits credits){
+    protected abstract int timeOfConstruction();
 
-        this.ticketCredits.transferCreditsTo(credits);
-    }
+    protected abstract int damage();
 
-
+    public abstract String toString();
 
 }

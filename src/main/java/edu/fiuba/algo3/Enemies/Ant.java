@@ -1,32 +1,55 @@
 package edu.fiuba.algo3.Enemies;
 
-import edu.fiuba.algo3.Advancer.AntAdvancer;
-import edu.fiuba.algo3.Players.Player;
-import edu.fiuba.algo3.TypeData.Damage;
-import edu.fiuba.algo3.TypeData.Energy;
-import edu.fiuba.algo3.TypeData.Life;
+import edu.fiuba.algo3.GameMap.GameMap;
+import edu.fiuba.algo3.TypeData.*;
 
+import java.util.Queue;
 
 
 public class Ant extends Enemy {
 
-    public Ant(){
+    private static int antsThatDied;
 
-        super(new Damage(1), new Energy(new Life(1)), new AntAdvancer());
-
+    public Ant(GameMap map){
+        super(map);
+        this.antsThatDied = 0;
     }
-    public void attack(Player player) {
 
-        player.receiveAttack(this.damage);
+    public Ant(GameMap map, Queue<Coordinate> path){
+        super(map, path);
+        this.antsThatDied = 0;
+    }
+
+    public void takeDamage(Damage damage){
+        super.takeDamage(damage);
+        if ( this.isDead() ){
+            antsThatDied += 1;
+        }
     }
 
     protected int amountOfCredits(){
-
+        if( antsThatDied > 10 ){
+            return 2;
+        }
         return 1;
     }
 
-    public String returnName(){
+    @Override
+    protected int damage() {
+        return 1;
+    }
 
+    @Override
+    protected int energy() {
+        return 1;
+    }
+
+    @Override
+    protected int speed() {
+        return 1;
+    }
+
+    public String toString(){
         return "Ant";
     }
 }

@@ -1,67 +1,41 @@
 package edu.fiuba.algo3.Players;
 
-import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
-import edu.fiuba.algo3.TypeData.Credits;
-import edu.fiuba.algo3.TypeData.Damage;
-import edu.fiuba.algo3.TypeData.Life;
+import edu.fiuba.algo3.Exceptions.WrongPlayerName;
+import edu.fiuba.algo3.Shop.Buyer;
+import edu.fiuba.algo3.TypeData.*;
 
-public class Player {
-    private static Player instance = registerPlayer();
-    Life life;
-    Credits credits;
-    String name;
+public class Player implements Looter, Buyer {
+    private Credits credits;
+    private String name;
 
-    public Player() {
-        
-        this.life = new Life(20);
-        this.credits = new Credits(100);
-        
-    }
-
-    public void setName(String name) {
-
+    public Player(String name) {
+        if( !this.rightName(name)){
+            throw new WrongPlayerName("The player needs as less a six characters name.");
+        }
+        this.credits = new Credits(playerCredits());
         this.name = name;
     }
 
-    public static Player getPlayer() {
-
-        return instance;
+    private boolean rightName( String name ){
+        return (name.length() >= 6);
     }
 
-    private static Player registerPlayer() {
-        return new Player();
-        // TODO: 6/7/2023 Implementar nombre, validacion, etc
-        // TODO: 6/7/2023 Se puede hacer publico para llamarlo una sola vez cuando se crea el juego.
+    public void transferCredits(Credits credits) {
+        credits.transferCreditsTo(this.credits);
     }
 
-
-    public void buy(Defense defense) throws InsuficientCredits {
-
-        defense.buy(this.credits);
+    public void wasteCredits(Credits amountToWaste) throws InsuficientCredits {
+        if( amountToWaste.higherCreditsThan(this.credits)){
+            throw new InsuficientCredits("The player has not got sufficient credits.");
+        }
+        this.credits.wasteCredits(amountToWaste);
     }
 
-    public void receiveAttack(Damage damage) {
-
-        damage.applyDamage(this.life);
-
+    private int playerCredits(){
+        return 100;
     }
-
-    
-
-    public boolean isDead() {
-
-        return life.isEmpty();
-    }
-
-    public static void resetPlayer(){
-
-        instance = registerPlayer();
-    }
-
-    public void giveCredits(Credits creditsToGive) {
-
-        creditsToGive.GiveCreditsTo(this.credits);
-
+    public String toString(){
+        return "Player";
     }
 }

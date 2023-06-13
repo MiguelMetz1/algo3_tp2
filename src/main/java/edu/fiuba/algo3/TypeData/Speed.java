@@ -6,4 +6,12 @@ public class Speed {
     public Speed(int speed){
         this.speed = speed;
     }
+
+    public void incrementSpeed(){
+        this.speed++;
+    }
+
+    public boolean lower( Speed otherSpeed ){
+        return this.speed < otherSpeed.speed;
+    }
 }

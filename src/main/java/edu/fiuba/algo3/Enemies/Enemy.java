@@ -1,65 +1,119 @@
 package edu.fiuba.algo3.Enemies;
-
 import edu.fiuba.algo3.Advancer.Advancer;
-import edu.fiuba.algo3.Players.Player;
-import edu.fiuba.algo3.TypeData.Credits;
-import edu.fiuba.algo3.TypeData.Damage;
-import edu.fiuba.algo3.TypeData.Energy;
+import edu.fiuba.algo3.Attacker.Attacker;
+import edu.fiuba.algo3.Attacker.NullAttacker;
+import edu.fiuba.algo3.Attacker.ReadyAttacker;
+import edu.fiuba.algo3.Exceptions.*;
+import edu.fiuba.algo3.GameMap.GameMap;
+import edu.fiuba.algo3.Players.Looter;
+import edu.fiuba.algo3.Plots.*;
+import edu.fiuba.algo3.TypeData.*;
 
-public abstract class Enemy {
-    Damage damage;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public abstract class Enemy implements Target, Placeable {
+
+    Plot positionedPlace;
 
     Energy energy;
 
     Advancer advancer;
 
-    public Enemy(Damage damage, Energy energy, Advancer advancer) {
-        this.damage = damage;
-        this.energy = energy;
-        this.advancer = advancer;
+    Inventory inventorier;
+
+    Attacker attacker;
+
+    AttackReceiver attackReceiver;
+
+    ArrayList<String> passablePlots;
+
+    GameMap map;
+
+    public Enemy( GameMap map ) {
+        this.map = map;
+        this.energy = new Energy( new Life(energy()) );
+        this.attackReceiver = new LiveAttackReceiver(this.energy);
+        this.advancer = new LiveAdvancer(this.map, new Speed(speed()), new LinkedList<>(), this );
+        this.positionedPlace = new NullPlot();
+        this.inventorier = new UnlooteableMOB();
+        this.attacker = new ReadyAttacker(new Damage(damage()), this.positionedPlace, new Distance(range()));
+        this.passablePlots = passablePlots();
     }
 
-    public boolean shouldAdvance(){
-        return advancer.shouldAdvance();
+    public Enemy( GameMap map, Queue<Coordinate> path ) {
+        this.map = map;
+        this.energy = new Energy( new Life(energy()) );
+        this.attackReceiver = new LiveAttackReceiver(this.energy);
+        this.advancer = new LiveAdvancer(this.map, new Speed(speed()), path, this );
+        this.positionedPlace = new NullPlot();
+        this.inventorier = new UnlooteableMOB();
+        this.attacker = new ReadyAttacker(new Damage(damage()), this.positionedPlace, new Distance(range()));
+        this.passablePlots = passablePlots();
+    }
 
+    public void locateIn( Plot plot ) throws IncorrectPlaceable {
+        plot.receive(this);
+        this.positionedPlace = plot;
+        this.attacker = new ReadyAttacker(new Damage(damage()), this.positionedPlace, new Distance(range()));
     }
 
     public void takeDamage(Damage damage) {
 
-        damage.applyDamage(this.energy);
-        if(isDead()){
-            Credits creditsToGive = returnCredits();
-            Player.getPlayer().giveCredits(creditsToGive);
+        this.attackReceiver.takeDamage(damage);
+        if( this.isDead() ){
+            this.inventorier = new LooteableMOB(new Credits(amountOfCredits()));
+            this.advancer = new DeadAdvancer();
+            this.attacker = new NullAttacker();
+            this.positionedPlace = new HellsPlot();
+            this.passablePlots.clear();
+            this.attackReceiver = new DeadAttackReceiver();
         }
-
     }
 
+    public void transferLootTo( Looter player ){
+        this.inventorier.transferLootTo(player);
+    }
+
+    public boolean distanceToBiggerThan( Plot place, Distance distance ){
+        return  this.positionedPlace.distanceToBiggerThan(place, distance);
+    }
 
     //TODO PONER isDead En Private
-    public boolean isDead(){
-        return (energy.isEmpty());
-    }
-
-    public Credits returnCredits(){
-
-        return new Credits(this.amountOfCredits());
+    protected boolean isDead(){
+        Energy deadEntityEnergy = new Energy( new Life(0) );
+        return ( !this.energy.higher(deadEntityEnergy) || this.energy.equals(deadEntityEnergy) );
     }
 
     protected abstract int amountOfCredits();
 
-
-
-    public abstract String returnName();
-
     public void advance() {
-
-        advancer.advancePosition();
+        this.advancer.advance();
     }
 
-    public void attack(Player player) {
-
-        player.receiveAttack(this.damage);
+    public void attack( Target player ) {
+        this.attacker.attack(player);
     }
 
+    protected abstract int damage();
+
+    protected abstract int energy();
+
+    protected abstract int speed();
+
+    protected ArrayList<String> passablePlots(){
+        ArrayList<String> passablePlots = new ArrayList<>();
+        passablePlots.add(new Gangway(new Coordinate(0,0)).toString());
+        passablePlots.add(new FinalGangway(new Coordinate(0,0)).toString());
+        passablePlots.add(new InitialGangway(new Coordinate(0,0)).toString());
+        return passablePlots;
+    }
+
+    protected int range(){
+        return 0;
+    }
+
+    public abstract String toString();
 
 }

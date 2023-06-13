@@ -1,18 +1,22 @@
 package edu.fiuba.algo3.TypeData;
 
-public class Energy implements Reducible{
+public class Energy implements Reducible<Energy>{
     Life life;
 
     public Energy(Life life){
         this.life = life;
     }
 
-    public void reduce(int life) {
-
-        this.life.reduce(life);
+    public void reduceIn(Energy energy) {
+        this.life.reduceIn(energy.life);
     }
 
-    public boolean isEmpty() {
-        return this.life.isEmpty();
+    public boolean higher( Energy otherEnergy ){
+        return this.life.higher(otherEnergy.life);
     }
+
+    public boolean equals( Energy otherEnergy ){
+        return this.life.equals(otherEnergy.life);
+    }
+
 }

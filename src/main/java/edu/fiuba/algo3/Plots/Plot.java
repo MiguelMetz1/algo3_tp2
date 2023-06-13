@@ -1,44 +1,31 @@
 package edu.fiuba.algo3.Plots;
 
-import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Enemies.Enemy;
-import edu.fiuba.algo3.Exceptions.CannotBuild;
-import edu.fiuba.algo3.Exceptions.EnemyNotFound;
-import edu.fiuba.algo3.Exceptions.UnespawnablePlace;
+import edu.fiuba.algo3.Enemies.Placeable;
+import edu.fiuba.algo3.Exceptions.IncorrectPlaceable;
+import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance;
+
+import java.util.ArrayList;
 
 public abstract class Plot {
-    //Coordinate coordinate;
-    Buildable buildable;
+    Coordinate coordinate;
+    ArrayList<String> rightPlaceables;
 
 
-    public Plot(Buildable buildable) {
-        //this.coordinate = coordinate;
-        this.buildable = buildable;
+    public Plot(Coordinate coordinate) {
+        this.coordinate = coordinate;
+        this.rightPlaceables = rightPlaceables();
     }
 
-    public void build(Defense defense) throws CannotBuild {
-        this.buildable.build(defense);
+    public boolean distanceToBiggerThan(Plot place, Distance distance ){
+        return (this.coordinate.distanceTo(place.coordinate).higher(distance));
     }
 
-    public boolean canBuild() {
-        return this.buildable.canBuild();
+    public void receive(Placeable placeable) throws IncorrectPlaceable {
+        if(!this.rightPlaceables.contains(placeable.getClass().getName())){
+            throw new IncorrectPlaceable("this plot cant receive the placeable object.");
+        }
     }
 
-    public boolean hasEnemies(){
-        return false;
-    }
-
-    public Enemy returnEnemy() throws EnemyNotFound {
-        throw new EnemyNotFound("No enemies in this plot.");
-    }
-
-    public Boolean canSpawnEnemies(){
-        return false;
-    }
-
-    public void spawnEnemies() throws UnespawnablePlace {
-        throw new UnespawnablePlace("Enemies cant be spawned in this place.");
-    }
-
-    public abstract String showPlotName();
+    protected abstract ArrayList<String> rightPlaceables();
 }

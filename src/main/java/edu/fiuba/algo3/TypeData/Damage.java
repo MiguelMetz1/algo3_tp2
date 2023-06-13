@@ -1,13 +1,26 @@
 package edu.fiuba.algo3.TypeData;
 
 public class Damage {
-    int damage;
+    int damagePoints;
 
-    public Damage(int damage){
-        this.damage = damage;
+    public Damage(){
+        this.damagePoints = this.getDamage();
     }
 
-    public void applyDamage(Reducible reducible) {
-        reducible.reduce(this.damage);
+    public Damage( int damagePoints ){
+        this.damagePoints = damagePoints;
     }
+
+    public void applyDamage(Energy energy) {
+        energy.reduceIn( new Energy(new Life(this.damagePoints)) );
+    }
+
+    public void applyDamage(Life life) {
+        life.reduceIn( new Life(this.damagePoints) );
+    }
+
+    protected int getDamage(){
+        return 0;
+    }
+
 }

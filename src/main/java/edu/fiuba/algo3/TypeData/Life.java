@@ -1,19 +1,29 @@
 package edu.fiuba.algo3.TypeData;
 
-public class Life implements Reducible{
+public class Life implements Reducible<Life>{
 
-    int life;
-    public Life(int life) {
-        this.life = life;
+    int lifePoints;
+    public Life(int lifePoints) {
+        this.lifePoints = lifePoints;
+    }
+    public Life() {
+        this.lifePoints = this.getLifePoints();
     }
 
-    public void reduce(int life) {
-        this.life -= life;
+    public void reduceIn(Life otherLife) {
+        this.lifePoints -= otherLife.lifePoints;
     }
 
-    public boolean isEmpty() {
-        return (this.life <= 0);
+    public boolean higher( Life otherLife ) {
+        return (this.lifePoints > otherLife.lifePoints);
     }
 
-    //public int getLife(){return this.life;}
+    protected int getLifePoints(){
+        return lifePoints;
+    }
+
+    public boolean equals( Life otherLife ){
+        return this.lifePoints == otherLife.lifePoints;
+    }
+
 }

@@ -1,47 +1,47 @@
 package edu.fiuba.algo3.Parsers;
 
-import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class MapJsonParser extends JsonParser {
     private Gangway previousGangway;
     private Coordinate finalGangwayCoordinate;
+    private LinkedList<Coordinate> path;
+
+    Coordinate initialCoordinate;
     int numberOfColumns;
     int numberOfRows;
 
     public MapJsonParser(String fileName) {
         super(fileName);
+        path = new LinkedList<>();
     }
 
     private Plot createPlot(String plotName, Coordinate coordinate) {
         switch (plotName) {
             case "Rocoso":
-                return new Rocky();
+                return new Rocky(coordinate);
 
             case "Pasarela":
-
+                path.add(coordinate);
                 if (this.previousGangway == null) {
-                    InitialGangway gangwayBeginning = new InitialGangway();
+                    InitialGangway gangwayBeginning = new InitialGangway(coordinate);
+                    initialCoordinate = coordinate;
                     this.previousGangway = gangwayBeginning;
                     return gangwayBeginning;
                 }
-                Gangway gangway = new Gangway(this.previousGangway);
+                Gangway gangway = new Gangway(coordinate);
 
                 this.finalGangwayCoordinate = coordinate;
                 this.previousGangway = gangway;
                 return gangway;
 
             default:
-                return new Ground();
+                return new Ground(coordinate);
         }
     }
 
@@ -72,8 +72,22 @@ public class MapJsonParser extends JsonParser {
             this.numberOfColumns = columnNumber;
         }
         Gangway actualFinalGangway = (Gangway) map.get(this.finalGangwayCoordinate);
-        map.put(this.finalGangwayCoordinate, new FinalGangway(actualFinalGangway));
+        map.put(this.finalGangwayCoordinate, new FinalGangway(finalGangwayCoordinate));
         return map;
+    }
+
+    public LinkedList<Coordinate> getPath(){
+        this.get();
+        return path;
+    }
+
+    public Coordinate getSpawnCoordinate(){
+        this.get();
+        return initialCoordinate;
+    }
+
+    public Coordinate getPlayerCharacterCoordinate(){
+        return this.finalGangwayCoordinate;
     }
 
 }

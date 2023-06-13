@@ -1,7 +1,4 @@
 package edu.fiuba.algo3.TypeData;
-
-import java.util.ArrayList;
-
 public class Coordinate {
     int x;
     int y;
@@ -19,20 +16,25 @@ public class Coordinate {
 
     @Override
     public final int hashCode() {
-        return (this.x * 10000) + this.y;
+        int digitsOfY = this.digitsOf(this.y);
+        return (this.x * Math.round((float) Math.pow(10,digitsOfY))) + this.y;
     }
 
-    public ArrayList<Coordinate> getAround(int distance) {
-        ArrayList<Coordinate> tmpCoordinates = new ArrayList<Coordinate>();
-
-        for (int i = this.x - distance; i <= this.x + distance; i++) {
-            for (int j = this.y - distance; j <= this.y + distance; j++) {
-                tmpCoordinates.add(new Coordinate(i, j));
-            }
+    private int digitsOf(int number){
+        int digits = 1;
+        while( number >= 10 ){
+            number = number/10;
+            digits++;
         }
-        return tmpCoordinates;
+        return digits;
     }
-    public String returnCoordinate(){
+
+    public Distance distanceTo( Coordinate otherDistance ){
+        double distance = Math.sqrt(Math.pow(this.x- otherDistance.x, 2) + Math.pow(this.y - otherDistance.y,2));
+        return new Distance(distance);
+    }
+
+    public String toString(){
         return ("("+this.x+","+this.y+")");
     }
 

@@ -2,29 +2,49 @@ package edu.fiuba.algo3.Interface;
 
 
 import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Exceptions.CannotAttack;
-import edu.fiuba.algo3.Exceptions.CannotBuild;
-import edu.fiuba.algo3.Exceptions.EnemyNotFound;
-import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Enemies.Enemy;
+import edu.fiuba.algo3.Exceptions.IncorrectPlaceable;
 import edu.fiuba.algo3.GameMap.GameMap;
+import edu.fiuba.algo3.Parsers.MapJsonParser;
 import edu.fiuba.algo3.Players.Player;
-import edu.fiuba.algo3.Turn.ChangedTurn;
-import edu.fiuba.algo3.Turn.NotChangedTurn;
-import edu.fiuba.algo3.Turn.Turner;
+import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Plots.HellsPlot;
 import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class GameInterface implements ComputerInterface, PlayerInterface{
+public class GameInterface{
     ArrayList<Defense> defenses;
+    ArrayList<Enemy> enemies;
     Player player;
-    Turner turner;
+    PlayerCharacter playerCharacter;
+    boolean gameFinalized;
+    String winner;
+    GameMap map;
 
-    public GameInterface(Player player){
+    public GameInterface(){
+        //Hacer que el parser de las peticiones del usuario se ocupe de construir el usuario con el nombre y lo devuelva.
+        //Mientras tanto Hardcodeo.
+        this.player = new Player("Fabricio");
         this.turner = new NotChangedTurn();
-        this.player = player;
         this.defenses = new ArrayList<>();
+        this.playerCharacter = new PlayerCharacter();
+        MapJsonParser mapParser = new MapJsonParser("src/mapa.json");
+        this.map = new GameMap(mapParser);
+        Coordinate playerCharacterPosition = mapParser.getPlayerCharacterCoordinate();
+        try {
+            this.map.locateEntityIn(playerCharacter, playerCharacterPosition);
+        } catch (IncorrectPlaceable e) {
+            System.out.println("The player character cannot be located here.");
+        }
+    }
+
+    public void startGame(){
+        while( !this.gameFinalized ){
+            this.requireAction();
+            this.computerTurn();
+        }
     }
 
     public void requireAction(){
@@ -42,76 +62,63 @@ public class GameInterface implements ComputerInterface, PlayerInterface{
                 break;
 
         }*/
-        changeTurn();
+
     }
 
-    public void build(Defense defense, Coordinate coordinate) {
-        if (GameMap.getMap().canBuild(defense, coordinate)){
-            try {
-                player.buy(defense);
-                defense.putIn(coordinate);
-                defenses.add(defense);
-            } catch (InsuficientCredits e) {
-                //Send message to Graphic interface : "You haven't got sufficient credits."
-            } catch (CannotBuild e){
-                //Send message to Graphic interface : "You cant build in this plot."
+    public void lootEnemies(){
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+        for(Enemy enemy: enemies){
+            enemy.transferLootTo(player);
+            if( !enemy.distanceToBiggerThan(new HellsPlot(), new Distance(0)) ){
+                deadEnemies.add(enemy);
             }
         }
+        this.removeDeadEnemies( deadEnemies );
     }
 
-    public void makeDefensesAttack(){
-        for (Defense defense:defenses) {
-            try {
-                defense.attack();
-            } catch (Exception e) {
-                //throw new RuntimeException(e);
-            }
-        }
-        this.checkGameStatus();
-    }
-
-    public void advanceEnemies(){
-        GameMap.getMap().advanceEnemies();
-    }
-
-    public void changeTurn(){
-        this.turner = this.turner.returnTurn();
-    }
-
-    public boolean turnChanged(){
-        return turner.turnChanged();
-    }
-
-    public Turner returnTurn(){
-        return turner.returnTurn();
-    }
-
-    public void spawnEnemies(){
-        GameMap.getMap().spawnEnemies();
-    }
-
-    public void buildDefenses(){
-        for (Defense defense:defenses) {
-            try {
-                defense.build();
-            } catch (Exception e) {
-                //throw new RuntimeException(e);
-            }
+    private void removeDeadEnemies(ArrayList<Enemy> deadEnemies) {
+        for( Enemy deadEnemy: deadEnemies){
+            enemies.remove(deadEnemy);
         }
     }
 
-    private boolean checkGameStatus(){
-        if ( (!GameMap.getMap().MapHasEnemies()) && (!this.player.isDead()) ) {
-            return true;
-        }
-        return false;
+    public void computerTurn(){
+        this.buildDefenses();
+        this.advanceEnemies();
+        this.makeDefensesAttack();
+        this.makeEnemiesAttack();
+        this.lootEnemies();
     }
 
-    public String gameWon() {
-        if (this.checkGameStatus()) {
-            return "You Won";
+    private void makeEnemiesAttack() {
+        for(Enemy enemy: enemies){
+            enemy.attack(this.playerCharacter);
         }
-        return "Game Over";
     }
+
+    private void makeDefensesAttack() {
+        for( Defense defense: defenses ){
+            this.enemiesReceiveAttackFrom(defense);
+        }
+    }
+
+    private void enemiesReceiveAttackFrom( Defense defense ){
+        for( Enemy enemy: enemies) {
+            defense.attack(enemy);
+        }
+    }
+
+    private void advanceEnemies() {
+        for( Enemy enemy: enemies){
+            enemy.advance();
+        }
+    }
+
+    private void buildDefenses() {
+        for( Defense defense: defenses){
+            defense.continueWithTheConstruction();
+        }
+    }
+
 
 }
