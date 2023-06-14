@@ -3,6 +3,8 @@ package edu.fiuba.algo3.Plots;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.EnemyNotFound;
 import edu.fiuba.algo3.TypeData.Coordinate;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -79,5 +81,13 @@ public class Gangway extends Plot{
         return "Pasarela";
     }
 
+    public Color getColor(){
+        return Color.GREEN;
+    }
 
+    public Image getImage() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        String imagePath = classLoader.getResource("edu/fiuba/algo3/InterfazGrafica/javafx/Imagenes/madera.jpg").toExternalForm();
+        return new Image(imagePath);
+    }
 }
