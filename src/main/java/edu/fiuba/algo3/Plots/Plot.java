@@ -5,6 +5,8 @@ import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.CannotBuild;
 import edu.fiuba.algo3.Exceptions.EnemyNotFound;
 import edu.fiuba.algo3.Exceptions.UnespawnablePlace;
+import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 public abstract class Plot {
     //Coordinate coordinate;
@@ -41,4 +43,9 @@ public abstract class Plot {
     }
 
     public abstract String showPlotName();
+
+    public abstract Color getColor();
+
+    public abstract Image getImage();
+
 }

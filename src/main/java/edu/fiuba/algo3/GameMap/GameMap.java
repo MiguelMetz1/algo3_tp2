@@ -114,4 +114,8 @@ public class GameMap {
         return false;
     }
 
+    public HashMap< Coordinate, Plot > map(){
+        return map;
+    }
+
 }
