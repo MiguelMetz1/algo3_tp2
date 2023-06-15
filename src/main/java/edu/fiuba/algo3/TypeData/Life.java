@@ -1,13 +1,14 @@
 package edu.fiuba.algo3.TypeData;
 
-public class Life implements Reducible<Life>{
+import java.util.ArrayList;
 
+public class Life implements Attribute {
+
+    ArrayList<Buff> buffs;
     int lifePoints;
     public Life(int lifePoints) {
         this.lifePoints = lifePoints;
-    }
-    public Life() {
-        this.lifePoints = this.getLifePoints();
+        this.buffs = new ArrayList<>();
     }
 
     public void reduceIn(Life otherLife) {
@@ -26,4 +27,42 @@ public class Life implements Reducible<Life>{
         return this.lifePoints == otherLife.lifePoints;
     }
 
+    @Override
+    public void reduceIn(int reducePoints) {
+        this.lifePoints -= reducePoints;
+    }
+
+    @Override
+    public void changeInScale(int scale) {
+
+    }
+
+    @Override
+    public void applyBuff(Buff buff) {
+        buff.applyBuffIn(this, buffs);
+    }
+
+    @Override
+    public void quitBuffs() {
+        ArrayList<Buff> buffsToQuit = new ArrayList<Buff>();
+        for( Buff buff: buffs){
+            buff.quitBuffFrom(this, buffsToQuit);
+        }
+        quitDebbufs(buffsToQuit);
+    }
+
+    private void quitDebbufs(ArrayList<Buff> buffsToQuit){
+        for( Buff buffToQuit: buffsToQuit ){
+            this.buffs.remove(buffToQuit);
+        }
+    }
+
+    @Override
+    public boolean typeOfBuffsEquals(String type) {
+        return type.equals(this.type());
+    }
+
+    private String type(){
+        return this.getClass().getName();
+    }
 }

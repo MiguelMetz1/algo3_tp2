@@ -18,7 +18,6 @@ public abstract class Defense implements Placeable {
     protected Attacker attacker;
     protected Builder<Attacker> builder;
     protected Plot position;
-
     protected ArrayList< String > rightPlots;
 
     public Defense() {
@@ -26,7 +25,9 @@ public abstract class Defense implements Placeable {
         this.position = new NullPlot();
         this.attacker = new NullAttacker();
         this.rightPlots = this.rightPlots();
+
     }
+
 
     public void attack(Target enemy){
         this.attacker.attack(enemy);
@@ -43,14 +44,25 @@ public abstract class Defense implements Placeable {
         }
 
         this.position = plot;
-        this.builder = new UnderConstructionAttacker(
+        /*this.builder = new UnderConstructionAttacker(
                 timeOfConstruction(),
                 new Damage(damage()),
+                plot,
+                new Distance(range())
+        );*/
+
+        this.builder = new UnderConstructionAttacker(
+                timeOfConstruction(),
+                this.getBuff(),
                 plot,
                 new Distance(range())
         );
 
         this.rightPlots.clear();
+    }
+
+    protected Buff getBuff(){
+        return new LifeInstantDecrementerDebuff(1, new DecrementerDamage(damage()));
     }
 
     protected boolean isARightPlot( Plot plot ){

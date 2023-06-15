@@ -36,7 +36,7 @@ public class ContinousAdvancer implements Advancer {
                 } catch (WrongPlace e) {
                     System.out.println("The entity can't advance to this place.");
                 }
-                actualSpeed.incrementSpeed();
+                actualSpeed.reduceIn(-1);
             }
         }
     }

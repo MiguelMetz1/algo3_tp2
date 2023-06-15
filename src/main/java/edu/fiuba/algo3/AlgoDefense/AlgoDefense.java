@@ -1,13 +1,13 @@
 package edu.fiuba.algo3.AlgoDefense;
 
-import edu.fiuba.algo3.Interface.GameInterface;
+import edu.fiuba.algo3.Interface.Game;
 
 
 public class AlgoDefense {
 
-    GameInterface gameInterface;
+    Game gameInterface;
 
     public void startGame(){
-        this.gameInterface = new GameInterface();
+        this.gameInterface = new Game();
     }
 }

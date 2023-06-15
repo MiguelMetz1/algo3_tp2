@@ -6,7 +6,6 @@ import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
-import edu.fiuba.algo3.Parsers.MapJsonParser;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Players.PlayerCharacter;
 import edu.fiuba.algo3.Plots.HellsPlot;
@@ -16,35 +15,31 @@ import edu.fiuba.algo3.TypeData.Distance;
 import java.util.ArrayList;
 import java.util.Queue;
 
-public class GameInterface{
+public class Game {
     ArrayList<Defense> defenses;
     ArrayList<Enemy> enemies;
     Queue<ArrayList<Enemy>> troops;
     Player player;
     PlayerCharacter playerCharacter;
-    boolean gameFinalized;
     GameMap map;
+    ArrayList<Enemy> deadEnemies;
 
-    public GameInterface(){
+    public Game(){
         //Hacer que el parser de las peticiones del usuario se ocupe de construir el usuario con el nombre y lo devuelva.
         //Mientras tanto Hardcodeo.
         this.player = new Player("Fabricio");
         this.defenses = new ArrayList<>();
         this.playerCharacter = new PlayerCharacter();
         this.map = new GameMap();
+        this.deadEnemies = new ArrayList<>();
         ExternalResources resources = new ExternalResources(this.map);
+        this.troops = resources.getEnemies();
+        this.enemies = this.troops.poll();
         Coordinate playerCharacterPosition = resources.getPlayerCharacterCoordinate();
         try {
             this.map.locateEntityIn(playerCharacter, playerCharacterPosition);
         } catch (WrongPlace e) {
             System.out.println("The player character cannot be located here.");
-        }
-    }
-
-    public void startGame(){
-        while( !this.gameFinalized ){
-            this.requireAction();
-            this.computerTurn();
         }
     }
 
@@ -66,6 +61,13 @@ public class GameInterface{
 
     }
 
+    public void deleteDeadEnemies(){
+        for (Enemy enemy:enemies){
+            enemy.selfDestroy(deadEnemies);
+        }
+        removeDeadEnemies(deadEnemies);
+    }
+
     public void lootEnemies(){
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
         for(Enemy enemy: enemies){
@@ -77,49 +79,49 @@ public class GameInterface{
         this.removeDeadEnemies( deadEnemies );
     }
 
-    private void removeDeadEnemies(ArrayList<Enemy> deadEnemies) {
+    public void removeDeadEnemies(ArrayList<Enemy> deadEnemies) {
         for( Enemy deadEnemy: deadEnemies){
             enemies.remove(deadEnemy);
         }
     }
 
-    public void computerTurn(){
-        this.buildDefenses();
-        this.advanceEnemies();
-        this.makeDefensesAttack();
-        this.makeEnemiesAttack();
-        this.lootEnemies();
-    }
-
-    private void makeEnemiesAttack() {
+    public void makeEnemiesAttack() {
         for(Enemy enemy: enemies){
             enemy.attack(this.playerCharacter);
         }
     }
 
-    private void makeDefensesAttack() {
+    public void makeDefensesAttack() {
         for( Defense defense: defenses ){
             this.enemiesReceiveAttackFrom(defense);
         }
     }
 
-    private void enemiesReceiveAttackFrom( Defense defense ){
+    public void enemiesReceiveAttackFrom( Defense defense ){
         for( Enemy enemy: enemies) {
             defense.attack(enemy);
         }
     }
 
-    private void advanceEnemies() {
+    public void advanceEnemies() {
         for( Enemy enemy: enemies){
             enemy.advance();
         }
+        this.enemies.addAll(this.troops.poll());
     }
 
-    private void buildDefenses() {
+    public void buildDefenses() {
         for( Defense defense: defenses){
             defense.continueWithTheConstruction();
         }
     }
 
+    public void buildDefenseIn( Defense defense, Coordinate coordinate) throws WrongPlace {
+        this.map.locateEntityIn(defense, coordinate);
+    }
+
+    public String gameWon(){
+            return this.playerCharacter.won(this.troops, this.enemies);
+    }
 
 }

@@ -6,7 +6,6 @@ import edu.fiuba.algo3.Defenses.WhiteTower;
 import edu.fiuba.algo3.Enemies.Ant;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.GameMap.GameMap;
-import edu.fiuba.algo3.Parsers.MapJsonParser;
 import edu.fiuba.algo3.Players.PlayerCharacter;
 import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.Shop.Shop;
@@ -99,7 +98,6 @@ public class CasesOfUseTest {
         tower.attack(spider);
         tower.attack(spider);
         assertEquals( false, spider.distanceToBiggerThan(new HellsPlot(), new Distance(0)));
-
 
     }
 
@@ -241,7 +239,6 @@ public class CasesOfUseTest {
 
         WhiteTower whiteTower = new WhiteTower();
         GameMap map = new GameMap();
-
         assertDoesNotThrow(()->{ map.locateEntityIn(whiteTower, new Coordinate(3,1)); });
         whiteTower.continueWithTheConstruction();
         Player player = new Player("Lisandro");

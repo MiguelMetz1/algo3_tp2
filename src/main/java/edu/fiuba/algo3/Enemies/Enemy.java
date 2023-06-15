@@ -26,39 +26,51 @@ public abstract class Enemy implements Target, Placeable {
     Attacker attacker;
 
     AttackReceiver attackReceiver;
-
     ArrayList<String> passablePlots;
 
     GameMap map;
+
+    protected Speed speed;
+
+    Damage damage;
+
+    ArrayList<Attribute> attributes;
 
     public Enemy( GameMap map ) {
         this.map = map;
         this.energy = new Energy( new Life(energy()) );
         this.attackReceiver = new LiveAttackReceiver(this.energy);
-        this.advancer = new LiveAdvancer(this.map, new Speed(speed()), new LinkedList<>(), this );
+        this.speed = new Speed(speed());
+        this.advancer = new LiveAdvancer(this.map, this.speed, new LinkedList<>(), this );
         this.positionedPlace = new NullPlot();
+        this.damage = new DecrementerDamage(damage());
         this.inventorier = new UnlooteableMOB();
-        this.attacker = new ReadyAttacker(new Damage(damage()), this.positionedPlace, new Distance(range()));
+        this.attacker = new ReadyAttacker(new LifeInstantDecrementerDebuff(1, this.damage), this.positionedPlace, new Distance(range()));
         this.passablePlots = passablePlots();
     }
 
     public Enemy( GameMap map, Queue<Coordinate> path ) {
         this.map = map;
+        this.attributes = new ArrayList<>();
         this.energy = new Energy( new Life(energy()) );
         this.attackReceiver = new LiveAttackReceiver(this.energy);
-        this.advancer = new LiveAdvancer(this.map, new Speed(speed()), path, this );
+        this.speed = new Speed(speed());
+        this.advancer = new LiveAdvancer(this.map, this.speed, path, this );
         this.positionedPlace = new NullPlot();
         this.inventorier = new UnlooteableMOB();
-        this.attacker = new ReadyAttacker(new Damage(damage()), this.positionedPlace, new Distance(range()));
+        DecrementerDamage damage = new DecrementerDamage(damage());
+        this.attacker = new ReadyAttacker(new LifeInstantDecrementerDebuff(1, damage), this.positionedPlace, new Distance(range()));
         this.passablePlots = passablePlots();
+        this.attributes.add(this.energy);
+        this.attributes.add(this.speed);
     }
 
     public void locateIn( Plot plot ) throws WrongPlace {
         if( !this.isARightPlot(plot) ){
             throw new WrongPlace("The enemy cant walk on this plot.");
         }
+
         this.positionedPlace = plot;
-        this.attacker = new ReadyAttacker(new Damage(damage()), this.positionedPlace, new Distance(range()));
     }
 
     protected boolean isARightPlot( Plot plot ){
@@ -83,6 +95,25 @@ public abstract class Enemy implements Target, Placeable {
         }
     }
 
+    public void takeBuff(Buff buff) {
+
+        for( Attribute attribute: attributes ){
+            attribute.applyBuff(buff);
+        }
+
+        this.energy.quitBuffs();
+
+        if( this.isDead() ){
+            this.inventorier = new LooteableMOB(new Credits(amountOfCredits()));
+            this.advancer = new DeadAdvancer();
+            this.attacker = new NullAttacker();
+            this.positionedPlace = new HellsPlot();
+            this.passablePlots.clear();
+            this.attackReceiver = new DeadAttackReceiver();
+        }
+
+    }
+
     public void transferLootTo( Looter player ){
         this.inventorier.transferLootTo(player);
     }
@@ -98,9 +129,9 @@ public abstract class Enemy implements Target, Placeable {
     }
 
 
-    public void selfDestroy( ArrayList<Enemy> liveEnemies){
+    public void selfDestroy( ArrayList<Enemy> deadEnemies){
         if( this.isDead()) {
-            liveEnemies.remove(this);
+            deadEnemies.add(this);
         }
     }
 
@@ -108,6 +139,7 @@ public abstract class Enemy implements Target, Placeable {
 
     public void advance() {
         this.advancer.advance();
+        this.speed.quitBuffs();
     }
 
     public void attack( Target player ) {

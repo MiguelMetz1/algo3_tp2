@@ -53,7 +53,6 @@ public class ExternalResources {
             throw new RuntimeException(e.getMessage());
         }
 
-        // return enemiesParser.get();
     }
 
     public Coordinate getPlayerCharacterCoordinate() {
