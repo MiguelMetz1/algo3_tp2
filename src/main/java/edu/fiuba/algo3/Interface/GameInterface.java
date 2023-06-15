@@ -5,6 +5,7 @@ import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
+import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Parsers.MapJsonParser;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Players.PlayerCharacter;
@@ -13,14 +14,15 @@ import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class GameInterface{
     ArrayList<Defense> defenses;
     ArrayList<Enemy> enemies;
+    Queue<ArrayList<Enemy>> troops;
     Player player;
     PlayerCharacter playerCharacter;
     boolean gameFinalized;
-    String winner;
     GameMap map;
 
     public GameInterface(){
@@ -29,9 +31,9 @@ public class GameInterface{
         this.player = new Player("Fabricio");
         this.defenses = new ArrayList<>();
         this.playerCharacter = new PlayerCharacter();
-        MapJsonParser mapParser = new MapJsonParser("src/mapa.json");
-        this.map = new GameMap(mapParser);
-        Coordinate playerCharacterPosition = mapParser.getPlayerCharacterCoordinate();
+        this.map = new GameMap();
+        ExternalResources resources = new ExternalResources(this.map);
+        Coordinate playerCharacterPosition = resources.getPlayerCharacterCoordinate();
         try {
             this.map.locateEntityIn(playerCharacter, playerCharacterPosition);
         } catch (WrongPlace e) {

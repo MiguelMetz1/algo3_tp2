@@ -97,6 +97,13 @@ public abstract class Enemy implements Target, Placeable {
         return ( !this.energy.higher(deadEntityEnergy) || this.energy.equals(deadEntityEnergy) );
     }
 
+
+    public void selfDestroy( ArrayList<Enemy> liveEnemies){
+        if( this.isDead()) {
+            liveEnemies.remove(this);
+        }
+    }
+
     protected abstract int amountOfCredits();
 
     public void advance() {

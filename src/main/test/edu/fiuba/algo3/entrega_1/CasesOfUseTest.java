@@ -69,7 +69,7 @@ public class CasesOfUseTest {
     @Test
     public void playerStartsWithCorrespondingLife() {
 
-        GameMap map = new GameMap(new MapJsonParser("src/mapa.json"));
+        GameMap map = new GameMap();
 
         Spider spider = new Spider(map, this.copyPath());
         PlayerCharacter playerCharacter = new PlayerCharacter();
@@ -86,7 +86,7 @@ public class CasesOfUseTest {
 
     @Test
     public void whiteTowerConstructionTimeIsCorrect(){
-        GameMap map = new GameMap(new MapJsonParser("src/mapa.json"));
+        GameMap map = new GameMap();
         Spider spider = new Spider(map, this.copyPath());
         WhiteTower tower = new WhiteTower();
         assertDoesNotThrow(()->{map.locateEntityIn(tower, new Coordinate(3,1));});
@@ -105,7 +105,7 @@ public class CasesOfUseTest {
 
     @Test
     public void silverTowerConstructionTimeIsCorrect(){
-        GameMap map = new GameMap(new MapJsonParser("src/mapa.json"));
+        GameMap map = new GameMap();
         Spider spider = new Spider(map, this.copyPath());
         SilverTower tower = new SilverTower();
         assertDoesNotThrow(()->{map.locateEntityIn(tower, new Coordinate(3,1));});
@@ -156,7 +156,7 @@ public class CasesOfUseTest {
     @Test
     public void TheTowersAttackEnemiesWithinTheExpectedRange(){
 
-        GameMap map = new GameMap(new MapJsonParser("src/mapa.json"));
+        GameMap map = new GameMap();
         Spider spiderA = new Spider(map, this.copyPath());
         Spider spiderB = new Spider(map, this.copyPath());
         Spider spiderC = new Spider(map, this.copyPath());
@@ -194,7 +194,7 @@ public class CasesOfUseTest {
     @Test
     public void enemiesAreDamagedAcordingToRecievesAttack(){
 
-        GameMap map = new GameMap(new MapJsonParser("src/mapa.json"));
+        GameMap map = new GameMap();
         Spider spiderA = new Spider(map, this.copyPath());
         Spider spiderB = new Spider(map, this.copyPath());
         Spider spiderC = new Spider(map, this.copyPath());
@@ -219,7 +219,7 @@ public class CasesOfUseTest {
     //Verificar que las unidades enemigas solo se muevan por la parcela autorizada.
     @Test
     public void enemiesMoveToTheAuthorizedPlot(){
-        GameMap map = new GameMap(new MapJsonParser("src/mapa.json"));
+        GameMap map = new GameMap();
         Spider spider = new Spider(map, this.copyPath());
         Ground ground = new Ground(new Coordinate(0,0));
         Rocky rocky = new Rocky(new Coordinate(0,0));
@@ -240,7 +240,7 @@ public class CasesOfUseTest {
     public void DestroyEnemiesGivesTheCorrectAmountOfCreditsToThePlayer(){
 
         WhiteTower whiteTower = new WhiteTower();
-        GameMap map = new GameMap(new MapJsonParser("src/mapa.json"));
+        GameMap map = new GameMap();
 
         assertDoesNotThrow(()->{ map.locateEntityIn(whiteTower, new Coordinate(3,1)); });
         whiteTower.continueWithTheConstruction();
@@ -265,7 +265,7 @@ public class CasesOfUseTest {
 
     @Test
     public void whenPassingTurnEnemiesMoveAccordingToTheirSpeed(){
-        GameMap map = new GameMap(new MapJsonParser("src/mapa.json"));
+        GameMap map = new GameMap();
         Ant ant = new Ant(map, this.copyPath());
         Spider spider = new Spider(map, this.copyPath());
         ant.advance();
@@ -322,55 +322,6 @@ public class CasesOfUseTest {
 
     @Test
     public void whenAllEnemiesAreDeadTheUserWinsTheGame() {
-        /*GameMap map = GameMap.createMap(new MapJsonParser("src/mapa.json"));
-        Player.registerANewPlayer("Lisandro");
-        Player player = Player.getPlayer();
-        PlayerCharacter playerCharacter = new PlayerCharacter();
-        ArrayList<Defense> defenses = new ArrayList<>();
-        SilverTower silverTower = new SilverTower();
-
-        try {
-            GameMap.getMap().locateEntityIn(playerCharacter, new Coordinate(15,11));
-            GameMap.getMap().locateEntityIn(silverTower, new Coordinate(3,1));
-        } catch (IncorrectPlaceable e) {
-            throw new RuntimeException(e);
-        }
-        LinkedList<Coordinate> path = new LinkedList<>();
-        path.add(new Coordinate(2,1));
-        path.add(new Coordinate(2,2));
-        path.add(new Coordinate(2,3));
-        path.add(new Coordinate(2,4));
-        path.add(new Coordinate(2,5));
-        path.add(new Coordinate(2,6));
-        path.add(new Coordinate(2,7));
-        path.add(new Coordinate(3,7));
-        path.add(new Coordinate(4,7));
-        path.add(new Coordinate(5,7));
-        path.add(new Coordinate(6,7));
-        path.add(new Coordinate(7,7));
-        path.add(new Coordinate(8,7));
-        path.add(new Coordinate(9,7));
-        path.add(new Coordinate(9,8));
-        path.add(new Coordinate(9,9));
-        path.add(new Coordinate(9,10));
-        int totalEnemies = 2;
-        Spider spider = new Spider(copyPath(path));
-        Spider spiderB = new Spider(copyPath(path));
-        GameInterface game = new GameInterface(player);
-        spider.advance();
-        spiderB.advance();
-        silverTower.continueWithTheConstruction();
-        silverTower.continueWithTheConstruction();
-        try {
-            silverTower.attack(spider);
-            silverTower.attack(spiderB);
-        } catch (CannotAttack e) {
-            throw new RuntimeException(e);
-        }
-
-        Enemy.lose(totalEnemies, game);
-
-        assertEquals("Player", game.winner());*/
 
     }
 
