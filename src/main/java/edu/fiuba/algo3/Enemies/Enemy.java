@@ -53,10 +53,21 @@ public abstract class Enemy implements Target, Placeable {
         this.passablePlots = passablePlots();
     }
 
-    public void locateIn( Plot plot ) throws IncorrectPlaceable {
-        plot.receive(this);
+    public void locateIn( Plot plot ) throws WrongPlace {
+        if( !this.isARightPlot(plot) ){
+            throw new WrongPlace("The enemy cant walk on this plot.");
+        }
         this.positionedPlace = plot;
         this.attacker = new ReadyAttacker(new Damage(damage()), this.positionedPlace, new Distance(range()));
+    }
+
+    protected boolean isARightPlot( Plot plot ){
+        for ( String rightPlotType : this.passablePlots){
+             if( plot.hasType( rightPlotType ) ){
+                 return true;
+             }
+        }
+        return false;
     }
 
     public void takeDamage(Damage damage) {
@@ -104,9 +115,9 @@ public abstract class Enemy implements Target, Placeable {
 
     protected ArrayList<String> passablePlots(){
         ArrayList<String> passablePlots = new ArrayList<>();
-        passablePlots.add(new Gangway(new Coordinate(0,0)).toString());
-        passablePlots.add(new FinalGangway(new Coordinate(0,0)).toString());
-        passablePlots.add(new InitialGangway(new Coordinate(0,0)).toString());
+        passablePlots.add( Gangway.class.getName() );
+        passablePlots.add(FinalGangway.class.getName());
+        passablePlots.add(InitialGangway.class.getName());
         return passablePlots;
     }
 
@@ -115,5 +126,13 @@ public abstract class Enemy implements Target, Placeable {
     }
 
     public abstract String toString();
+
+    public boolean hasType( String type ){
+            return type.equals( this.type() );
+    }
+
+    private String type(){
+        return this.getClass().getName();
+    }
 
 }

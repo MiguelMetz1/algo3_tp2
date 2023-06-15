@@ -3,7 +3,7 @@ package edu.fiuba.algo3.Interface;
 
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Enemies.Enemy;
-import edu.fiuba.algo3.Exceptions.IncorrectPlaceable;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.MapJsonParser;
 import edu.fiuba.algo3.Players.Player;
@@ -27,7 +27,6 @@ public class GameInterface{
         //Hacer que el parser de las peticiones del usuario se ocupe de construir el usuario con el nombre y lo devuelva.
         //Mientras tanto Hardcodeo.
         this.player = new Player("Fabricio");
-        this.turner = new NotChangedTurn();
         this.defenses = new ArrayList<>();
         this.playerCharacter = new PlayerCharacter();
         MapJsonParser mapParser = new MapJsonParser("src/mapa.json");
@@ -35,7 +34,7 @@ public class GameInterface{
         Coordinate playerCharacterPosition = mapParser.getPlayerCharacterCoordinate();
         try {
             this.map.locateEntityIn(playerCharacter, playerCharacterPosition);
-        } catch (IncorrectPlaceable e) {
+        } catch (WrongPlace e) {
             System.out.println("The player character cannot be located here.");
         }
     }

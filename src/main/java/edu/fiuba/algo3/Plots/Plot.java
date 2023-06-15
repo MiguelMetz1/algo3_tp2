@@ -1,31 +1,31 @@
 package edu.fiuba.algo3.Plots;
 
 import edu.fiuba.algo3.Enemies.Placeable;
-import edu.fiuba.algo3.Exceptions.IncorrectPlaceable;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance;
 
-import java.util.ArrayList;
-
 public abstract class Plot {
     Coordinate coordinate;
-    ArrayList<String> rightPlaceables;
-
 
     public Plot(Coordinate coordinate) {
         this.coordinate = coordinate;
-        this.rightPlaceables = rightPlaceables();
     }
 
     public boolean distanceToBiggerThan(Plot place, Distance distance ){
         return (this.coordinate.distanceTo(place.coordinate).higher(distance));
     }
 
-    public void receive(Placeable placeable) throws IncorrectPlaceable {
-        if(!this.rightPlaceables.contains(placeable.getClass().getName())){
-            throw new IncorrectPlaceable("this plot cant receive the placeable object.");
-        }
+    public boolean hasType( String type ){
+        return type.equals(this.type());
     }
 
-    protected abstract ArrayList<String> rightPlaceables();
+    public void receive(Placeable placeable) throws WrongPlace {
+       //Replace with log
+        System.out.println("The entity was located in this plot.");
+    }
+
+    protected  String type(){
+        return this.getClass().getName();
+    }
 }

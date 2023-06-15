@@ -9,8 +9,4 @@ public class NullPlot extends Plot{
         super(new Coordinate(0,0));
     }
 
-    @Override
-    protected ArrayList<String> rightPlaceables() {
-        return new ArrayList<>();
-    }
 }

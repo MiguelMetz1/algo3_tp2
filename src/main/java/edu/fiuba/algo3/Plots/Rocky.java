@@ -12,15 +12,4 @@ public class Rocky extends Plot{
         super(coordinate);
     }
 
-    @Override
-    protected ArrayList<String> rightPlaceables() {
-        ArrayList<String> rightPlaceables = new ArrayList<>();
-        return rightPlaceables;
-    }
-
-
-    public String showPlotName(){
-        return "Piedra";
-    }
-
 }

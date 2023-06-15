@@ -146,11 +146,11 @@ public class CasesOfUseTest {
         WhiteTower whiteTower = new WhiteTower();
         SilverTower silverTower = new SilverTower();
         assertDoesNotThrow(()->{silverTower.locateIn(new Ground(new Coordinate(0,0)));});
-        assertThrows(IncorrectPlaceable.class, ()->{silverTower.locateIn(new Rocky(new Coordinate(0,0)));});
-        assertThrows(IncorrectPlaceable.class, ()->{silverTower.locateIn(new Gangway(new Coordinate(0,0)));});
+        assertThrows(WrongPlace.class, ()->{silverTower.locateIn(new Rocky(new Coordinate(0,0)));});
+        assertThrows(WrongPlace.class, ()->{silverTower.locateIn(new Gangway(new Coordinate(0,0)));});
         assertDoesNotThrow(()->{whiteTower.locateIn(new Ground(new Coordinate(0,0)));});
-        assertThrows(IncorrectPlaceable.class, ()->{whiteTower.locateIn(new Rocky(new Coordinate(0,0)));});
-        assertThrows(IncorrectPlaceable.class, ()->{whiteTower.locateIn(new Gangway(new Coordinate(0,0)));});
+        assertThrows(WrongPlace.class, ()->{whiteTower.locateIn(new Rocky(new Coordinate(0,0)));});
+        assertThrows(WrongPlace.class, ()->{whiteTower.locateIn(new Gangway(new Coordinate(0,0)));});
     }
 
     @Test
@@ -227,8 +227,8 @@ public class CasesOfUseTest {
         FinalGangway finalGangway = new FinalGangway(new Coordinate(0,0));
         InitialGangway initialGangway = new InitialGangway(new Coordinate(0,0));
 
-        assertThrows( IncorrectPlaceable.class ,()->{ spider.locateIn(ground); } );
-        assertThrows( IncorrectPlaceable.class ,()->{ spider.locateIn(rocky); } );
+        assertThrows( WrongPlace.class ,()->{ spider.locateIn(ground); } );
+        assertThrows( WrongPlace.class ,()->{ spider.locateIn(rocky); } );
         assertDoesNotThrow( ()->{ spider.locateIn(gangway); } );
         assertDoesNotThrow( ()->{ spider.locateIn(finalGangway); } );
         assertDoesNotThrow( ()->{ spider.locateIn(initialGangway); } );

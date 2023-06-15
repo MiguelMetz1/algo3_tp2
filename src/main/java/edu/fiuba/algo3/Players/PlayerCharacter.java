@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.Players;
 import edu.fiuba.algo3.Enemies.Placeable;
 import edu.fiuba.algo3.Enemies.Target;
-import edu.fiuba.algo3.Exceptions.IncorrectPlaceable;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Plots.HellsPlot;
 import edu.fiuba.algo3.Plots.NullPlot;
 import edu.fiuba.algo3.Plots.Plot;
@@ -28,7 +28,7 @@ public class PlayerCharacter implements Target, Placeable {
     }
 
     @Override
-    public void locateIn(Plot plot) throws IncorrectPlaceable {
+    public void locateIn(Plot plot) throws WrongPlace {
         plot.receive(this);
         this.position = plot;
     }

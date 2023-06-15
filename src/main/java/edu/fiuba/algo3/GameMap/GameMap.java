@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.GameMap;
 
 import edu.fiuba.algo3.Enemies.Placeable;
-import edu.fiuba.algo3.Exceptions.IncorrectPlaceable;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Parsers.MapJsonParser;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Coordinate;
@@ -16,9 +16,10 @@ public class GameMap {
         this.map = mapParser.get();
     }
 
-    public void locateEntityIn(Placeable entity, Coordinate destinationPlace ) throws IncorrectPlaceable {
+    public void locateEntityIn(Placeable entity, Coordinate destinationPlace ) throws WrongPlace {
         Plot destinationPlot = map.get(destinationPlace);
         entity.locateIn(destinationPlot);
+        destinationPlot.receive(entity);
     }
 
 

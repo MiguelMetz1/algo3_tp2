@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.Enemies;
 
 import edu.fiuba.algo3.Advancer.Advancer;
-import edu.fiuba.algo3.Exceptions.IncorrectPlaceable;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.TypeData.Coordinate;
 
@@ -27,7 +27,7 @@ public class FirstEnemyAdvancer implements Advancer {
             Coordinate nextPosition = this.path.poll();
             try {
                 this.map.locateEntityIn(entityToAdvance, nextPosition);
-            } catch (IncorrectPlaceable e) {
+            } catch (WrongPlace e) {
                 System.out.println("The entity can't advance to this place.");
             }
         }

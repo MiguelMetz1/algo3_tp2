@@ -13,7 +13,4 @@ public class InitialGangway extends Gangway {
         super(coordinate);
     }
 
-    public String toString(){
-        return "InitialGangway";
-    }
 }

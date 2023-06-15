@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.Enemies;
 
 import edu.fiuba.algo3.Advancer.Advancer;
-import edu.fiuba.algo3.Exceptions.IncorrectPlaceable;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.TypeData.Speed;
@@ -33,7 +33,7 @@ public class ContinousAdvancer implements Advancer {
                 nextPosition = this.path.poll();
                 try {
                     map.locateEntityIn(entityToAdvance, nextPosition);
-                } catch (IncorrectPlaceable e) {
+                } catch (WrongPlace e) {
                     System.out.println("The entity can't advance to this place.");
                 }
                 actualSpeed.incrementSpeed();

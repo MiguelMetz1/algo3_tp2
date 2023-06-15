@@ -12,17 +12,4 @@ public class Gangway extends Plot{
         super(coordinate);
     }
 
-    @Override
-    protected ArrayList<String> rightPlaceables() {
-        ArrayList<String> rightPlaceables = new ArrayList<>();
-        rightPlaceables.add( Spider.class.getName() );
-        rightPlaceables.add( Ant.class.getName() );
-        return rightPlaceables;
-    }
-
-    public String toString(){
-        return "Gangway";
-    }
-
-
 }

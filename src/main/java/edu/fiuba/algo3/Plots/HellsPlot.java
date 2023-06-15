@@ -8,8 +8,5 @@ public class HellsPlot extends Plot{
     public HellsPlot(){
         super(new Coordinate(-666,-666));
     }
-    @Override
-    protected ArrayList<String> rightPlaceables() {
-        return new ArrayList<String>();
-    }
+
 }
