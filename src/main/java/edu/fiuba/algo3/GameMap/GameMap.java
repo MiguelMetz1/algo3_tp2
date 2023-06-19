@@ -11,6 +11,11 @@ import edu.fiuba.algo3.Plots.Gangway;
 import edu.fiuba.algo3.Plots.InitialGangway;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Coordinate;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 import java.util.*;
 
@@ -118,4 +123,19 @@ public class GameMap {
         return map;
     }
 
+    public void showMap(AnchorPane root) {
+        Map<Coordinate, Plot> plots = this.map(); // Acceder al campo "map" de la clase GameMap
+
+        for (Map.Entry<Coordinate, Plot> entry : plots.entrySet()) {
+            Coordinate coordinate = entry.getKey();
+            Plot plot = entry.getValue();
+
+            Rectangle rectangle = new Rectangle(coordinate.getX() * 40, coordinate.getY() * 40, 40, 40);
+            rectangle.setFill(plot.getColor());
+            rectangle.setStroke(Color.BLACK);
+            root.getChildren().add(rectangle);
+
+
+        }
+    }
 }

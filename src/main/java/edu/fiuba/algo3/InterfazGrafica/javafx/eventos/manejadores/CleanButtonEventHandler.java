@@ -4,11 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 
-public class BotonLimpiarEventHandler implements EventHandler<ActionEvent> {
+public class CleanButtonEventHandler implements EventHandler<ActionEvent> {
 
     private TextField textField;
 
-    public BotonLimpiarEventHandler(TextField textField) {
+    public CleanButtonEventHandler(TextField textField) {
         this.textField = textField;
     }
 

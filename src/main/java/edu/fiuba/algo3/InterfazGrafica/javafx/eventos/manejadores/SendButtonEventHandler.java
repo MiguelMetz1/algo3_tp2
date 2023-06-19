@@ -2,17 +2,16 @@ package edu.fiuba.algo3.InterfazGrafica.javafx.eventos.manejadores;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-public class BotonEnviarEventHandler implements EventHandler<ActionEvent> {
+public class SendButtonEventHandler implements EventHandler<ActionEvent> {
 
     private TextField textField;
     private Label label;
 
-    public BotonEnviarEventHandler(TextField textField, Label label) {
+    public SendButtonEventHandler(TextField textField, Label label) {
         this.textField = textField;
         this.label = label;
     }
@@ -24,6 +23,7 @@ public class BotonEnviarEventHandler implements EventHandler<ActionEvent> {
 
             this.label.setText("Debe ingresar un texto");
             this.label.setTextFill(Color.web("#FF0000"));
+            System.out.println("Arania");
 
         } else {
 
