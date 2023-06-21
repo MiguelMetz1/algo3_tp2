@@ -27,10 +27,8 @@ public class JsonParser {
             }
             fileReader.close();
         } catch (Exception e) {
-            //fileReader.close();
+
             throw new RuntimeException(e);
-        } finally {
-            //fileReader.close();
         }
 
         return completeString;

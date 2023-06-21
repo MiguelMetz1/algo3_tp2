@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.Parsers;
 
+import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import org.json.JSONArray;
@@ -19,9 +20,12 @@ public class MapJsonParser extends JsonParser {
 
     LinkedList<Coordinate> gangwayCoordinates;
 
-    public MapJsonParser(String fileName) {
+    GameMap map;
+
+    public MapJsonParser(String fileName) throws InvalidJson {
         super(fileName);
         this.gangwayCoordinates = new LinkedList<Coordinate>();
+        this.chargeMap();
     }
 
     private Plot createPlot(String plotName, Coordinate coordinate) throws InvalidJson {
@@ -48,8 +52,11 @@ public class MapJsonParser extends JsonParser {
         }
     }
 
-    public HashMap< Coordinate, Plot > get() throws InvalidJson {
+    public GameMap get(){
+        return this.map;
+    }
 
+    private void chargeMap() throws InvalidJson{
         HashMap< Coordinate, Plot> map = new HashMap<>();
         JSONObject gameMapJson;
 
@@ -60,34 +67,32 @@ public class MapJsonParser extends JsonParser {
         } catch ( JSONException e ) {
             throw new InvalidJson(e.getMessage());
         }
-        
+
         this.numberOfRows = gameMapJson.length();
         if ( this.numberOfRows == 0 ) {
             throw new InvalidJson("The map is empty.");
         }
         int rowNumber;
-        
+
         for(rowNumber = 1; rowNumber <= this.numberOfRows; rowNumber++){
 
             // System.out.print("\nRow number: " + rowNumber);
             String rowNumberString = Integer.toString(rowNumber);
             JSONArray rowArray;
             Iterator<Object> plotName;
-            
+
             try {
                 rowArray = gameMapJson.getJSONArray(rowNumberString);
                 plotName = rowArray.iterator();
             } catch ( JSONException e ) {
                 throw new InvalidJson(e.getMessage());
             }
-            
-            // System.out.print("\n\tColumn number: ");
+
             int columnNumber = 1;
             Plot currentPlot;
-            
+
             while (plotName.hasNext()) {
-                
-                // System.out.print(columnNumber + " | ");
+
                 Coordinate coordinate = new Coordinate(columnNumber, rowNumber);
 
                 try {
@@ -99,26 +104,23 @@ public class MapJsonParser extends JsonParser {
                 map.put(coordinate, currentPlot);
                 columnNumber ++;
             }
-            
+
             if ( (rowNumber != 1) && (this.numberOfColumns != columnNumber) ) {
                 throw( new InvalidJson("There are incomplete rows in '" + this.fileName + "'.") );
             }
-            
+
             this.numberOfColumns = columnNumber;
         }
-        
-        Gangway actualFinalGangway = (Gangway) map.get(this.finalGangwayCoordinate);
         map.put(this.finalGangwayCoordinate, new FinalGangway(this.finalGangwayCoordinate));
-        
-        return map;
+
+        this.map = new GameMap(map);
     }
 
-    public Queue<Coordinate> getPath() throws InvalidJson {
-        this.get();
-        return this.copyPath(this.gangwayCoordinates);
+    public LinkedList<Coordinate> getPath() {
+        return this.copyPath( this.gangwayCoordinates );
     }
 
-    public LinkedList<Coordinate> copyPath( LinkedList<Coordinate> path ){
+    private LinkedList<Coordinate> copyPath( LinkedList<Coordinate> path ){
         ListIterator<Coordinate> iterator = path.listIterator(0);
         LinkedList<Coordinate> newPath = new LinkedList<>();
         while (iterator.hasNext()){

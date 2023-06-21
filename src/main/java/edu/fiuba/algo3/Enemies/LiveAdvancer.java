@@ -15,20 +15,24 @@ public class LiveAdvancer implements Advancer {
 
     Placeable entityToAdvance;
 
+    Coordinate actualPosition;
+
     Advancer advancer;
 
     GameMap map;
 
-    public LiveAdvancer(GameMap map, Speed speedToReach, Queue<Coordinate> path, Placeable entityToAdvance){
+    public LiveAdvancer(GameMap map, Speed speedToReach, Coordinate actualPosition, Queue<Coordinate> path, Placeable entityToAdvance){
         this.map = map;
         this.speedToReach = speedToReach;
         this.path = path;
         this.entityToAdvance = entityToAdvance;
-        this.advancer = new FirstEnemyAdvancer(this.map, this.path, this.entityToAdvance);
+        this.actualPosition = actualPosition;
+        Coordinate firstAdvancePoint = path.poll();
+        this.advancer = new FirstEnemyAdvancer(this.map, this.actualPosition, firstAdvancePoint, this.entityToAdvance);
     }
     @Override
     public void advance() {
         this.advancer.advance();
-        this.advancer = new ContinousAdvancer(map, speedToReach, path, entityToAdvance);
+        this.advancer = new ContinousAdvancer(map, speedToReach, this.actualPosition, path, entityToAdvance);
     }
 }

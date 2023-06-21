@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.classesTests;
 
 import edu.fiuba.algo3.Exceptions.*;
-import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Parsers.EnemiesJsonParser;
 import edu.fiuba.algo3.Parsers.MapJsonParser;
@@ -19,25 +18,29 @@ public class JsonParserTests {
     @Test
     public void correctMapIsCreatedWithoutExceptions() {
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
-        MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
-        assertDoesNotThrow(() -> mapJsonParser.get(), "The json '"+mapJsonFilename+"' is invalid.");
+        final MapJsonParser[] mapJsonParser = new MapJsonParser[1];
+        assertDoesNotThrow(() -> {
+            mapJsonParser[0] = new MapJsonParser(mapJsonFilename);}, "The json '"+mapJsonFilename+"' is invalid.");
+        mapJsonParser[0].get();
     }
     
     @Test
     public void correctMapIsCreatedWithoutExceptionsFromExternalResources() {
-        GameMap map = new GameMap();
-        ExternalResources resources = new ExternalResources(map);
-        assertDoesNotThrow(() -> resources.getMap(), "The json is invalid.");
+        assertDoesNotThrow(() ->{
+            ExternalResources resources = new ExternalResources();
+            resources.getMap();
+        }, "The json is invalid.");
     }
     
     @Test
     public void emptyMapThrowsInvalidJason() {
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/empty_json_map.json";
-        MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
-
         InvalidJson thrown = assertThrows(
            InvalidJson.class,
-           () -> mapJsonParser.get(),
+           () -> {
+               MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
+               mapJsonParser.get();
+               },
            "Expected get() to throw, but it didn't"
         );
 
@@ -48,11 +51,14 @@ public class JsonParserTests {
     @Test
     public void IncompleteMapThrowsInvalidJson() {
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/incomplete_map.json";
-        MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
+
 
         InvalidJson thrown = assertThrows(
            InvalidJson.class,
-           () -> mapJsonParser.get(),
+           () -> {
+               MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
+               mapJsonParser.get();
+               },
            "Expected get() to throw, but it didn't"
         );
 
@@ -63,11 +69,13 @@ public class JsonParserTests {
     @Test
     public void MapWithArenaPlotThrowsInvalidJson() {
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/map_with_arena_plot.json";
-        MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
         
         InvalidJson thrown = assertThrows(
            InvalidJson.class,
-           () -> mapJsonParser.get(),
+           () -> {
+               MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
+               mapJsonParser.get();
+               },
            "Expected get() to throw, but it didn't"
         );
 
@@ -78,15 +86,20 @@ public class JsonParserTests {
     @Test
     public void MapWithoutMapaKeyThrowsInvalidJson() {
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/map_without_mapa_key.json";
-        MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
-        assertThrows(InvalidJson.class, () -> { mapJsonParser.get(); });
+        assertThrows(InvalidJson.class, () -> {
+            MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
+            mapJsonParser.get();
+        });
     }
 
     @Test
     public void MapWithInexistentRowNumberThrowsInvalidJson() {
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/map_with_inexistent_row_number.json";
-        MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
-        assertThrows(InvalidJson.class, () -> { mapJsonParser.get(); });
+
+        assertThrows(InvalidJson.class, () -> {
+            MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
+            mapJsonParser.get();
+        });
     }
 
     @Test
@@ -94,22 +107,19 @@ public class JsonParserTests {
         String enemiesJsonFileName = "src/main/java/edu/fiuba/algo3/JsonFiles/enemigos.json";
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
         MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
-        GameMap map = new GameMap();
-        final Queue<Coordinate> path;
-        try {
-            path = mapJsonParser.getPath();
-        } catch (InvalidJson e) {
-            throw new RuntimeException(e);
-        }
-        EnemiesJsonParser enemiesJsonParser = new EnemiesJsonParser(enemiesJsonFileName, map, path);
-        assertDoesNotThrow(() -> { enemiesJsonParser.get(); }, "The enemies json has got an error.");
+
+        assertDoesNotThrow(() -> {
+            EnemiesJsonParser enemiesJsonParser = new EnemiesJsonParser( enemiesJsonFileName, mapJsonParser );
+            enemiesJsonParser.get();
+            }, "The enemies json has got an error.");
     }
 
     @Test
     public void CorrectEnemiesJsonIsCreatedWithoutExceptionsFromExternalResources() {
-        GameMap map = new GameMap();
-        ExternalResources resources = new ExternalResources(map);
-        assertDoesNotThrow(() -> { resources.getEnemies(); }, "The enemies json has got an error.");
+
+        assertDoesNotThrow(() -> {
+            ExternalResources resources = new ExternalResources();
+            resources.getEnemies(); }, "The enemies json has got an error.");
     }
 
     @Test
@@ -117,18 +127,12 @@ public class JsonParserTests {
         String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/enemies_with_wasp_name.json";
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
         MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
-        GameMap map = new GameMap();
-        final Queue<Coordinate> path;
-        try {
-            path = mapJsonParser.getPath();
-        } catch (InvalidJson e) {
-            throw new RuntimeException(e);
-        }
-        EnemiesJsonParser enemiesJsonParser = new EnemiesJsonParser(enemiesJsonFilename, map, path);
 
         InvalidJson thrown = assertThrows(
            InvalidJson.class,
-           () -> enemiesJsonParser.get(),
+           () -> {
+               EnemiesJsonParser enemiesJsonParser = new EnemiesJsonParser(enemiesJsonFilename, mapJsonParser);
+               enemiesJsonParser.get();},
            "Expected get() to throw, but it didn't"
         );
 
@@ -142,18 +146,15 @@ public class JsonParserTests {
         String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/enemies_with_amount_LT_0_name.json";
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
         MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
-        GameMap map = new GameMap();
         final Queue<Coordinate> path;
-        try {
-            path = mapJsonParser.getPath();
-        } catch (InvalidJson e) {
-            throw new RuntimeException(e);
-        }
-        EnemiesJsonParser enemiesJsonParser = new EnemiesJsonParser(enemiesJsonFilename, map, path);
+
 
         InvalidJson thrown = assertThrows(
            InvalidJson.class,
-           () -> enemiesJsonParser.get(),
+           () -> {
+               EnemiesJsonParser enemiesJsonParser = new EnemiesJsonParser(enemiesJsonFilename, mapJsonParser);
+               enemiesJsonParser.get();
+               },
            "Expected get() to throw, but it didn't"
         );
 
@@ -166,18 +167,13 @@ public class JsonParserTests {
         String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles//empty_enemies.json";
         String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
         MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
-        GameMap map = new GameMap();
-        final Queue<Coordinate> path;
-        try {
-            path = mapJsonParser.getPath();
-        } catch (InvalidJson e) {
-            throw new RuntimeException(e);
-        }
-        EnemiesJsonParser enemiesJsonParser = new EnemiesJsonParser(enemiesJsonFilename, map, path);
         
         InvalidJson thrown = assertThrows(
            InvalidJson.class,
-           () -> enemiesJsonParser.get(),
+           () -> {
+               EnemiesJsonParser enemiesJsonParser = new EnemiesJsonParser(enemiesJsonFilename, mapJsonParser);
+               enemiesJsonParser.get();
+               },
            "Expected get() to throw, but it didn't"
         );
 

@@ -1,24 +1,18 @@
 package edu.fiuba.algo3.TypeData;
 
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class LifeInstantDecrementerDebuff extends Buff{
+public class LifeInstantDecrementerDebuff extends AttackBuff{
 
-    public LifeInstantDecrementerDebuff(int timeOfAction, Damage damage ){
-        super(timeOfAction, damage);
-    }
-
-
-    public void quitBuffFrom(Attribute buffeable, ArrayList<Buff> buffsToQuit){
-        timeOfAction--;
-        if( timeOfAction <= 0 ){
-            buffsToQuit.add(this);
-        }
+    public LifeInstantDecrementerDebuff(AdditiveDamage damage ){
+        super(damage);
     }
 
     @Override
     protected void quitBuff(Attribute attribute) {
-        System.out.println("This debuff is instant damage debuff");
+
+        Logger.getLogger("Buff").log(Level.INFO, "This buff is a instant damage buff.");
     }
 
 

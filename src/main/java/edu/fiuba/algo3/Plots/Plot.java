@@ -5,6 +5,9 @@ import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public abstract class Plot {
     Coordinate coordinate;
 
@@ -12,17 +15,12 @@ public abstract class Plot {
         this.coordinate = coordinate;
     }
 
-    public boolean distanceToBiggerThan(Plot place, Distance distance ){
-        return (this.coordinate.distanceTo(place.coordinate).higher(distance));
-    }
-
     public boolean hasType( String type ){
         return type.equals(this.type());
     }
 
     public void receive(Placeable placeable) throws WrongPlace {
-       //Replace with log
-        System.out.println("The entity was located in this plot.");
+        Logger.getLogger("Placeable").log(Level.INFO, "The entity was located in the indicated plot.");
     }
 
     protected  String type(){

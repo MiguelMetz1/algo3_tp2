@@ -1,48 +1,46 @@
 package edu.fiuba.algo3.Enemies;
 
-import edu.fiuba.algo3.Attacker.ReadyAttacker;
+import edu.fiuba.algo3.Attacker.Attacker;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.Ground;
 import edu.fiuba.algo3.Plots.Rocky;
-import edu.fiuba.algo3.TypeData.Coordinate;
-import edu.fiuba.algo3.TypeData.DecrementerDamage;
-import edu.fiuba.algo3.TypeData.Distance;
-import edu.fiuba.algo3.TypeData.LifeInstantDecrementerDebuff;
+import edu.fiuba.algo3.TypeData.*;
+
 import java.util.ArrayList;
 import java.util.Queue;
 
-public class Mole extends Enemy{
-
+public class Mole extends Enemy {
 
     private int advances;
 
     public Mole(GameMap map, Queue<Coordinate> path){
         super(map, path);
-        this.attributes.remove(this.energy);
         this.advances = 0;
+        this.setAttacker( new LifeAttacker( this.actualPosition, getDamage() ) );
+        this.addMolePassablePlots();
+    }
+
+    private void addMolePassablePlots(){
+        this.addPassablePlot(Rocky.class.getName());
+        this.addPassablePlot(Ground.class.getName());
     }
 
     public void advance(){
         super.advance();
         advances++;
-        if( this.movesThatIncrementSpeed().contains(advances) ){
-            this.speed.reduceIn(-1);
-        }
-
+        this.incrementSpeed();
+        this.changeAttacker();
     }
 
-    public void attack( Target target){
-        if( advances % 2 != 0){
-            this.damage = new DecrementerDamage(5);
-        }else{
-            this.damage = new DecrementerDamage(2);
-        }
-        if( !this.isDead()) {
-            this.attacker = new ReadyAttacker(new LifeInstantDecrementerDebuff(1, damage), this.positionedPlace, new Distance(range()));
-        }
+    protected void changeAttacker(){
+        Attacker attacker = new LifeAttacker( this.actualPosition, getDamage() );
+        this.setAttacker(attacker);
+    }
 
-        super.attack(target);
-
+    private void incrementSpeed(){
+        if( this.movesThatIncrementSpeed().contains( advances ) ){
+            this.speed.incrementIn(1);
+        }
     }
 
     private ArrayList<Integer> movesThatIncrementSpeed(){
@@ -52,35 +50,16 @@ public class Mole extends Enemy{
         return movesThatIncrementSpeed;
     }
 
-    @Override
-    protected int amountOfCredits() {
-        return 0;
-    }
 
-    @Override
-    protected int damage() {
+    protected double getDamage() {
+        if( advances % 2 != 0 ){
+            return 5;
+        }
         return 2;
     }
 
     @Override
-    protected int energy() {
+    protected double getSpeed() {
         return 1;
-    }
-
-    @Override
-    protected int speed() {
-        return 1;
-    }
-
-    @Override
-    public String toString() {
-        return "Mole";
-    }
-
-    protected ArrayList<String> passablePlots(){
-        ArrayList<String> passablePlots = super.passablePlots();
-        passablePlots.add(Ground.class.getName());
-        passablePlots.add(Rocky.class.getName());
-        return passablePlots;
     }
 }

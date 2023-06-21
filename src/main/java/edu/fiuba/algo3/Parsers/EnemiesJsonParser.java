@@ -1,8 +1,8 @@
 package edu.fiuba.algo3.Parsers;
 
 import edu.fiuba.algo3.Enemies.*;
-import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,14 +11,19 @@ import java.util.*;
 
 public class EnemiesJsonParser extends JsonParser{
 
-    private Queue<Coordinate> path;
+    private MapJsonParser mapJsonParser;
 
-    private GameMap map;
+    private ArrayList<TargetableEnemy> attackReceivers;
 
-    public EnemiesJsonParser(String fileName, GameMap map, Queue<Coordinate> path){
+    private ArrayList<LooteableEnemy> looteables;
+
+
+
+    public EnemiesJsonParser(String fileName,MapJsonParser mapJsonParser){
         super(fileName);
-        this.path = path;
-        this.map = map;
+        this.mapJsonParser = mapJsonParser;
+        this.attackReceivers = new ArrayList<>();
+        this.looteables = new ArrayList<>();
     }
 
     public Queue<ArrayList<Enemy>> get() throws InvalidJson {
@@ -75,13 +80,33 @@ public class EnemiesJsonParser extends JsonParser{
         switch (enemy) {
             case "hormiga":
                 for(int i = 0; i < amountOfEnemyType; i++) {
-                    enemies.add( new Ant(this.map, this.path) );
+                    Ant ant = new Ant(this.mapJsonParser.get(), this.mapJsonParser.getPath());
+                    enemies.add( ant );
+                    this.attackReceivers.add(ant);
+                    this.looteables.add(ant);
                 }
                 break;
 
             case "arana":
                 for(int i = 0; i < amountOfEnemyType; i++) {
-                    enemies.add( new Spider(this.map, this.path) );
+                    Spider spider = new Spider(this.mapJsonParser.get(), this.mapJsonParser.getPath());
+                    enemies.add( spider );
+                    this.attackReceivers.add(spider);
+                    this.looteables.add(spider);
+                }
+                break;
+            case "topo":
+                for(int i = 0; i < amountOfEnemyType; i++) {
+                    Mole mole = new Mole(this.mapJsonParser.get(), this.mapJsonParser.getPath());
+                    enemies.add( mole );
+                }
+                break;
+            case "lechuza":
+
+                for(int i = 0; i < amountOfEnemyType; i++) {
+                    Owl owl = new Owl(this.mapJsonParser.get(), this.createOwlPath(), this.mapJsonParser.getPath().getLast());
+                    enemies.add( owl );
+                    this.attackReceivers.add( owl );
                 }
                 break;
             default:
@@ -90,4 +115,32 @@ public class EnemiesJsonParser extends JsonParser{
         
         return enemies;
     }
+
+    private LinkedList<Coordinate> createOwlPath( ){
+        LinkedList<Coordinate> owlPath = new LinkedList<>();
+        Coordinate start = this.mapJsonParser.getPath().getFirst();
+        Coordinate destination = this.mapJsonParser.getPath().getLast();
+        Coordinate checkPoint = start.perpendicularProjectionInVerticalLine(destination);
+        Coordinate actualCoordinate = start;
+        owlPath.add(actualCoordinate);
+        while ( !actualCoordinate.equals(destination) ){
+            actualCoordinate = actualCoordinate.nextCoordinateInDirectionWithDistance( checkPoint, new Distance(1));
+            owlPath.add(actualCoordinate);
+            if( actualCoordinate.distanceTo(checkPoint).equalsTo(new Distance(0)) ){
+                checkPoint = destination;
+            }
+        }
+
+        return owlPath;
+
+    }
+
+    public ArrayList<TargetableEnemy> getTargetableEnemies(){
+        return this.attackReceivers;
+    }
+
+    public ArrayList<LooteableEnemy> getLooteables(){
+        return this.looteables;
+    }
+
 }

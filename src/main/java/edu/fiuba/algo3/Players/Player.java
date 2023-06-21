@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.Players;
 
+import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.WrongPlayerName;
 import edu.fiuba.algo3.Shop.Buyer;
@@ -30,6 +31,11 @@ public class Player implements Looter, Buyer {
             throw new InsuficientCredits("The player has not got sufficient credits.");
         }
         this.credits.wasteCredits(amountToWaste);
+    }
+
+    @Override
+    public void addDefense(Defense defense) {
+
     }
 
     private int playerCredits(){

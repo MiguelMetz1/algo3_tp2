@@ -24,6 +24,6 @@ public class SandTrap extends Defense{
 
     @Override
     public String toString() {
-        return null;
+        return "SandTrap";
     }
 }

@@ -1,127 +1,129 @@
 package edu.fiuba.algo3.Interface;
 
 
-import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Enemies.Enemy;
+import edu.fiuba.algo3.Enemies.Looteable;
+import edu.fiuba.algo3.Enemies.LooteableEnemy;
+import edu.fiuba.algo3.Enemies.TargetableEnemy;
+
+import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
-import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Players.PlayerCharacter;
-import edu.fiuba.algo3.Plots.HellsPlot;
+import edu.fiuba.algo3.Shop.Shop;
+import edu.fiuba.algo3.Shop.SilverTowerProvider;
+import edu.fiuba.algo3.Shop.WhiteTowerProvider;
 import edu.fiuba.algo3.TypeData.Coordinate;
-import edu.fiuba.algo3.TypeData.Distance;
 
 import java.util.ArrayList;
 import java.util.Queue;
 
 public class Game {
-    ArrayList<Defense> defenses;
+
     ArrayList<Enemy> enemies;
+
     Queue<ArrayList<Enemy>> troops;
-    Player player;
+
     PlayerCharacter playerCharacter;
     GameMap map;
+
+    Shop shop;
+
     ArrayList<Enemy> deadEnemies;
+
+    ArrayList<TargetableEnemy> attackableEnemies;
+
+    ArrayList<LooteableEnemy> looteableEnemies;
 
     public Game(){
         //Hacer que el parser de las peticiones del usuario se ocupe de construir el usuario con el nombre y lo devuelva.
         //Mientras tanto Hardcodeo.
-        this.player = new Player("Fabricio");
-        this.defenses = new ArrayList<>();
-        this.playerCharacter = new PlayerCharacter();
-        this.map = new GameMap();
+        ExternalResources resources = new ExternalResources();
+        this.map = resources.getMap();
         this.deadEnemies = new ArrayList<>();
-        ExternalResources resources = new ExternalResources(this.map);
         this.troops = resources.getEnemies();
+        this.attackableEnemies = resources.getAttackables();
+        this.looteableEnemies = resources.getLooteables();
         this.enemies = this.troops.poll();
         Coordinate playerCharacterPosition = resources.getPlayerCharacterCoordinate();
-        try {
-            this.map.locateEntityIn(playerCharacter, playerCharacterPosition);
-        } catch (WrongPlace e) {
-            System.out.println("The player character cannot be located here.");
-        }
+        this.playerCharacter = new PlayerCharacter("Fabricio", map, playerCharacterPosition, troops, enemies);
+        this.shop = new Shop(playerCharacter);
+        this.chargeShop();
+    }
+
+    private void chargeShop(){
+            this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
+            this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
+    }
+
+    private String whiteTowerKey(){
+        return "White Tower";
+    }
+
+    private String silverTowerKey(){
+        return "Silver Tower";
     }
 
     public void requireAction(){
-        //System.out.println("Que quiere hacer? pasar o construir");
-        //Scanner scanner = new Scanner(System.in);
-        //String action = scanner.nextLine();
-        /*switch (action){
-            case "pasar":
-                changeTurn();
-                break;
-            case "construir":
-                //chooseConstruction();
-                break;
-            default:
-                break;
 
-        }*/
 
     }
 
-    public void deleteDeadEnemies(){
-        for (Enemy enemy:enemies){
-            enemy.selfDestroy(deadEnemies);
-        }
-        removeDeadEnemies(deadEnemies);
+    public void buyDefense( String defense ) throws InsuficientCredits, NonExistentArticle {
+        this.shop.buy(defense);
+    }
+
+    public void locateLastBoughtDefenseIn( Coordinate coordinate ) throws WrongPlace {
+        playerCharacter.locateLastDefense(coordinate);
     }
 
     public void lootEnemies(){
-        ArrayList<Enemy> deadEnemies = new ArrayList<>();
-        for(Enemy enemy: enemies){
-            enemy.transferLootTo(player);
-            if( !enemy.distanceToBiggerThan(new HellsPlot(), new Distance(0)) ){
-                deadEnemies.add(enemy);
-            }
-        }
-        this.removeDeadEnemies( deadEnemies );
-    }
-
-    public void removeDeadEnemies(ArrayList<Enemy> deadEnemies) {
-        for( Enemy deadEnemy: deadEnemies){
-            enemies.remove(deadEnemy);
+        for(Looteable enemy: looteableEnemies){
+            enemy.transferLootTo(playerCharacter);
         }
     }
 
-    public void makeEnemiesAttack() {
-        for(Enemy enemy: enemies){
-            enemy.attack(this.playerCharacter);
+    private void removeFinalizedWayEnemies() {
+        ArrayList<Enemy> enemiesCopy = new ArrayList<>();
+        enemiesCopy.addAll(enemies);
+        for( Enemy enemy: enemiesCopy){
+            enemy.finalizeYourWay(enemies);
         }
+    }
+
+    private void makeEnemiesAttack() {
+        ArrayList<PlayerCharacter> players = new ArrayList<>();
+        players.add(playerCharacter);
+        for(Enemy enemy: enemies){
+            enemy.attack(players);
+        }
+        this.removeFinalizedWayEnemies();
     }
 
     public void makeDefensesAttack() {
-        for( Defense defense: defenses ){
-            this.enemiesReceiveAttackFrom(defense);
-        }
-    }
-
-    public void enemiesReceiveAttackFrom( Defense defense ){
-        for( Enemy enemy: enemies) {
-            defense.attack(enemy);
-        }
+        playerCharacter.makeDefensesAttack(this.attackableEnemies);
     }
 
     public void advanceEnemies() {
         for( Enemy enemy: enemies){
             enemy.advance();
         }
-        this.enemies.addAll(this.troops.poll());
+
+        if( !this.troops.isEmpty() )
+            this.enemies.addAll(this.troops.poll());
+
+        this.makeEnemiesAttack();
+
     }
 
     public void buildDefenses() {
-        for( Defense defense: defenses){
-            defense.continueWithTheConstruction();
-        }
-    }
-
-    public void buildDefenseIn( Defense defense, Coordinate coordinate) throws WrongPlace {
-        this.map.locateEntityIn(defense, coordinate);
+        playerCharacter.buildDefenses();
     }
 
     public String gameWon(){
-            return this.playerCharacter.won(this.troops, this.enemies);
+            return this.playerCharacter.won();
     }
 
 }

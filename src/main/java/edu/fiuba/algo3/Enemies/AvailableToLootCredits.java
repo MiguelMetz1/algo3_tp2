@@ -1,10 +1,9 @@
 package edu.fiuba.algo3.Enemies;
 
 import edu.fiuba.algo3.Players.Looter;
-import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.TypeData.Credits;
 
-public class AvailableToLootCredits implements Inventory{
+public class AvailableToLootCredits implements Looteable {
 
     Credits creditsToGive;
 

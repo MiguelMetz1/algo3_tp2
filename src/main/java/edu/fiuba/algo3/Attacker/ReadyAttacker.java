@@ -3,28 +3,41 @@ package edu.fiuba.algo3.Attacker;
 import edu.fiuba.algo3.Enemies.Target;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Buff;
-import edu.fiuba.algo3.TypeData.Damage;
+import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance;
 
-public class ReadyAttacker implements Attacker {
+import java.util.ArrayList;
+import java.util.Iterator;
 
-    Damage damage;
+public class ReadyAttacker implements Attacker<Target> {
+
     Distance attackDistance;
-    Plot position;
+
+    Plot positionedPlace;
+
+    Coordinate position;
 
     Buff buff;
 
-    public ReadyAttacker(Buff buff, Plot position, Distance attackDistance) {
+    private boolean hasAttacked;
+
+    public ReadyAttacker(Buff buff, Coordinate position, Distance attackDistance) {
         this.position = position;
         this.buff = buff;
         this.attackDistance = attackDistance;
+        this.hasAttacked = false;
     }
 
-    public void attack( Target attackable ){
-        if( !attackable.distanceToBiggerThan( position, attackDistance ) ){
-            //attackable.takeDamage(damage);//Descomentar si el refactor no funciona
-            attackable.takeBuff(this.buff);
+    public void attack(ArrayList<Target> attackables ){
+        Iterator<Target> targets = attackables.iterator();
+        while ( targets.hasNext() && !hasAttacked ) {
+            Target attackable = targets.next();
+            if (!attackable.distanceToBiggerThan(position, attackDistance)) {
+                attackable.takeBuff(this.buff);
+                hasAttacked = true;
+            }
         }
+        hasAttacked = false;
     }
 
 }

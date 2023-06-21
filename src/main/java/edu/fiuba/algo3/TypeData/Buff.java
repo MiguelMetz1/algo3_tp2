@@ -10,18 +10,18 @@ public abstract class Buff {
         this.damage = damage;
         this.timeOfAction = timeOfAction;
     }
-    public void quitBuffFrom(Attribute buffeable, ArrayList<Buff> buffsToQuit){
+    public void quitBuffFrom(Attribute attribute, ArrayList<Buff> buffsToQuit){
         timeOfAction--;
         if( timeOfAction <= 0 ){
             buffsToQuit.add(this);
-            damage.removeDamage(buffeable);
-            this.quitBuff(buffeable);
+            damage.removeDamage(attribute);
+            this.quitBuff(attribute);
         }
     }
 
     protected abstract void quitBuff( Attribute attribute);
 
-    public void applyBuffIn(Attribute buffeable, ArrayList<Buff> activeBuffs){
+    public void applyBuffIn( Attribute buffeable, ArrayList<Buff> activeBuffs ){
         if( buffeable.typeOfBuffsEquals(this.typeOfBuff()) ){
             damage.applyDamage(buffeable);
             activeBuffs.add(this);

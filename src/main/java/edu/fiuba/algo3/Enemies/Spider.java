@@ -1,45 +1,34 @@
 package edu.fiuba.algo3.Enemies;
 
-
 import edu.fiuba.algo3.GameMap.GameMap;
-import edu.fiuba.algo3.Players.Player;
-import edu.fiuba.algo3.TypeData.*;
+import edu.fiuba.algo3.TypeData.Coordinate;
 
 import java.util.Queue;
 
-
-public class Spider extends Enemy{
-
-    public Spider(GameMap map){
-        super(map);
-    }
-
-    public Spider(GameMap map, Queue<Coordinate> path){
+public class Spider extends LooteableEnemy {
+    public Spider(GameMap map, Queue<Coordinate> path) {
         super(map, path);
+        this.setAttacker( new LifeAttacker( this.actualPosition, getDamage() ) );
     }
 
-    protected int amountOfCredits(){
+
+    protected double getDamage() {
+        return 2;
+    }
+
+    @Override
+    protected double getLife() {
+        return 2;
+    }
+
+    @Override
+    protected double getSpeed() {
+        return 2;
+    }
+
+    @Override
+    protected int amountOfCredits() {
         int random = (int) Math.round(Math.random());
         return 10*(random);
     }
-
-    @Override
-    protected int damage() {
-        return 2;
-    }
-
-    @Override
-    protected int energy() {
-        return 2;
-    }
-
-    @Override
-    protected int speed() {
-        return 2;
-    }
-
-    public String toString(){
-        return "Spider";
-    }
-
 }

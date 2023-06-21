@@ -1,9 +1,13 @@
 package edu.fiuba.algo3.Attacker;
 import edu.fiuba.algo3.Enemies.Target;
 
-public class InConstructionAttacker implements Attacker{
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class InConstructionAttacker implements Attacker<Target>{
     @Override
-    public void attack(Target enemy){
-        System.out.println("The defense is under construction");
+    public void attack(ArrayList<Target> enemy){
+        Logger.getLogger("Attacker").log(Level.INFO, "The defense is under construction");
     }
 }

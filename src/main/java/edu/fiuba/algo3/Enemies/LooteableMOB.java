@@ -3,9 +3,9 @@ package edu.fiuba.algo3.Enemies;
 import edu.fiuba.algo3.Players.Looter;
 import edu.fiuba.algo3.TypeData.Credits;
 
-public class LooteableMOB implements Inventory {
+public class LooteableMOB implements Looteable {
 
-    Inventory loot;
+    Looteable loot;
 
     public LooteableMOB(Credits credits ){
         this.loot = new AvailableToLootCredits(credits);

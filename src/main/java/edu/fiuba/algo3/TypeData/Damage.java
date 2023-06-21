@@ -1,26 +1,15 @@
 package edu.fiuba.algo3.TypeData;
 
-public abstract class Damage {
-    int damagePoints;
+public abstract class Damage extends Attribute{
 
-    public Damage(){
-        this.damagePoints = this.getDamage();
-    }
-
-    public Damage(int damagePoints ){
-        this.damagePoints = damagePoints;
-    }
-
-    public void incrementIn( int incrementPoints ){
-        this.damagePoints += incrementPoints;
+    public Damage(double damagePoints ){
+        super(damagePoints);
     }
 
     public  abstract void applyDamage(Attribute reducible);
 
     public abstract void removeDamage( Attribute buffeable);
 
-    protected int getDamage(){
-        return 0;
-    }
+    protected abstract String type();
 
 }

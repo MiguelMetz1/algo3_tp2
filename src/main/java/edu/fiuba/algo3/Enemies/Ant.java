@@ -1,55 +1,47 @@
 package edu.fiuba.algo3.Enemies;
 
+
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.TypeData.*;
 
+import java.util.ArrayList;
 import java.util.Queue;
 
+public class Ant extends LooteableEnemy {
 
-public class Ant extends Enemy {
+    private static ArrayList<Ant> deadAnts;
 
-    private static int antsThatDied;
-
-    public Ant(GameMap map){
-        super(map);
-        this.antsThatDied = 0;
-    }
-
-    public Ant(GameMap map, Queue<Coordinate> path){
+    public Ant(GameMap map, Queue<Coordinate> path) {
         super(map, path);
-        this.antsThatDied = 0;
+        this.setAttacker( new LifeAttacker( this.actualPosition, getDamage() ) );
+        deadAnts = new ArrayList<>();
     }
 
-    public void takeDamage(Damage damage){
-        super.takeDamage(damage);
-        if ( this.isDead() ){
-            antsThatDied += 1;
+    public void takeBuff( Buff buff ){
+        super.takeBuff(buff);
+        if( this.isDead() ) {
+            deadAnts.remove(this);
+            deadAnts.add(this);
         }
+    }
+
+    protected double getSpeed() {
+        return 1;
+    }
+
+    protected double getDamage() {
+        return 1;
+    }
+
+    protected double getLife(){
+        return 1;
     }
 
     protected int amountOfCredits(){
-        if( antsThatDied > 10 ){
+        if ( deadAnts.size() > 10 ){
             return 2;
         }
-        return 1;
-    }
 
-    @Override
-    protected int damage() {
         return 1;
-    }
-
-    @Override
-    protected int energy() {
-        return 1;
-    }
-
-    @Override
-    protected int speed() {
-        return 1;
-    }
-
-    public String toString(){
-        return "Ant";
     }
 }

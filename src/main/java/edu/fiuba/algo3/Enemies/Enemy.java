@@ -1,156 +1,106 @@
 package edu.fiuba.algo3.Enemies;
+
 import edu.fiuba.algo3.Advancer.Advancer;
 import edu.fiuba.algo3.Attacker.Attacker;
 import edu.fiuba.algo3.Attacker.NullAttacker;
-import edu.fiuba.algo3.Attacker.ReadyAttacker;
-import edu.fiuba.algo3.Exceptions.*;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
-import edu.fiuba.algo3.Players.Looter;
+import edu.fiuba.algo3.Players.PlayerCharacter;
 import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.TypeData.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
 
-public abstract class Enemy implements Target, Placeable {
-
-    Plot positionedPlace;
-
-    Energy energy;
-
+public abstract class Enemy implements Advanceable, Attacker<PlayerCharacter> {
     Advancer advancer;
-
-    Inventory inventorier;
 
     Attacker attacker;
 
-    AttackReceiver attackReceiver;
+    protected Speed speed;
+
+    protected Coordinate actualPosition;
+
+    Plot positionedPlace;
+
     ArrayList<String> passablePlots;
+
+    Queue<Coordinate> path;
 
     GameMap map;
 
-    protected Speed speed;
-
-    Damage damage;
-
-    ArrayList<Attribute> attributes;
-
-    public Enemy( GameMap map ) {
+    public Enemy(GameMap map, Queue<Coordinate> path){
+        this.speed = new Speed( this.getSpeed() );
+        this.actualPosition = new HellsCoordinate();
+        this.path = path;
         this.map = map;
-        this.energy = new Energy( new Life(energy()) );
-        this.attackReceiver = new LiveAttackReceiver(this.energy);
-        this.speed = new Speed(speed());
-        this.advancer = new LiveAdvancer(this.map, this.speed, new LinkedList<>(), this );
+        this.advancer = new LiveAdvancer( map, this.speed, this.actualPosition, path, this);
+        this.attacker = new NullAttacker();
         this.positionedPlace = new NullPlot();
-        this.damage = new DecrementerDamage(damage());
-        this.inventorier = new UnlooteableMOB();
-        this.attacker = new ReadyAttacker(new LifeInstantDecrementerDebuff(1, this.damage), this.positionedPlace, new Distance(range()));
-        this.passablePlots = passablePlots();
+        this.passablePlots = this.passablePlots();
     }
 
-    public Enemy( GameMap map, Queue<Coordinate> path ) {
-        this.map = map;
-        this.attributes = new ArrayList<>();
-        this.energy = new Energy( new Life(energy()) );
-        this.attackReceiver = new LiveAttackReceiver(this.energy);
-        this.speed = new Speed(speed());
-        this.advancer = new LiveAdvancer(this.map, this.speed, path, this );
-        this.positionedPlace = new NullPlot();
-        this.inventorier = new UnlooteableMOB();
-        DecrementerDamage damage = new DecrementerDamage(damage());
-        this.attacker = new ReadyAttacker(new LifeInstantDecrementerDebuff(1, damage), this.positionedPlace, new Distance(range()));
-        this.passablePlots = passablePlots();
-        this.attributes.add(this.energy);
-        this.attributes.add(this.speed);
-    }
+    public  void attack( ArrayList<PlayerCharacter> targets ){
 
-    public void locateIn( Plot plot ) throws WrongPlace {
-        if( !this.isARightPlot(plot) ){
-            throw new WrongPlace("The enemy cant walk on this plot.");
+        Attacker attacker = this.attacker;
+        if( this.isBeforeTheStartPosition() ) {
+            attacker = new NullAttacker();
         }
 
+        attacker.attack(targets);
+    }
+
+    protected boolean isBeforeTheStartPosition(){
+        return this.actualPositionIs( new HellsCoordinate() );
+    }
+
+    public  void advance(){
+
+        Advancer advancer = this.advancer;
+
+        if( this.reachedTheFinal() ){
+
+            advancer = new NullAdvancer();
+
+            this.positionedPlace = new HellsPlot();
+
+        }
+        advancer.advance();
+    }
+
+    protected boolean reachedTheFinal(){
+        return this.path.isEmpty();
+    }
+
+    protected boolean actualPositionIs( Coordinate coordinate ){
+        return this.actualPosition.equals( coordinate );
+    }
+
+    protected void setAttacker(Attacker attacker){
+        this.attacker = attacker;
+    }
+
+    protected void setAdvancer( Advancer advancer ){
+        this.advancer = advancer;
+    }
+
+    @Override
+    public void locateIn( Coordinate actualPosition, Plot plot ) throws WrongPlace {
+        if( !this.isARightPlot(plot) ){
+            throw new WrongPlace("The enemy can't walk on this plot.");
+        }
+        this.actualPosition.updateTo(actualPosition);
         this.positionedPlace = plot;
     }
 
     protected boolean isARightPlot( Plot plot ){
         for ( String rightPlotType : this.passablePlots){
-             if( plot.hasType( rightPlotType ) ){
-                 return true;
-             }
+            if( plot.hasType( rightPlotType ) ){
+                return true;
+            }
         }
         return false;
     }
-
-    public void takeDamage(Damage damage) {
-
-        this.attackReceiver.takeDamage(damage);
-        if( this.isDead() ){
-            this.inventorier = new LooteableMOB(new Credits(amountOfCredits()));
-            this.advancer = new DeadAdvancer();
-            this.attacker = new NullAttacker();
-            this.positionedPlace = new HellsPlot();
-            this.passablePlots.clear();
-            this.attackReceiver = new DeadAttackReceiver();
-        }
-    }
-
-    public void takeBuff(Buff buff) {
-
-        for( Attribute attribute: attributes ){
-            attribute.applyBuff(buff);
-        }
-
-        this.energy.quitBuffs();
-
-        if( this.isDead() ){
-            this.inventorier = new LooteableMOB(new Credits(amountOfCredits()));
-            this.advancer = new DeadAdvancer();
-            this.attacker = new NullAttacker();
-            this.positionedPlace = new HellsPlot();
-            this.passablePlots.clear();
-            this.attackReceiver = new DeadAttackReceiver();
-        }
-
-    }
-
-    public void transferLootTo( Looter player ){
-        this.inventorier.transferLootTo(player);
-    }
-
-    public boolean distanceToBiggerThan( Plot place, Distance distance ){
-        return  this.positionedPlace.distanceToBiggerThan(place, distance);
-    }
-
-    //TODO PONER isDead En Private
-    protected boolean isDead(){
-        Energy deadEntityEnergy = new Energy( new Life(0) );
-        return ( !this.energy.higher(deadEntityEnergy) || this.energy.equals(deadEntityEnergy) );
-    }
-
-
-    public void selfDestroy( ArrayList<Enemy> deadEnemies){
-        if( this.isDead()) {
-            deadEnemies.add(this);
-        }
-    }
-
-    protected abstract int amountOfCredits();
-
-    public void advance() {
-        this.advancer.advance();
-        this.speed.quitBuffs();
-    }
-
-    public void attack( Target player ) {
-        this.attacker.attack(player);
-    }
-
-    protected abstract int damage();
-
-    protected abstract int energy();
-
-    protected abstract int speed();
 
     protected ArrayList<String> passablePlots(){
         ArrayList<String> passablePlots = new ArrayList<>();
@@ -160,18 +110,16 @@ public abstract class Enemy implements Target, Placeable {
         return passablePlots;
     }
 
-    protected int range(){
-        return 0;
+    public void finalizeYourWay(ArrayList<Enemy> finalWaysEnemies ){
+        if( this.reachedTheFinal() ){
+            finalWaysEnemies.remove(this);
+        }
     }
 
-    public abstract String toString();
-
-    public boolean hasType( String type ){
-            return type.equals( this.type() );
+    protected void addPassablePlot( String passablePlot ){
+        this.passablePlots.add(passablePlot);
     }
 
-    private String type(){
-        return this.getClass().getName();
-    }
+    protected abstract double getSpeed();
 
 }

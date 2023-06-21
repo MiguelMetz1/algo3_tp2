@@ -1,26 +1,23 @@
 package edu.fiuba.algo3.Enemies;
 
+import edu.fiuba.algo3.TypeData.Attribute;
 import edu.fiuba.algo3.TypeData.Buff;
-import edu.fiuba.algo3.TypeData.Damage;
-import edu.fiuba.algo3.TypeData.Energy;
+
+import java.util.ArrayList;
 
 public class LiveAttackReceiver implements AttackReceiver {
 
-    Energy energy;
+    ArrayList<Attribute> attributes;
 
-    public LiveAttackReceiver( Energy energy ) {
-        this.energy = energy;
-    }
-
-
-    @Override
-    public void takeDamage(Damage damage) {
-        damage.applyDamage(this.energy);
+    public LiveAttackReceiver( ArrayList<Attribute> attributes ) {
+        this.attributes = attributes;
     }
 
     @Override
     public void takeBuff(Buff buff) {
-
+        for (Attribute attribute : attributes) {
+            attribute.applyBuff(buff);
+        }
     }
 
 

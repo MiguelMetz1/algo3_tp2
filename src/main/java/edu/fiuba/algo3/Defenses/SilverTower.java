@@ -1,5 +1,4 @@
 package edu.fiuba.algo3.Defenses;
-import edu.fiuba.algo3.TypeData.*;
 
 public class SilverTower extends Defense {
 

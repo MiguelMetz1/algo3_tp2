@@ -5,31 +5,39 @@ import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.TypeData.Coordinate;
 
-import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FirstEnemyAdvancer implements Advancer {
 
-    Queue<Coordinate> path;
+    Coordinate firstAdvanceCoordinate;
 
     Placeable entityToAdvance;
 
     GameMap map;
 
-    public FirstEnemyAdvancer(GameMap map, Queue<Coordinate> path, Placeable entityToAdvance){
+    Coordinate actualPosition;
+
+    public FirstEnemyAdvancer(GameMap map, Coordinate firstStep, Placeable entityToAdvance){
         this.map = map;
-        this.path = path;
+        this.firstAdvanceCoordinate = firstStep;
         this.entityToAdvance = entityToAdvance;
+    }
+
+    public FirstEnemyAdvancer(GameMap map, Coordinate actualPosition, Coordinate firstAdvanceCoordinate, Placeable entityToAdvance){
+        this.map = map;
+        this.firstAdvanceCoordinate = firstAdvanceCoordinate;
+        this.entityToAdvance = entityToAdvance;
+        this.actualPosition = actualPosition;
     }
 
     @Override
     public void advance() {
-        if( !this.path.isEmpty() ) {
-            Coordinate nextPosition = this.path.poll();
-            try {
-                this.map.locateEntityIn(entityToAdvance, nextPosition);
-            } catch (WrongPlace e) {
-                System.out.println("The entity can't advance to this place.");
-            }
+        try {
+            this.map.locateEntityIn(entityToAdvance, firstAdvanceCoordinate);
+            actualPosition.updateTo(firstAdvanceCoordinate);
+        } catch (WrongPlace e) {
+            Logger.getLogger("Advancer").log(Level.INFO, "The entity can't advance to this place.");
         }
     }
 }

@@ -2,10 +2,9 @@ package edu.fiuba.algo3.Shop;
 
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
-import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.TypeData.Credits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
-import edu.fiuba.algo3.Exceptions.WrongCost;
+
 import java.util.HashMap;
 
 public class Shop {
@@ -18,23 +17,24 @@ public class Shop {
         this.buyer = buyer;
     }
 
-    public Defense buy(String article) throws InsuficientCredits, NonExistentArticle {
+    public void buy(String article) throws InsuficientCredits, NonExistentArticle {
 
         if( !this.providers.containsKey(article) ) {
             throw new NonExistentArticle("The article that you wanted is not in the shop.");
         }
         Credits cost = this.providers.get(article).articleCost();
         buyer.wasteCredits(cost);
-        return this.providers.get(article).newArticle();
+        Defense defense = this.providers.get(article).newArticle();
+        buyer.addDefense(defense);
     }
 
-    public void addArticle( String articleName, Provider provider) throws WrongCost {
+    public void addArticle( String articleName, Provider provider){
         Credits articleCost = provider.articleCost();
-        if( articleCost.lowerCreditsThan(new Credits(0)) ){
-            throw new WrongCost("The cost of the article is lower than zero.");
+        if( !articleCost.lowerCreditsThan(new Credits(0)) ){
+            this.providers.put(articleName, provider);
         }
 
-        this.providers.put(articleName, provider);
+
     }
 
 }

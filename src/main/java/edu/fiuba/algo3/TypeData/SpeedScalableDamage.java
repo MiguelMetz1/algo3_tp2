@@ -8,11 +8,16 @@ public class SpeedScalableDamage extends Damage {
 
     @Override
     public void applyDamage(Attribute reducible) {
-        reducible.changeInScale(1/(this.damagePoints));
+        reducible.changeInScale(1/(this.pointsOfAttribute));
     }
 
     @Override
     public void removeDamage(Attribute buffeable) {
-        buffeable.changeInScale(this.damagePoints);
+        buffeable.changeInScale(this.pointsOfAttribute);
+    }
+
+    @Override
+    protected String type() {
+        return this.getClass().getName();
     }
 }
