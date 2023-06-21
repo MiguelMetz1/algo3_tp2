@@ -18,7 +18,5 @@ public class ComputerTurn implements Turn{
         this.computerInterface.spawnEnemies();//<<<<<<<<<<<<
         this.computerInterface.makeDefensesAttack();
         this.computerInterface.buildDefenses();
-
-
     }
 }

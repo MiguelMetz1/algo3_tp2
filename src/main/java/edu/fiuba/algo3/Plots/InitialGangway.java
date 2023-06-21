@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.Plots;
 
 import edu.fiuba.algo3.Enemies.Enemy;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,4 +32,9 @@ public class InitialGangway extends Gangway {
             this.enemies = new ArrayList<Enemy>();
         }
     }
+
+    public Image getImage() {
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/redWool.png");
+    }
+
 }

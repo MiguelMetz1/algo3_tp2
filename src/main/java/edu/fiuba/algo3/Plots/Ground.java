@@ -22,9 +22,7 @@ public class Ground extends Plot{
     }
 
     public Image getImage() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        String imagePath = classLoader.getResource("edu/fiuba/algo3/InterfazGrafica/javafx/Imagenes/ground.png").toExternalForm();
-        return new Image(imagePath);
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/ground.png");
     }
 
 }

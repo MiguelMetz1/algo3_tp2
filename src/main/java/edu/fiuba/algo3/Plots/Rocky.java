@@ -19,8 +19,6 @@ public class Rocky extends Plot{
     }
 
     public Image getImage() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        String imagePath = classLoader.getResource("edu/fiuba/algo3/InterfazGrafica/javafx/Imagenes/rocky.jpg").toExternalForm();
-        return new Image(imagePath);
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/rocky.jpg");
     }
 }
