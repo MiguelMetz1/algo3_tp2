@@ -68,7 +68,7 @@ public class WelcomeConteiner extends VBox {
 
 
         Button cleanButton = new Button();
-        cleanButton.setText("Clean text");
+        cleanButton.setText("Clean name");
 
 
         TextEventHandler textEventHandler = new TextEventHandler(startButton);

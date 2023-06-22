@@ -25,10 +25,6 @@ public class Gangway extends Plot{
         ground.remove(defense);
     }
 
-    public Color getColor(){
-        return Color.GREEN;
-    }
-
     public Image getImage() {
         return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/madera.jpg");
     }

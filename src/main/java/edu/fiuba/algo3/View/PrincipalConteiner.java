@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.View;
 
 import edu.fiuba.algo3.GameMap.GameMap;
+import edu.fiuba.algo3.Interface.Game;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -17,12 +18,12 @@ public class PrincipalConteiner extends BorderPane {
     OwnMenuBar menuBar;
     Canvas centralCanvas;
     VBox centralConteiner;
-    public PrincipalConteiner(Stage stage){
+    public PrincipalConteiner(Stage stage, Game game){
         this.setMenu(stage);
         this.setButtonPanel();
         this.setMessagePanel();
 
-        this.showMap();
+        this.showMap(game);
 
 
     }
@@ -41,14 +42,13 @@ public class PrincipalConteiner extends BorderPane {
         this.setLeft(verticalConteiner);
     }
 
-    private void showMap() {
+    private void showMap(Game game) {
 
 
-        GameMap map = GameMap.getMap();
 
         AnchorPane root = new AnchorPane();
 
-        map.showMap(root);
+        game.showMap(root);
 
 
         this.centralConteiner = new VBox(root);

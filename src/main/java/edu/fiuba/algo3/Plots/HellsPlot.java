@@ -3,6 +3,7 @@ package edu.fiuba.algo3.Plots;
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -25,5 +26,9 @@ public class HellsPlot extends Plot{
     @Override
     public void remove(Defense defense) {
         nullPlot.remove(defense);
+    }
+
+    public Image getImage(){
+        return null;
     }
 }

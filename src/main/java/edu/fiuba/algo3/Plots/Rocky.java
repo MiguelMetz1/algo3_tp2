@@ -25,9 +25,6 @@ public class Rocky extends Plot{
         Logger.getLogger("Placeable").log(Level.INFO, "This plot has nothing to remove.");
     }
 
-    public Color getColor(){
-        return Color.GRAY;
-    }
 
     public Image getImage() {
         return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/rocky.jpg");

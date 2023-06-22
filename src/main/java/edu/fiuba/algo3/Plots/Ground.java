@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Defenses.WhiteTower;
 import edu.fiuba.algo3.Enemies.Placeable;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -30,4 +31,7 @@ public class Ground extends Plot{
         this.defenses.remove(defense);
     }
 
+    public Image getImage() {
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/ground.png");
+    }
 }

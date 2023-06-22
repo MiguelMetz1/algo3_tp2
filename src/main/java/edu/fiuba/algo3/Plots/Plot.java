@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Enemies.Placeable;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance;
+import javafx.scene.image.Image;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,4 +29,6 @@ public abstract class Plot {
     }
 
     public abstract void remove(Defense defense);
+
+    public abstract Image getImage();
 }

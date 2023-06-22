@@ -90,10 +90,10 @@ public class Coordinate {
         return ("("+this.x+","+this.y+")");
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
-    public int getY() {
+    public double getY() {
         return y;
     }
 }
