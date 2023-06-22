@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class TowersAttacker implements Attacker<PlayerCharacter> {
 
-    private Coordinate position;
+    private final Coordinate position;
 
     public TowersAttacker(Coordinate actualPosition) {
         this.position = actualPosition;
@@ -17,10 +17,16 @@ public class TowersAttacker implements Attacker<PlayerCharacter> {
 
     @Override
     public void attack(ArrayList<PlayerCharacter> players) {
+
         for ( PlayerCharacter player : players) {
-            if( !player.distanceToBiggerThan(position, new Distance(0)) ) {
+
+            if( !player.distanceToBiggerThan( position, new Distance(0) ) ) {
+
                 player.attackFirstDefense();
+
             }
+
         }
+
     }
 }

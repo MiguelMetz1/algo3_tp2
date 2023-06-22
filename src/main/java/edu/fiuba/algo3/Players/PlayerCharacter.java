@@ -118,7 +118,10 @@ public class PlayerCharacter implements Target, Placeable, Buyer, Looter {
     }
 
     public void attackFirstDefense(){
-        this.defenses.poll();
+        if( !this.defenses.isEmpty() ) {
+            Defense defense = this.defenses.poll();
+            defense.removeFromYourPlot();
+        }
     }
 
     public void makeDefensesAttack( ArrayList<TargetableEnemy> enemies ){
@@ -192,4 +195,7 @@ public class PlayerCharacter implements Target, Placeable, Buyer, Looter {
         return passablePlots;
     }
 
+    public void destroyDefense(Defense defense) {
+        this.defenses.remove(defense);
+    }
 }

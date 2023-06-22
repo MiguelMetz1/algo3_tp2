@@ -19,9 +19,7 @@ public class GameMap {
             throw new WrongPlace("The place that you are trying to access is not part of this map");
         }
         Plot destinationPlot = map.get(destinationPlace);
-        destinationPlot.receive(entity);
         entity.locateIn(destinationPlace, destinationPlot);
-
     }
 
 

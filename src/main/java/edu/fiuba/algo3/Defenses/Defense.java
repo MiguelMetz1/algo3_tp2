@@ -1,5 +1,5 @@
 package edu.fiuba.algo3.Defenses;
-import edu.fiuba.algo3.Defenses.States.NullAttackerBuilder;
+import edu.fiuba.algo3.Defenses.States.NullBuilder;
 import edu.fiuba.algo3.Enemies.TargetableEnemy;
 import edu.fiuba.algo3.Attacker.Attacker;
 import edu.fiuba.algo3.Defenses.States.UnderConstructionAttacker;
@@ -7,7 +7,6 @@ import edu.fiuba.algo3.Defenses.States.Builder;
 import edu.fiuba.algo3.Enemies.Placeable;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.Attacker.NullAttacker;
-import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.TypeData.*;
 
@@ -27,7 +26,7 @@ public abstract class Defense implements Placeable {
     protected ArrayList< String > rightPlots;
 
     public Defense() {
-        this.builder = new NullAttackerBuilder();
+        this.builder = new NullBuilder();
         this.positionedPlot = new NullPlot();
         this.attacker = new NullAttacker();
         this.rightPlots = this.rightPlots();
@@ -43,13 +42,20 @@ public abstract class Defense implements Placeable {
         this.attacker = this.builder.actualState();
     }
 
+    protected void setAttacker(Attacker attacker){
+        this.attacker = attacker;
+    }
+
     @Override
     public void locateIn( Coordinate position, Plot plot) throws WrongPlace {
         if( !this.isARightPlot(plot) ){
             throw new WrongPlace("The defense cant be located in this plot.");
         }
-        this.position.updateTo(position);
+
+
+        this.positionedPlot.receive(this);
         this.positionedPlot = plot;
+        this.position.updateTo(position);
 
         this.builder = new UnderConstructionAttacker(
                 timeOfConstruction(),
@@ -60,6 +66,10 @@ public abstract class Defense implements Placeable {
 
         this.rightPlots.clear();
 
+    }
+
+    protected void setBuilder( Builder<Attacker>  builder){
+        this.builder = builder;
     }
 
     protected Buff getBuff(){
@@ -89,4 +99,7 @@ public abstract class Defense implements Placeable {
         return passablePlots;
     }
 
+    public void removeFromYourPlot() {
+        this.positionedPlot.remove(this);
+    }
 }

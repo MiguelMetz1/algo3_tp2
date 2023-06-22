@@ -1,5 +1,7 @@
 package edu.fiuba.algo3.Plots;
 
+import edu.fiuba.algo3.Defenses.Defense;
+import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Placeable;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate;
@@ -19,11 +21,11 @@ public abstract class Plot {
         return type.equals(this.type());
     }
 
-    public void receive(Placeable placeable) throws WrongPlace {
-        Logger.getLogger("Placeable").log(Level.INFO, "The entity was located in the indicated plot.");
-    }
+    public abstract void receive(Defense defense) throws WrongPlace;
 
     protected  String type(){
         return this.getClass().getName();
     }
+
+    public abstract void remove(Defense defense);
 }

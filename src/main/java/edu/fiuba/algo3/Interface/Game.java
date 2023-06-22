@@ -1,11 +1,9 @@
 package edu.fiuba.algo3.Interface;
 
-
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Looteable;
 import edu.fiuba.algo3.Enemies.LooteableEnemy;
 import edu.fiuba.algo3.Enemies.TargetableEnemy;
-
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
@@ -16,7 +14,6 @@ import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.Shop.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.WhiteTowerProvider;
 import edu.fiuba.algo3.TypeData.Coordinate;
-
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -38,8 +35,6 @@ public class Game {
     ArrayList<LooteableEnemy> looteableEnemies;
 
     public Game(){
-        //Hacer que el parser de las peticiones del usuario se ocupe de construir el usuario con el nombre y lo devuelva.
-        //Mientras tanto Hardcodeo.
         ExternalResources resources = new ExternalResources();
         this.map = resources.getMap();
         this.deadEnemies = new ArrayList<>();
@@ -56,6 +51,11 @@ public class Game {
     private void chargeShop(){
             this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
             this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
+            this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.playerCharacter));
+    }
+
+    private String sandTrapKey() {
+        return "Sand Trap";
     }
 
     private String whiteTowerKey(){
@@ -64,11 +64,6 @@ public class Game {
 
     private String silverTowerKey(){
         return "Silver Tower";
-    }
-
-    public void requireAction(){
-
-
     }
 
     public void buyDefense( String defense ) throws InsuficientCredits, NonExistentArticle {
