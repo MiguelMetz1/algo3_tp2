@@ -32,6 +32,10 @@ public class PlayerTurn implements Turn{
         System.out.println("Please. Select one option:");
         System.out.println("1. Construct tower.");
         System.out.println("2. Change turn.");
+        game.showPlayerCredist();
+
+        System.out.println("");
+
         String choice = input.nextLine();
 
         switch (choice) {

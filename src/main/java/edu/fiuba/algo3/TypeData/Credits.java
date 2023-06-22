@@ -40,6 +40,10 @@ public class Credits {
         return 0;
     }
 
+    public void showCredits(){
+        System.out.println("Remaining credits: " + this.credits);
+    }
+
 }
 
 

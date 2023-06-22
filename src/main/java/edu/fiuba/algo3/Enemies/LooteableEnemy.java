@@ -9,8 +9,13 @@ public abstract class LooteableEnemy extends TargetableEnemy implements Looteabl
 
     Looteable looteable;
 
+    Credits credits;
+
     public LooteableEnemy(GameMap map, Queue<Coordinate> path ) {
         super(map, path);
+
+        this.credits = new Credits(this.amountOfCredits());
+
         Looteable looteable = new NullLooteable();
         this.looteable = looteable;
     }
@@ -18,7 +23,9 @@ public abstract class LooteableEnemy extends TargetableEnemy implements Looteabl
     @Override
     public void transferLootTo(Looter player) {
         if( this.isDead() ) {
-            this.looteable = new LooteableMOB( new Credits( amountOfCredits() ) );
+            this.looteable = new LooteableMOB( this.credits );
+
+
         }
         this.looteable.transferLootTo(player);
     }

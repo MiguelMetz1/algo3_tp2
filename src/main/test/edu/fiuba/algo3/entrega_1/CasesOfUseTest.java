@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.entrega_1;
 
 
+import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
 import edu.fiuba.algo3.Defenses.SilverTower;
 import edu.fiuba.algo3.Defenses.WhiteTower;
 import edu.fiuba.algo3.Enemies.*;
@@ -493,6 +494,15 @@ public class CasesOfUseTest {
 
     }
 
+    @Test
+    public void SimulatingAGameNotAutomatized(){
+
+        AlgoDefense algoDefense = new AlgoDefense();
+        algoDefense.startGame();
+
+
+
+    }
 
 
 }

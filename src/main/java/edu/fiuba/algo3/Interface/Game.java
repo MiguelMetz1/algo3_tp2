@@ -126,4 +126,8 @@ public class Game {
     public void showMap(AnchorPane root) {
         this.map.showMap(root);
     }
+
+    public void showPlayerCredist() {
+        this.playerCharacter.showCredits();
+    }
 }

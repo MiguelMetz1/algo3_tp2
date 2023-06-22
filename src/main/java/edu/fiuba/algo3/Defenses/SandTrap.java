@@ -4,8 +4,12 @@ import edu.fiuba.algo3.Defenses.States.Builder;
 import edu.fiuba.algo3.Defenses.States.NullBuilder;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Plots.Gangway;
+import edu.fiuba.algo3.Plots.Ground;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.*;
+
+import java.util.ArrayList;
 
 public class SandTrap extends Defense{
 
@@ -54,5 +58,12 @@ public class SandTrap extends Defense{
     @Override
     public String toString() {
         return "SandTrap";
+    }
+
+    @Override
+    protected ArrayList<String> rightPlots(){
+        ArrayList<String> passablePlots = new ArrayList<>();
+        passablePlots.add( Gangway.class.getName() );
+        return passablePlots;
     }
 }

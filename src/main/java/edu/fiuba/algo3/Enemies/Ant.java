@@ -9,12 +9,12 @@ import java.util.Queue;
 
 public class Ant extends LooteableEnemy {
 
-    private static ArrayList<Ant> deadAnts;
+    private static ArrayList<Ant> deadAnts = new ArrayList<>();
 
     public Ant(GameMap map, Queue<Coordinate> path) {
         super(map, path);
         this.setAttacker( new LifeAttacker( this.actualPosition, getDamage() ) );
-        deadAnts = new ArrayList<>();
+
     }
 
     public void takeBuff( Buff buff ){

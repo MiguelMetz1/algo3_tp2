@@ -178,7 +178,7 @@ public class PlayerCharacter implements Target, Placeable, Buyer, Looter {
 
     @Override
     public void transferCredits(Credits creditsToGive) {
-        credits.transferCreditsTo(this.credits);
+        creditsToGive.transferCreditsTo(this.credits);
     }
 
     @Override
@@ -197,5 +197,9 @@ public class PlayerCharacter implements Target, Placeable, Buyer, Looter {
 
     public void destroyDefense(Defense defense) {
         this.defenses.remove(defense);
+    }
+
+    public void showCredits(){
+        this.credits.showCredits();
     }
 }

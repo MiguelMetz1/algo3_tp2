@@ -52,8 +52,7 @@ public abstract class Defense implements Placeable {
             throw new WrongPlace("The defense cant be located in this plot.");
         }
 
-
-        this.positionedPlot.receive(this);
+        plot.receive(this);
         this.positionedPlot = plot;
         this.position.updateTo(position);
 
