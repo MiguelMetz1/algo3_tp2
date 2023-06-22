@@ -22,7 +22,7 @@ public class ExternalResources {
     public ExternalResources() {
         String mapFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
         this.mapJsonParser = new MapJsonParser(mapFilename);
-        String enemiesFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/enemigos.json";
+        String enemiesFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/enemigosV2.json";
         this.enemiesJsonParser = new EnemiesJsonParser(enemiesFilename, this.mapJsonParser);
     }
 

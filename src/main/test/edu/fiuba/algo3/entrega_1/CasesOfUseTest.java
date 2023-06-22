@@ -379,7 +379,7 @@ public class CasesOfUseTest {
         game.buildDefenses();
         game.buildDefenses();
 
-        for( int i = 1; i < 13; i++ ) {
+        for( int i = 1; i < 30; i++ ) {
             game.advanceEnemies();
             game.makeDefensesAttack();
             game.makeDefensesAttack();
@@ -491,16 +491,6 @@ public class CasesOfUseTest {
         }
 
         assertEquals("Lose.", game.gameWon());
-
-    }
-
-    @Test
-    public void SimulatingAGameNotAutomatized(){
-
-        AlgoDefense algoDefense = new AlgoDefense();
-        algoDefense.startGame();
-
-
 
     }
 
