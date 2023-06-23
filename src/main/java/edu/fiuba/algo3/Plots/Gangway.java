@@ -26,6 +26,10 @@ public class Gangway extends Plot{
     }
 
     public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/madera.jpg");
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/madera.jpg");
+    }
+
+    public String getName(){
+        return "Gangway" + this.coordinate.toIntString();
     }
 }

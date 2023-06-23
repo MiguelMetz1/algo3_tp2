@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.View;
 
+import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Interface.Game;
 import javafx.geometry.Insets;
@@ -18,22 +19,28 @@ public class PrincipalConteiner extends BorderPane {
     OwnMenuBar menuBar;
     Canvas centralCanvas;
     VBox centralConteiner;
-    public PrincipalConteiner(Stage stage, Game game){
+
+    VBox consoleContainer;
+    public PrincipalConteiner(Stage stage, AlgoDefense algoDefense){
         this.setMenu(stage);
         this.setButtonPanel();
         this.setMessagePanel();
 
-        this.showMap(game);
+        this.showMap(algoDefense, this.consoleContainer);
+
+        Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
+        this.setBackground(new Background(backgroundImage));
 
 
     }
 
     private void setButtonPanel() {
         Button addSpider = new Button();
-        addSpider.setText("Add spider");
+        addSpider.setText("Buy defense");
 
         Button addAnt = new Button();
-        addAnt.setText("Add ant");
+        addAnt.setText("End turn");
 
         VBox verticalConteiner = new VBox(addSpider,addAnt);
         verticalConteiner.setSpacing(10);
@@ -42,22 +49,22 @@ public class PrincipalConteiner extends BorderPane {
         this.setLeft(verticalConteiner);
     }
 
-    private void showMap(Game game) {
+    private void showMap(AlgoDefense algoDefense, VBox consoleContainer) {
 
 
 
         AnchorPane root = new AnchorPane();
 
-        game.showMap(root);
+        algoDefense.showMap(root, consoleContainer);
 
 
         this.centralConteiner = new VBox(root);
         this.centralConteiner.setMaxWidth(680);
         this.setCenter(this.centralConteiner);
        /* this.centralConteiner.setAlignment(Pos.CENTER);*/
-        Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/water.jpg");
+        /*Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
-        this.centralConteiner.setBackground(new Background(backgroundImage));
+        this.centralConteiner.setBackground(new Background(backgroundImage));*/
 
 
 
@@ -72,12 +79,14 @@ public class PrincipalConteiner extends BorderPane {
         Label label = new Label("Messages:");
         label.setTextFill(Color.WHITE);
 
-        VBox consoleContainer = new VBox(label);
+        this.consoleContainer = new VBox(label);
+        /*VBox consoleContainer = new VBox(label);*/
         consoleContainer.setSpacing(10);
-        consoleContainer.setStyle("-fx-background-color: black");
+        //consoleContainer.setStyle("-fx-background-color: black");
         consoleContainer.setMinWidth(100);
+        consoleContainer.setMinHeight(100);
 
-        this.setRight(consoleContainer);
+        this.setBottom(consoleContainer);
     }
 
 }

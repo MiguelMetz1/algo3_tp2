@@ -96,4 +96,7 @@ public class Coordinate {
     public double getY() {
         return y;
     }
+    public String toIntString(){
+        return ("("+(int)this.x+","+(int)this.y+")");
+    }
 }

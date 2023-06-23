@@ -32,6 +32,10 @@ public class Ground extends Plot{
     }
 
     public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/ground.png");
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/ground.png");
+    }
+
+    public String getName(){
+        return "Ground" + this.coordinate.toIntString();
     }
 }

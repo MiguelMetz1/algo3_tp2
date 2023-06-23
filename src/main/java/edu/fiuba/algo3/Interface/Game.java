@@ -15,6 +15,7 @@ import edu.fiuba.algo3.Shop.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.WhiteTowerProvider;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.Queue;
@@ -123,8 +124,8 @@ public class Game {
             return this.playerCharacter.won();
     }
 
-    public void showMap(AnchorPane root) {
-        this.map.showMap(root);
+    public void showMap(AnchorPane root, VBox consoleContainer) {
+        this.map.showMap(root, consoleContainer);
     }
 
     public void showPlayerCredist() {

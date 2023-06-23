@@ -12,7 +12,11 @@ public class FinalGangway extends Gangway {
     }
 
     public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/orangeWool.png");
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/orangeWool.png");
+    }
+
+    public String getName(){
+        return "Final Gangway" + this.coordinate.toIntString();
     }
 
 }

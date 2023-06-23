@@ -11,10 +11,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+
 
 public class WelcomeConteiner extends VBox {
 
@@ -28,24 +41,23 @@ public class WelcomeConteiner extends VBox {
         this.stage = stage;
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);
-        Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/towerBackground.png");
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(60,85,false,false,false,false));
+        Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/algoDefenseFrontCover.jpg");
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
 
+
         Button startButton = new Button("Start Game");
+        styleButton(startButton);
+
 
         Button exitButton = new Button("Exit");
+        styleButton(exitButton);
 
         ExitButtonEventHandler exitButtonEventHandler = new ExitButtonEventHandler();
         exitButton.setOnAction(exitButtonEventHandler);
 
         Label label = new Label();
-        label.setText("Welcome to AlgoDefense, a game of strategy and war mixed");
-        label.setTextFill(Color.GREEN);
-        label.setStyle("-fx-background-color: White");
-        label.setMaxWidth(350);
-        label.setMaxHeight(60);
-        label.setAlignment(Pos.CENTER);
+        createTitle(label);
 
         this.getChildren().add(label);
 
@@ -67,21 +79,15 @@ public class WelcomeConteiner extends VBox {
         label1.setText(text.getText());
 
 
-        Button cleanButton = new Button();
-        cleanButton.setText("Clean name");
-
 
         TextEventHandler textEventHandler = new TextEventHandler(startButton);
         text.setOnKeyPressed(textEventHandler);
 
-        CleanButtonEventHandler cleanButtonEventHandler = new CleanButtonEventHandler(text);
-        cleanButton.setOnAction(cleanButtonEventHandler);
-
         StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler(text,label1,stage,nextScene);
         startButton.setOnAction(startButtonEventHandler);
 
-        VBox conteiner = new VBox(text,label1,cleanButton);
-        conteiner.setStyle("-fx-background-color: white");
+        VBox conteiner = new VBox(text,label1);
+        //conteiner.setStyle("-fx-background-color: white");
         conteiner.setAlignment(Pos.CENTER);
         conteiner.setSpacing(20);
         conteiner.setPadding(new Insets(15));
@@ -89,6 +95,46 @@ public class WelcomeConteiner extends VBox {
 
         this.getChildren().addAll(conteiner);
 
+    }
+
+    private void createTitle(Label label){
+        Text text = new Text("AlgoDefense");
+        text.setFont(Font.font("Arial", FontWeight.BOLD,60));
+        LinearGradient gradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.ORANGE), new Stop(1, Color.RED));
+
+        // Aplicar el degradado como relleno del texto
+        text.setFill(gradient);
+
+        text.setStroke(Color.BLACK);
+        text.setStrokeWidth(2);
+        text.setStrokeType(StrokeType.OUTSIDE);
+
+        // Crear una sombra alrededor del texto
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.BLACK);
+        shadow.setRadius(5);
+        shadow.setOffsetX(3);
+        shadow.setOffsetY(3);
+
+        // Aplicar la sombra al texto
+        text.setEffect(shadow);
+
+
+        label.setGraphic(text);
+        label.setStyle("-fx-padding: -20px 0 0 0");
+    }
+
+    private void styleButton(Button button){
+        button.setMaxWidth(300);
+
+        LinearGradient gradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.ORANGE), new Stop(1, Color.RED));
+
+        button.setBackground(new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY)));
+        button.setStyle("-fx-border-width: 2px; -fx-border-color: black");
+
+        button.setTextFill(Color.BLACK);
     }
 
 }

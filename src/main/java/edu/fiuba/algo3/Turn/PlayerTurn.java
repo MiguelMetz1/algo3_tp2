@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Exceptions.WrongFormat;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.TypeData.Coordinate;
+import javafx.scene.layout.BorderPane;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -36,7 +37,7 @@ public class PlayerTurn implements Turn{
 
         System.out.println("");
 
-        String choice = input.nextLine();
+        /*String choice = input.nextLine();
 
         switch (choice) {
             case "1":
@@ -49,7 +50,7 @@ public class PlayerTurn implements Turn{
                 System.out.println("Please, enter '1' to build or '2' to change turn");
                 playerAction();
                 break;
-        }
+        }*/
 
 
     }

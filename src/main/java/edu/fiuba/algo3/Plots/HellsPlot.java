@@ -31,4 +31,8 @@ public class HellsPlot extends Plot{
     public Image getImage(){
         return null;
     }
+
+    public String getName(){
+        return null;
+    }
 }

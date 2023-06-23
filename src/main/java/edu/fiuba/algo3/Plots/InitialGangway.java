@@ -10,6 +10,10 @@ public class InitialGangway extends Gangway {
     }
 
     public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/redWool.png");
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/redWool.png");
+    }
+
+    public String getName(){
+        return "Initial Gangway" + this.coordinate.toIntString();
     }
 }

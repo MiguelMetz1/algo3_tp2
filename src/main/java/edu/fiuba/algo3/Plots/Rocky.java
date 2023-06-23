@@ -27,6 +27,10 @@ public class Rocky extends Plot{
 
 
     public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Imagenes/rocky.jpg");
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/rocky.jpg");
+    }
+
+    public String getName(){
+        return "Rocky" + this.coordinate.toIntString();
     }
 }

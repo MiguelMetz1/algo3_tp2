@@ -31,4 +31,6 @@ public abstract class Plot {
     public abstract void remove(Defense defense);
 
     public abstract Image getImage();
+
+    public abstract String getName();
 }
