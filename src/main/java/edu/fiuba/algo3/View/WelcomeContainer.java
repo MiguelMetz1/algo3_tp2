@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.View;
 
 
-import edu.fiuba.algo3.View.Events.CleanButtonEventHandler;
+import edu.fiuba.algo3.TypeData.Name.Name;
 import edu.fiuba.algo3.View.Events.ExitButtonEventHandler;
 import edu.fiuba.algo3.View.Events.StartButtonEventHandler;
 import edu.fiuba.algo3.View.Events.TextEventHandler;
@@ -11,9 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -22,22 +20,21 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 
-public class WelcomeConteiner extends VBox {
+public class WelcomeContainer extends VBox {
 
     Stage stage;
-    OwnMenuBar menuBar;
+    Name name;
 
 
-    public WelcomeConteiner(Stage stage, Scene nextScene){
+    public WelcomeContainer(Stage stage, Scene nextScene, Name name){
         super();
 
+        this.name = name;
         this.stage = stage;
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);
@@ -58,39 +55,44 @@ public class WelcomeConteiner extends VBox {
 
         Label label = new Label();
         createTitle(label);
+        label.setPadding(new Insets(20, 0, 0, 0));
 
         this.getChildren().add(label);
 
-        this.createUser(startButton, nextScene);
+        this.createUser(startButton, nextScene,name);
 
         this.getChildren().addAll(startButton, exitButton);
 
     }
 
-    private void createUser(Button startButton, Scene nextScene) {
+    private void createUser(Button startButton, Scene nextScene, Name name) {
 
 
         TextField text = new TextField();
         text.setPromptText("Enter your name");
         text.setMaxWidth(300);
+        text.setStyle("-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-font-style: white; -fx-border-width: 2px; -fx-border-color: black");
+
+        text.setFont(Font.font("Arial", 18));
 
 
         Label label1 = new Label();
         label1.setText(text.getText());
+        label1.setStyle("-fx-background-color: #ef4335;-fx-border-radius: 10px");
 
 
 
         TextEventHandler textEventHandler = new TextEventHandler(startButton);
         text.setOnKeyPressed(textEventHandler);
 
-        StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler(text,label1,stage,nextScene);
+        StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler(text,label1,stage,nextScene, name);
         startButton.setOnAction(startButtonEventHandler);
 
         VBox conteiner = new VBox(text,label1);
         //conteiner.setStyle("-fx-background-color: white");
         conteiner.setAlignment(Pos.CENTER);
         conteiner.setSpacing(20);
-        conteiner.setPadding(new Insets(15));
+        conteiner.setPadding(new Insets(10));
         conteiner.setMaxWidth(350);
 
         this.getChildren().addAll(conteiner);
@@ -122,19 +124,41 @@ public class WelcomeConteiner extends VBox {
 
 
         label.setGraphic(text);
-        label.setStyle("-fx-padding: -20px 0 0 0");
+        //label.setStyle("-fx-padding: -20px 0 0 0");
     }
 
     private void styleButton(Button button){
         button.setMaxWidth(300);
 
-        LinearGradient gradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+        LinearGradient defaultGradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                 new Stop(0, Color.ORANGE), new Stop(1, Color.RED));
 
-        button.setBackground(new Background(new BackgroundFill(gradient, CornerRadii.EMPTY, Insets.EMPTY)));
+        LinearGradient hoverGradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.ORANGE.darker()), new Stop(1, Color.RED.darker()));
+
+        button.setBackground(new Background(new BackgroundFill(defaultGradient, CornerRadii.EMPTY, Insets.EMPTY)));
         button.setStyle("-fx-border-width: 2px; -fx-border-color: black");
 
         button.setTextFill(Color.BLACK);
+
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-100.0);
+
+        Lighting lighting = new Lighting();
+        lighting.setLight(light);
+        lighting.setSurfaceScale(5.0);
+
+
+        button.setFont(Font.font(null, FontWeight.BOLD, 18));
+        button.setEffect(lighting);
+
+        button.setOnMouseEntered(e -> button.setBackground(new Background(new BackgroundFill(hoverGradient, CornerRadii.EMPTY, Insets.EMPTY))));
+
+        // Restaurar el color de fondo al salir del mouse
+        button.setOnMouseExited(e -> button.setBackground(new Background(new BackgroundFill(defaultGradient, CornerRadii.EMPTY, Insets.EMPTY))));
+
     }
+
+
 
 }

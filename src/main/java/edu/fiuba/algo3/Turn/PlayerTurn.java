@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Exceptions.WrongFormat;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import javafx.scene.text.Text;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -124,4 +125,6 @@ public class PlayerTurn implements Turn{
     public void close(){
         input.close();
     }
+
+
 }

@@ -1,17 +1,17 @@
 package edu.fiuba.algo3.AlgoDefense;
 
-import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Turn.ComputerTurn;
 import edu.fiuba.algo3.Turn.PlayerTurn;
-import edu.fiuba.algo3.View.PrincipalConteiner;
+import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 
 public class AlgoDefense {
 
-    private PrincipalConteiner principalConteiner;
+    private PrincipalContainer principalContainer;
     PlayerTurn playerTurn;
     ComputerTurn computerTurn;
 
@@ -23,9 +23,9 @@ public class AlgoDefense {
         this.computerTurn = new ComputerTurn(game);
     }
 
-    public AlgoDefense(PrincipalConteiner principalConteiner) {
+    public AlgoDefense(PrincipalContainer principalContainer) {
         this();
-        this.principalConteiner = principalConteiner;
+        this.principalContainer = principalContainer;
 
     }
 
@@ -41,5 +41,9 @@ public class AlgoDefense {
 
     public void showMap(AnchorPane root, VBox consoleContainer) {
         this.game.showMap(root, consoleContainer);
+    }
+
+    public Name getName() {
+        return game.getName();
     }
 }

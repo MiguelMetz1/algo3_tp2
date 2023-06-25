@@ -15,9 +15,11 @@ import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Name.Name;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.Queue;
@@ -48,7 +50,7 @@ public class Game {
         this.looteableEnemies = resources.getLooteables();
         this.enemies = this.troops.poll();
         Coordinate playerCharacterPosition = resources.getPlayerCharacterCoordinate();
-        this.playerCharacter = new PlayerCharacter("Fabricio", map, playerCharacterPosition, troops, enemies);
+        this.playerCharacter = new PlayerCharacter(new Name("Fabricio"), map, playerCharacterPosition, troops, enemies);
         this.shop = new Shop(playerCharacter);
         this.chargeShop();
     }
@@ -132,5 +134,9 @@ public class Game {
 
     public void showPlayerCredist() {
         this.playerCharacter.showCredits();
+    }
+
+    public Name getName() {
+        return this.playerCharacter.getName();
     }
 }

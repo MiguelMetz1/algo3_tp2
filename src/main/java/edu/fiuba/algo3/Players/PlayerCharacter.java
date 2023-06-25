@@ -19,10 +19,13 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Credits.Credits;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Life.Life;
+import edu.fiuba.algo3.TypeData.Name.Name;
+import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.jar.Attributes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,12 +45,12 @@ public class PlayerCharacter implements Target, Placeable, Buyer, Looter {
 
     Credits credits;
 
-    String name;
+    Name name;
 
     GameMap map;
 
-    public PlayerCharacter(String name, GameMap map, Coordinate coordinate, Queue<ArrayList<Enemy>> troops, ArrayList<Enemy> enemies ) {
-        if( !this.rightName(name)){
+    public PlayerCharacter(Name name, GameMap map, Coordinate coordinate, Queue<ArrayList<Enemy>> troops, ArrayList<Enemy> enemies ) {
+        if( !this.rightName(name.getName())){
             throw new WrongPlayerName("The player needs as less a six characters name.");
         }
         this.troops = troops;
@@ -64,8 +67,8 @@ public class PlayerCharacter implements Target, Placeable, Buyer, Looter {
         this.name = name;
     }
 
-    public PlayerCharacter( String name, GameMap map, Coordinate coordinate ) {
-        if( !this.rightName(name)){
+    public PlayerCharacter( Name name, GameMap map, Coordinate coordinate ) {
+        if( !this.rightName(name.getName())){
             throw new WrongPlayerName("The player needs as less a six characters name.");
         }
         this.life = new Life(20);
@@ -207,4 +210,11 @@ public class PlayerCharacter implements Target, Placeable, Buyer, Looter {
     public void showCredits(){
         this.credits.showCredits();
     }
+
+    public Name getName() {
+
+        return this.name;
+    }
+
+
 }
