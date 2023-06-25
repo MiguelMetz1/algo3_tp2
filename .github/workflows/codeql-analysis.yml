@@ -26,12 +26,6 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-20.04
-  print-token:
-    permissions: write-all
-    name: print-token
-    environment: dev
-    # needs: pre-pkr
-    runs-on: ubuntu-latest 
 
     strategy:
       fail-fast: false
