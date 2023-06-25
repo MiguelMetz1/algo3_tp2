@@ -1,10 +1,11 @@
 package edu.fiuba.algo3.Enemies;
 
 import edu.fiuba.algo3.Attacker.Attacker;
+import edu.fiuba.algo3.Attacker.EnemiesAttacker.LifeAttacker;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.Ground;
 import edu.fiuba.algo3.Plots.Rocky;
-import edu.fiuba.algo3.TypeData.*;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 
 import java.util.ArrayList;
 import java.util.Queue;

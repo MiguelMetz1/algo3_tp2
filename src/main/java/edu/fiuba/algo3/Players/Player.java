@@ -4,8 +4,9 @@ import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.WrongPlayerName;
 import edu.fiuba.algo3.Shop.Buyer;
-import edu.fiuba.algo3.TypeData.*;
+import edu.fiuba.algo3.TypeData.Credits.Credits;
 
+//TODO VER SI SIRVE
 public class Player implements Looter, Buyer {
     private Credits credits;
     private String name;

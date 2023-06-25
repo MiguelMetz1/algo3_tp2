@@ -1,14 +1,23 @@
 package edu.fiuba.algo3.Enemies;
 
 import edu.fiuba.algo3.Attacker.NullAttacker;
+import edu.fiuba.algo3.Enemies.AttackReceiver.LiveAttackReceiver;
+import edu.fiuba.algo3.Enemies.AttackReceiver.AttackReceiver;
+import edu.fiuba.algo3.Enemies.Interface.Target;
+import edu.fiuba.algo3.Enemies.Advancer.NullAdvancer;
+import edu.fiuba.algo3.Enemies.AttackReceiver.NullAttackReceiver;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Players.PlayerCharacter;
-import edu.fiuba.algo3.TypeData.*;
+import edu.fiuba.algo3.TypeData.Buff.Attribute;
+import edu.fiuba.algo3.TypeData.Buff.Buff;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
+import edu.fiuba.algo3.TypeData.Energy.Energy;
 
 import java.util.ArrayList;
 import java.util.Queue;
 
-public abstract class TargetableEnemy extends Enemy implements Target{
+public abstract class TargetableEnemy extends Enemy implements Target {
     private Energy life;
 
     AttackReceiver attackReceiver;

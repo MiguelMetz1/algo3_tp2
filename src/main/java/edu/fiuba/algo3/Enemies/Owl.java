@@ -1,11 +1,13 @@
 package edu.fiuba.algo3.Enemies;
 
+import edu.fiuba.algo3.Attacker.EnemiesAttacker.TowersAttacker;
+import edu.fiuba.algo3.Enemies.Advancer.DamagedOwlAdvancer;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.Ground;
 import edu.fiuba.algo3.Plots.Rocky;
-import edu.fiuba.algo3.TypeData.Buff;
-import edu.fiuba.algo3.TypeData.Coordinate;
-import edu.fiuba.algo3.TypeData.Energy;
+import edu.fiuba.algo3.TypeData.Buff.Buff;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Energy.Energy;
 
 import java.util.Queue;
 

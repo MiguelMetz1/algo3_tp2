@@ -1,9 +1,8 @@
 package edu.fiuba.algo3.entrega_1;
 
 
-import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
-import edu.fiuba.algo3.Defenses.SilverTower;
-import edu.fiuba.algo3.Defenses.WhiteTower;
+import edu.fiuba.algo3.Defenses.Towers.SilverTower;
+import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
 import edu.fiuba.algo3.Enemies.*;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.GameMap.GameMap;
@@ -11,12 +10,12 @@ import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Players.PlayerCharacter;
 import edu.fiuba.algo3.Plots.*;
+import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
+import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
-import edu.fiuba.algo3.Shop.SilverTowerProvider;
-import edu.fiuba.algo3.Shop.WhiteTowerProvider;
-import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.Players.Player;
-import edu.fiuba.algo3.TypeData.Distance;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
 import org.junit.jupiter.api.Test;
 
 

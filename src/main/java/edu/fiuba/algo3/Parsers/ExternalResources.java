@@ -2,10 +2,10 @@ package edu.fiuba.algo3.Parsers;
 
 
 import edu.fiuba.algo3.Enemies.Enemy;
-import edu.fiuba.algo3.Enemies.LooteableEnemy;
+import edu.fiuba.algo3.Enemies.Loot.LooteableEnemy;
 import edu.fiuba.algo3.Enemies.TargetableEnemy;
 import edu.fiuba.algo3.GameMap.GameMap;
-import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

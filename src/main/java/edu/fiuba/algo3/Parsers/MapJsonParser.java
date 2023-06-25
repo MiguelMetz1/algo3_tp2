@@ -2,7 +2,7 @@ package edu.fiuba.algo3.Parsers;
 
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.*;
-import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

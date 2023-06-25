@@ -1,8 +1,9 @@
 package edu.fiuba.algo3.Parsers;
 
 import edu.fiuba.algo3.Enemies.*;
-import edu.fiuba.algo3.TypeData.Coordinate;
-import edu.fiuba.algo3.TypeData.Distance;
+import edu.fiuba.algo3.Enemies.Loot.LooteableEnemy;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

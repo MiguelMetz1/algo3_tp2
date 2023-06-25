@@ -1,9 +1,7 @@
 package edu.fiuba.algo3.Plots;
 
-import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import javafx.scene.image.Image;
-
-import java.util.ArrayList;
 
 public class FinalGangway extends Gangway {
 

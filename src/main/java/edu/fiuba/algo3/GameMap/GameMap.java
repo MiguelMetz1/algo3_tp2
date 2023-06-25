@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.GameMap;
 
-import edu.fiuba.algo3.Enemies.Placeable;
+import edu.fiuba.algo3.Enemies.Interface.Placeable;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Plots.Plot;
-import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;

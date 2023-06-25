@@ -1,14 +1,19 @@
 package edu.fiuba.algo3.Defenses;
-import edu.fiuba.algo3.Defenses.States.NullBuilder;
+import edu.fiuba.algo3.Defenses.Builder.NullBuilder;
 import edu.fiuba.algo3.Enemies.TargetableEnemy;
 import edu.fiuba.algo3.Attacker.Attacker;
-import edu.fiuba.algo3.Defenses.States.UnderConstructionAttacker;
-import edu.fiuba.algo3.Defenses.States.Builder;
-import edu.fiuba.algo3.Enemies.Placeable;
+import edu.fiuba.algo3.Defenses.Builder.UnderConstructionAttacker;
+import edu.fiuba.algo3.Defenses.Builder.Builder;
+import edu.fiuba.algo3.Enemies.Interface.Placeable;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.Attacker.NullAttacker;
 import edu.fiuba.algo3.Plots.*;
-import edu.fiuba.algo3.TypeData.*;
+import edu.fiuba.algo3.TypeData.Buff.Buff;
+import edu.fiuba.algo3.TypeData.Buff.EnergyInstantDecrementerDebuff;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.HellsCoordinate;
+import edu.fiuba.algo3.TypeData.Damage.AdditiveDamage;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
 
@@ -31,7 +36,9 @@ public abstract class Defense implements Placeable {
         this.attacker = new NullAttacker();
         this.rightPlots = this.rightPlots();
         this.position = new HellsCoordinate();
+
     }
+
 
 
     public void attack(ArrayList<TargetableEnemy> enemies){

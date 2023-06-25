@@ -2,7 +2,8 @@ package edu.fiuba.algo3.Shop;
 
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
-import edu.fiuba.algo3.TypeData.Credits;
+import edu.fiuba.algo3.Shop.Provider.Provider;
+import edu.fiuba.algo3.TypeData.Credits.Credits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 
 import java.util.HashMap;

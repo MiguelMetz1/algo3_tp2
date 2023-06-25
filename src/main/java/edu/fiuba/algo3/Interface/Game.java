@@ -1,8 +1,9 @@
 package edu.fiuba.algo3.Interface;
 
+import edu.fiuba.algo3.Defenses.Builder.UnderDestructionSandTrap;
 import edu.fiuba.algo3.Enemies.Enemy;
-import edu.fiuba.algo3.Enemies.Looteable;
-import edu.fiuba.algo3.Enemies.LooteableEnemy;
+import edu.fiuba.algo3.Enemies.Loot.Looteable;
+import edu.fiuba.algo3.Enemies.Loot.LooteableEnemy;
 import edu.fiuba.algo3.Enemies.TargetableEnemy;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
@@ -10,12 +11,13 @@ import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
+import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
-import edu.fiuba.algo3.Shop.SilverTowerProvider;
-import edu.fiuba.algo3.Shop.WhiteTowerProvider;
-import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
 
 import java.util.ArrayList;
 import java.util.Queue;

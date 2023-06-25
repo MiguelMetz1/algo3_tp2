@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.Attacker;
 
 
-import edu.fiuba.algo3.Enemies.Target;
+import edu.fiuba.algo3.Enemies.Interface.Target;
 
 import java.util.ArrayList;
 

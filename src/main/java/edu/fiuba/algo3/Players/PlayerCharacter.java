@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.Players;
 import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Enemies.Placeable;
+import edu.fiuba.algo3.Enemies.Interface.Placeable;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.TargetableEnemy;
-import edu.fiuba.algo3.Enemies.Target;
+import edu.fiuba.algo3.Enemies.Interface.Target;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Exceptions.WrongPlayerName;
@@ -13,7 +13,12 @@ import edu.fiuba.algo3.Plots.HellsPlot;
 import edu.fiuba.algo3.Plots.NullPlot;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.Shop.Buyer;
-import edu.fiuba.algo3.TypeData.*;
+import edu.fiuba.algo3.TypeData.Buff.Attribute;
+import edu.fiuba.algo3.TypeData.Buff.Buff;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Credits.Credits;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
+import edu.fiuba.algo3.TypeData.Life.Life;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

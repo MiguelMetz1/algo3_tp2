@@ -5,7 +5,7 @@ import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Parsers.EnemiesJsonParser;
 import edu.fiuba.algo3.Parsers.MapJsonParser;
 
-import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import org.junit.jupiter.api.Test;
 
 import java.util.Queue;

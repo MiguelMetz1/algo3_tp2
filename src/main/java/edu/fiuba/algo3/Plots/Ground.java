@@ -1,11 +1,8 @@
 package edu.fiuba.algo3.Plots;
 
 import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Defenses.SilverTower;
-import edu.fiuba.algo3.Defenses.WhiteTower;
-import edu.fiuba.algo3.Enemies.Placeable;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
-import edu.fiuba.algo3.TypeData.Coordinate;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;

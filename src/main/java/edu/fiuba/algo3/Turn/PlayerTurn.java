@@ -5,8 +5,7 @@ import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongFormat;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
-import edu.fiuba.algo3.TypeData.Coordinate;
-import javafx.scene.layout.BorderPane;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 
 import java.util.Scanner;
 import java.util.logging.Level;

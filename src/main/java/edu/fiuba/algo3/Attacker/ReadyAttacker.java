@@ -1,10 +1,10 @@
 package edu.fiuba.algo3.Attacker;
 
-import edu.fiuba.algo3.Enemies.Target;
+import edu.fiuba.algo3.Enemies.Interface.Target;
 import edu.fiuba.algo3.Plots.Plot;
-import edu.fiuba.algo3.TypeData.Buff;
-import edu.fiuba.algo3.TypeData.Coordinate;
-import edu.fiuba.algo3.TypeData.Distance;
+import edu.fiuba.algo3.TypeData.Buff.Buff;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
 import java.util.Iterator;
