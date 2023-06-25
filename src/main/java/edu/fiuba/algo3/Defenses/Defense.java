@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.Defenses;
 import edu.fiuba.algo3.Defenses.Builder.NullBuilder;
+import edu.fiuba.algo3.Enemies.Interface.Target;
 import edu.fiuba.algo3.Enemies.TargetableEnemy;
 import edu.fiuba.algo3.Attacker.Attacker;
 import edu.fiuba.algo3.Defenses.Builder.UnderConstructionAttacker;

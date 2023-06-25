@@ -4,6 +4,8 @@ import edu.fiuba.algo3.Defenses.Towers.SilverTower;
 import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
 import edu.fiuba.algo3.Defenses.Traps.SandTrap;
 import edu.fiuba.algo3.Enemies.Ant;
+import edu.fiuba.algo3.Enemies.Interface.Target;
+import edu.fiuba.algo3.Enemies.Mole;
 import edu.fiuba.algo3.Enemies.Spider;
 import edu.fiuba.algo3.Enemies.TargetableEnemy;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
@@ -16,6 +18,7 @@ import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import org.junit.jupiter.api.Test;
 
@@ -124,6 +127,7 @@ public class DefenseTest {
 
         ArrayList<TargetableEnemy> enemies = new ArrayList<>();
         enemies.add(ant);
+        ant.advance();
         whiteTower.attack(enemies); /* not constructed yet so cant attack*/
         ant.die(deadEnemies); /* ant is not dead so deanEnemies should de empty */
         assertFalse(deadEnemies.contains(ant));
@@ -154,6 +158,7 @@ public class DefenseTest {
 
         ArrayList<TargetableEnemy> enemies = new ArrayList<>();
         enemies.add(ant);
+        ant.advance();
         silverTower.attack(enemies); /* not constructed yet so cant attack*/
         ant.die(deadEnemies); /* ant is not dead so deanEnemies should de empty */
         assertFalse(deadEnemies.contains(ant));
@@ -172,12 +177,8 @@ public class DefenseTest {
     }
 
     @Test
-    public void SandTrapsShouldStartApplyingEffectInTheSameTurn() throws WrongPlace {
+    public void SandTrapsShouldStartApplyingEffectOnAntsInTheSameTurn() throws WrongPlace {
 
-        /* White towers have range attack of three block
-           if an enemy lands on a sand trap in coordinates (2,2) isn't in range of
-           the tower is placed on (2, 8)
-           The enemy is going to be on range after 5 turns */
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
@@ -188,7 +189,7 @@ public class DefenseTest {
 
         Path path = new Path();
         Ant ant = new Ant(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+
         ArrayList<TargetableEnemy> enemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
@@ -196,30 +197,115 @@ public class DefenseTest {
 
         SandTrap sandTrap = new SandTrap(playerCharacter);
         map.locateEntityIn(sandTrap, new Coordinate(2,2));
+        sandTrap.continueWithTheConstruction();
 
         enemies.add(ant);
         ant.advance();
-        whiteTower.attack(enemies);
-        whiteTower.continueWithTheConstruction();
-        ant.die(deadEnemies);
-        assertFalse(deadEnemies.contains(ant));
+        ant.advance();
+        boolean position1 = ant.distanceToBiggerThan(new Coordinate(2,2), new Distance(0));
+        assertFalse(position1);
+        sandTrap.attack(enemies);
+        ant.advance();
+        boolean position2 = ant.distanceToBiggerThan(new Coordinate(2,2.5), new Distance(0));
+        assertFalse(position2);
+        ant.advance();
+        boolean position3 = ant.distanceToBiggerThan(new Coordinate(2,3.5), new Distance(0));
+        assertFalse(position3);
+        ant.advance();
+        boolean position4 = ant.distanceToBiggerThan(new Coordinate(2,4.5), new Distance(0));
+        assertFalse(position4);
 
-        ant.advance();
-        ant.advance();
-        ant.advance();
-        ant.advance();
 
-        whiteTower.attack(enemies);
-        ant.die(deadEnemies);
-        assertTrue(deadEnemies.contains(ant));
 
-        
     }
+
+    @Test
+    public void SandTrapsShouldStartApplyingEffectOnSpidersInTheSameTurn() throws WrongPlace {
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+
+
+        Path path = new Path();
+        Spider spider = new Spider(map, path.copyPath());
+
+        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+
+        SandTrap sandTrap = new SandTrap(playerCharacter);
+        map.locateEntityIn(sandTrap, new Coordinate(2,3));
+        sandTrap.continueWithTheConstruction();
+
+        enemies.add(spider);
+        spider.advance();
+        spider.advance();
+        boolean position1 = spider.distanceToBiggerThan(new Coordinate(2,3), new Distance(0));
+        assertFalse(position1);
+        sandTrap.attack(enemies);
+        spider.advance();
+        boolean position2 = spider.distanceToBiggerThan(new Coordinate(2,4), new Distance(0));
+        assertFalse(position2);
+        spider.advance();
+        boolean position3 = spider.distanceToBiggerThan(new Coordinate(2,6), new Distance(0));
+        assertFalse(position3);
+        spider.advance();
+        boolean position4 = spider.distanceToBiggerThan(new Coordinate(3,7), new Distance(0));
+        assertFalse(position4);
+
+
+
+    }
+
+    @Test
+    public void SandTrapsShouldStartApplyingEffectOnMoleInTheSameTurn() throws WrongPlace {
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+
+
+        Path path = new Path();
+        Mole mole = new Mole(map, path.copyPath());
+
+        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+
+        SandTrap sandTrap = new SandTrap(playerCharacter);
+        map.locateEntityIn(sandTrap, new Coordinate(2,3));
+        sandTrap.continueWithTheConstruction();
+
+        /*enemies.add(mole);*/
+        mole.advance();
+        mole.advance();
+        boolean position1 = mole.distanceToBiggerThan(new Coordinate(2,3), new Distance(0));
+        assertFalse(position1);
+        sandTrap.attack(enemies);
+        mole.advance();
+        boolean position2 = mole.distanceToBiggerThan(new Coordinate(2,4), new Distance(0));
+        assertFalse(position2);
+        mole.advance();
+        boolean position3 = mole.distanceToBiggerThan(new Coordinate(2,6), new Distance(0));
+        assertFalse(position3);
+        mole.advance();
+        boolean position4 = mole.distanceToBiggerThan(new Coordinate(3,7), new Distance(0));
+        assertFalse(position4);
+
+
+
+    }
+
+
+
 
 
     @Test
     public void WhiteTowersMakeTheCorrectAmountOfDamage() throws WrongPlace {
-        /* White towers make one point of damage so should oneshot an ant that have one point of life */
+        /* White towers make one point of damage so should kill an spider in two shots that have one point of life */
 
 
         ExternalResources resources = new ExternalResources();
@@ -238,6 +324,7 @@ public class DefenseTest {
         ant.advance();
         whiteTower.continueWithTheConstruction();
         whiteTower.attack(enemies);
+        whiteTower.attack(enemies);
         ant.die(deadEnemies);
         assertTrue(deadEnemies.contains(ant));
 
@@ -247,7 +334,7 @@ public class DefenseTest {
 
     @Test
     public void SilversTowersMakeTheCorrectAmountOfDamage() throws WrongPlace {
-        /* Silver towers make two points of damage so should oneshot an spider that have two point of life */
+        /* Silver towers make two points of damage so should oneshot a spider that have two points of life */
 
 
         ExternalResources resources = new ExternalResources();
