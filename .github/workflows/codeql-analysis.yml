@@ -23,9 +23,15 @@ on:
     - cron: '33 7 * * 3'
 
 jobs:
+
   analyze:
     name: Analyze
     runs-on: ubuntu-20.04
+    
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      issues: 'write'
 
     strategy:
       fail-fast: false
