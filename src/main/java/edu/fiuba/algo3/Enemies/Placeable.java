@@ -7,4 +7,6 @@ import edu.fiuba.algo3.TypeData.Coordinate;
 public interface Placeable {
     void locateIn(Coordinate coordinate, Plot plot) throws WrongPlace;
 
+
+
 }

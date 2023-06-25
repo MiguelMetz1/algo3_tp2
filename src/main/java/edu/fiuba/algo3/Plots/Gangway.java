@@ -4,7 +4,6 @@ import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 
 public class Gangway extends Plot{
 
