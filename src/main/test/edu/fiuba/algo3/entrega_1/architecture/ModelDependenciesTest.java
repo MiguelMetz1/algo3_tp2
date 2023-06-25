@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.architecture;
+package edu.fiuba.algo3.entrega_1.architecture;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
