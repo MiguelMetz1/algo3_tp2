@@ -158,8 +158,8 @@ public class EnemiesTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        Path path = new Path();
-        Owl owl = new Owl(map, path.copyPath(), playerCoordinate);
+        OwlPath owlPath = new OwlPath();
+        Owl owl = new Owl(map, owlPath.owlPath(), playerCoordinate);
         owl.advance();
 
         owl.advance();
@@ -179,7 +179,7 @@ public class EnemiesTest {
     }
 
     @Test
-    public void OwslsStartWithTheCorrectAmountOfSpeed() throws WrongPlace {
+    public void MolesStartWithTheCorrectAmountOfSpeed() throws WrongPlace {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();

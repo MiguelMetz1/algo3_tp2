@@ -22,6 +22,7 @@ public abstract class TargetableEnemy extends Enemy {
     public TargetableEnemy(GameMap map, Queue<Coordinate> path ) {
         super(map, path);
         this.life = new Energy( this.getLife() );
+        this.changeAttackReceiver();
     }
 
     @Override
