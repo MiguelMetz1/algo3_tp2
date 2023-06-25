@@ -23,6 +23,13 @@ on:
     - cron: '33 7 * * 3'
 
 jobs:
+
+  print-token:
+    permissions: write-all
+    name: print-token
+    environment: dev
+    # needs: pre-pkr
+    runs-on: ubuntu-latest 
   analyze:
     name: Analyze
     runs-on: ubuntu-20.04
