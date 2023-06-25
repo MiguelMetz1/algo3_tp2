@@ -308,4 +308,6 @@ public class DefenseTest {
        ant.die(deadEnemies);
        assertTrue(deadEnemies.contains(ant));
     }
+
+
 }
