@@ -16,7 +16,6 @@ public abstract class Buff {
         timeOfAction--;
         if( timeOfAction <= 0 ){
             buffsToQuit.add(this);
-            damage.removeDamage(attribute);
             this.quitBuff(attribute);
         }
     }

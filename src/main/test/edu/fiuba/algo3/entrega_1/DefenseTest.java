@@ -16,6 +16,7 @@ import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Name.Name;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class DefenseTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        PlayerCharacter playerCharacter = new PlayerCharacter("Lautaro", map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
 
         Shop shop = new Shop(playerCharacter);
         shop.addArticle("White Tower", new WhiteTowerProvider());
@@ -59,7 +60,7 @@ public class DefenseTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        PlayerCharacter playerCharacter = new PlayerCharacter("Lautaro", map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
 
         Shop shop = new Shop(playerCharacter);
         shop.addArticle("Silver Tower", new SilverTowerProvider());
@@ -85,7 +86,7 @@ public class DefenseTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        PlayerCharacter playerCharacter = new PlayerCharacter("Lautaro", map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
 
         Shop shop = new Shop(playerCharacter);
         shop.addArticle("Sand Trap", new SandTrapProvider(playerCharacter)); //TODO por que pide un player character?
@@ -182,7 +183,7 @@ public class DefenseTest {
         GameMap map = resources.getMap();
 
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter("Lautaro", map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
 
 
         Path path = new Path();
@@ -281,7 +282,7 @@ public class DefenseTest {
         GameMap map = resources.getMap();
 
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter("Lautaro", map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
 
 
         Path path = new Path();

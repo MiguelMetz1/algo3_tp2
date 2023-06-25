@@ -36,4 +36,8 @@ public class Distance {
             this.distance = 0;
         }
     }
+
+    public void reduceIn(Distance otherDistance) {
+        this.distance -= otherDistance.distance;
+    }
 }

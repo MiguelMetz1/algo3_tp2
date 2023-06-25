@@ -3,6 +3,7 @@ package edu.fiuba.algo3.entrega_1;
 
 import edu.fiuba.algo3.Defenses.Towers.SilverTower;
 import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
+import edu.fiuba.algo3.Defenses.Traps.SandTrap;
 import edu.fiuba.algo3.Enemies.*;
 import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.GameMap.GameMap;
@@ -16,6 +17,7 @@ import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
+import edu.fiuba.algo3.TypeData.Name.Name;
 import org.junit.jupiter.api.Test;
 
 
@@ -75,7 +77,7 @@ public class CasesOfUseTest {
         ArrayList<Enemy> enemies = new ArrayList<>();
         Spider spider = new Spider(map, this.copyPath());
         enemies.add(spider);
-        PlayerCharacter playerCharacter = new PlayerCharacter("Fabricio", map, resources.getPlayerCharacterCoordinate());
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fabricio"), map, resources.getPlayerCharacterCoordinate());
         assertDoesNotThrow(()->map.locateEntityIn(spider, resources.getPlayerCharacterCoordinate()));
         ArrayList<PlayerCharacter> players = new ArrayList<>();
         players.add(playerCharacter);
@@ -490,6 +492,49 @@ public class CasesOfUseTest {
         }
 
         assertEquals("Lose.", game.gameWon());
+
+    }
+
+    @Test
+    public void SandTrapsShouldStartApplyingEffectOnAntsInTheSameTurn() throws WrongPlace {
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+
+
+        Path path = new Path();
+        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+
+        WhiteTower whiteTower = new WhiteTower();
+        map.locateEntityIn(whiteTower, new Coordinate(2,8));
+
+        SandTrap sandTrap = new SandTrap(playerCharacter);
+        map.locateEntityIn(sandTrap, new Coordinate(2,2));
+        sandTrap.continueWithTheConstruction();
+
+        enemies.add(ant);
+        ant.advance();
+        ant.advance();
+        boolean bool = ant.distanceToBiggerThan(new Coordinate(2,2), new Distance(0));
+        assertFalse(bool);
+        sandTrap.attack(enemies);
+        ant.advance();
+        boolean bool2 = ant.distanceToBiggerThan(new Coordinate(2,2.5), new Distance(0));
+        assertFalse(bool2);
+        ant.advance();
+        boolean bool3 = ant.distanceToBiggerThan(new Coordinate(2,3.5), new Distance(0));
+        assertFalse(bool3);
+        ant.advance();
+        boolean bool4 = ant.distanceToBiggerThan(new Coordinate(2,4.5), new Distance(0));
+        assertFalse(bool4);
+
+
 
     }
 

@@ -38,7 +38,7 @@ public class WelcomeContainer extends VBox {
         super();
 
         this.algoDefense = algoDefense;
-        this.name = algoDefense.getName();
+        //this.name = algoDefense.getName();
         this.stage = stage;
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);

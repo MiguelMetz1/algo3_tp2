@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.Defenses.Traps;
 
+import edu.fiuba.algo3.Attacker.ReadyAttacker;
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Defenses.Deleter.Deleter;
 import edu.fiuba.algo3.Defenses.Deleter.NullDeleter;
@@ -14,6 +15,7 @@ import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Buff.SpeedScalableBuff;
 import edu.fiuba.algo3.TypeData.Buff.SpeedScalableDamage;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,7 @@ public class SandTrap extends Defense {
         this.playerCharacter = playerCharacter;
         this.deleter = new NullDeleter();
         this.deleterBuilder = new NullBuilder();
+        this.attacker = new ReadyAttacker(this.getBuff(), this.position, new Distance(this.range()));
     }
 
     @Override

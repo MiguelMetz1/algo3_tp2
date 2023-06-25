@@ -37,9 +37,15 @@ public class ContinousAdvancer implements Advancer {
         this.remainingDistance = this.speedToReach.inDistancePerTurn().plus(this.remainingDistance);
 
         while ( this.mustToAdvance() ) {
-            Coordinate nextPosition = this.path.poll();
-            this.locateTheEntity(nextPosition);
-            this.remainingDistance.reduceIn(1);
+            Coordinate nextPosition = this.path.peek();
+            if( this.currentPosition.distanceTo(nextPosition).higher(this.remainingDistance) ) {
+                this.currentPosition.updateTo(this.currentPosition.nextCoordinateInDirectionWithDistance(nextPosition, this.remainingDistance));
+                this.remainingDistance = new Distance(0);
+            }else {
+                this.remainingDistance.reduceIn(this.currentPosition.distanceTo(nextPosition));
+                this.locateTheEntity(this.path.poll());
+
+            }
         }
 
         this.doTheLastStep();

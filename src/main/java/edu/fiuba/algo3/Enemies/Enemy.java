@@ -71,6 +71,7 @@ public abstract class Enemy implements Advanceable, Attacker<PlayerCharacter> {
 
         }
         advancer.advance();
+        this.speed.quitBuffs();
     }
 
     protected boolean reachedTheFinal(){

@@ -1,9 +1,10 @@
 package edu.fiuba.algo3.AlgoDefense;
 
+import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Turn.ComputerTurn;
 import edu.fiuba.algo3.Turn.PlayerTurn;
-import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.View.GameStart;
 import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -11,11 +12,13 @@ import javafx.scene.layout.VBox;
 
 public class AlgoDefense {
 
-    private PrincipalContainer principalContainer;
+    private PrincipalContainer principalConteiner;
     PlayerTurn playerTurn;
     ComputerTurn computerTurn;
 
     Game game;
+
+    String[] args;
 
     public AlgoDefense(){
         this.game = new Game();
@@ -23,13 +26,22 @@ public class AlgoDefense {
         this.computerTurn = new ComputerTurn(game);
     }
 
-    public AlgoDefense(PrincipalContainer principalContainer) {
+    public AlgoDefense(String[] args){
+        this.game = new Game();
+        this.playerTurn = new PlayerTurn(game);
+        this.computerTurn = new ComputerTurn(game);
+        this.args = args;
+    }
+
+
+    public AlgoDefense(PrincipalContainer principalConteiner) {
         this();
-        this.principalContainer = principalContainer;
+        this.principalConteiner = principalConteiner;
 
     }
 
     public void startGame(){
+        GameStart.main(args);
 
         while (this.game.gameWon().equals("In game.")){
             playerTurn.executeTurn();
@@ -41,9 +53,5 @@ public class AlgoDefense {
 
     public void showMap(AnchorPane root, VBox consoleContainer) {
         this.game.showMap(root, consoleContainer);
-    }
-
-    public Name getName() {
-        return game.getName();
     }
 }
