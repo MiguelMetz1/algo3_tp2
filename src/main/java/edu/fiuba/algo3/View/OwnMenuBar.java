@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.View;
 
 
+import edu.fiuba.algo3.View.Events.AboutButtonEventHandler;
 import edu.fiuba.algo3.View.Events.ExitButtonEventHandler;
 import edu.fiuba.algo3.View.Events.FullScreenButtonEventHandler;
 import javafx.scene.control.Menu;
@@ -24,6 +25,9 @@ public class OwnMenuBar extends MenuBar {
 
         ExitButtonEventHandler exitButtonEventHandler = new ExitButtonEventHandler();
         exitOption.setOnAction(exitButtonEventHandler);
+
+        AboutButtonEventHandler aboutButtonEventHandler = new AboutButtonEventHandler();
+        aboutOption.setOnAction(aboutButtonEventHandler);
 
         FullScreenButtonEventHandler fullScreenButtonEventHandler = new FullScreenButtonEventHandler(stage, this.fullScreenOption);
         this.fullScreenOption.setOnAction(fullScreenButtonEventHandler);

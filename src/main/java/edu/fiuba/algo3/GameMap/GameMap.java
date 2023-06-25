@@ -4,6 +4,7 @@ import edu.fiuba.algo3.Enemies.Interface.Placeable;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.View.Events.PlotButtonEventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -42,6 +43,9 @@ public class GameMap {
 
             button.setOnMouseEntered(event -> button.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))));
             button.setOnMouseExited(event -> button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))));
+
+            PlotButtonEventHandler plotButtonEventHandler = new PlotButtonEventHandler(consoleContainer, plot);
+            button.setOnAction(plotButtonEventHandler);
 
             root.getChildren().add(button);
         }
