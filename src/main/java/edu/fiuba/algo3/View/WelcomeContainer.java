@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.View;
 
 
+import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import edu.fiuba.algo3.View.Events.ExitButtonEventHandler;
 import edu.fiuba.algo3.View.Events.StartButtonEventHandler;
@@ -30,11 +31,14 @@ public class WelcomeContainer extends VBox {
     Stage stage;
     Name name;
 
+    AlgoDefense algoDefense;
 
-    public WelcomeContainer(Stage stage, Scene nextScene, Name name){
+
+    public WelcomeContainer(Stage stage, AlgoDefense algoDefense){
         super();
 
-        this.name = name;
+        this.algoDefense = algoDefense;
+        this.name = algoDefense.getName();
         this.stage = stage;
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);
@@ -59,13 +63,13 @@ public class WelcomeContainer extends VBox {
 
         this.getChildren().add(label);
 
-        this.createUser(startButton, nextScene,name);
+        this.createUser(startButton,name);
 
         this.getChildren().addAll(startButton, exitButton);
 
     }
 
-    private void createUser(Button startButton, Scene nextScene, Name name) {
+    private void createUser(Button startButton, Name name) {
 
 
         TextField text = new TextField();
@@ -85,7 +89,7 @@ public class WelcomeContainer extends VBox {
         TextEventHandler textEventHandler = new TextEventHandler(startButton);
         text.setOnKeyPressed(textEventHandler);
 
-        StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler(text,label1,stage,nextScene, name);
+        StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler(text,label1,stage, name,this.algoDefense);
         startButton.setOnAction(startButtonEventHandler);
 
         VBox conteiner = new VBox(text,label1);

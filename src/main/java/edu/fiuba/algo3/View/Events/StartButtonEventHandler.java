@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.View.Events;
 
+import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -20,11 +22,12 @@ public class StartButtonEventHandler implements EventHandler<ActionEvent> {
     Label label;
     Name name;
 
-    public StartButtonEventHandler(TextField textField, Label label, Stage stage, Scene nextScene, Name name){
+    AlgoDefense algoDefense;
+    public StartButtonEventHandler(TextField textField, Label label, Stage stage, Name name, AlgoDefense algoDefense){
         this.textField = textField;
         this.label = label;
         this.stage = stage;
-        this.nextScene = nextScene;
+        this.algoDefense = algoDefense;
         this.name = name;
     }
     public void handle(ActionEvent actionEvent){
@@ -40,7 +43,9 @@ public class StartButtonEventHandler implements EventHandler<ActionEvent> {
             this.label.setTextFill(Color.web("#fafafa"));
         } else {
             this.name.setName(this.textField.getText());
-            this.stage.setScene(this.nextScene);
+            PrincipalContainer principalContainer = new PrincipalContainer(stage,algoDefense,name);
+            Scene gameScene = new Scene(principalContainer,720,720);
+            this.stage.setScene(gameScene);
             this.stage.setFullScreen(false);
         }
 

@@ -15,14 +15,13 @@ public class GameStart extends Application {
     public void start(final Stage stage){
 
         AlgoDefense algoDefense = new AlgoDefense();
-        Name name = algoDefense.getName();
 
         stage.setTitle("AlgoDefense");
 
-        PrincipalContainer principalContainer = new PrincipalContainer(stage,algoDefense,name);
-        Scene gameScene = new Scene(principalContainer,720,720);
+        /*PrincipalContainer principalContainer = new PrincipalContainer(stage,algoDefense,name);
+        Scene gameScene = new Scene(principalContainer,720,720);*/
 
-        WelcomeContainer welcomeContainer = new WelcomeContainer(stage,gameScene,name);
+        WelcomeContainer welcomeContainer = new WelcomeContainer(stage,algoDefense);
         Scene welcomeScene = new Scene(welcomeContainer,600,340 );
 
         stage.setScene(welcomeScene);

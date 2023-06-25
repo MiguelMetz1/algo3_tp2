@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class PrincipalContainer extends BorderPane {
 
     OwnMenuBar menuBar;
-    Canvas centralCanvas;
+
     VBox centralConteiner;
 
     VBox consoleContainer;
@@ -52,10 +52,9 @@ public class PrincipalContainer extends BorderPane {
 
 
 
-        Button user = new Button("Show username");
+        Label user = new Label("User:" + name.getName());
         user.setStyle("-fx-background-color: #fafafa; -fx-font-family: 'Minecraft'; -fx-font-size: 16px; -fx-padding: 10px;-fx-background-radius: 4px;");
-        ShowUserButtonEventHandler showUserButtonEventHandler = new ShowUserButtonEventHandler(user, name);
-        user.setOnAction(showUserButtonEventHandler);
+
 
 
         VBox verticalConteiner = new VBox(user,buyDefense,endTurn);
