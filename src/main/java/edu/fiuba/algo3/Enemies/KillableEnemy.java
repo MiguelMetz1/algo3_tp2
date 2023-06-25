@@ -3,7 +3,6 @@ package edu.fiuba.algo3.Enemies;
 import edu.fiuba.algo3.Attacker.NullAttacker;
 import edu.fiuba.algo3.Enemies.AttackReceiver.LiveAttackReceiver;
 import edu.fiuba.algo3.Enemies.AttackReceiver.AttackReceiver;
-import edu.fiuba.algo3.Enemies.Interface.Target;
 import edu.fiuba.algo3.Enemies.Advancer.NullAdvancer;
 import edu.fiuba.algo3.Enemies.AttackReceiver.NullAttackReceiver;
 import edu.fiuba.algo3.GameMap.GameMap;
@@ -17,17 +16,12 @@ import edu.fiuba.algo3.TypeData.Energy.Energy;
 import java.util.ArrayList;
 import java.util.Queue;
 
-public abstract class TargetableEnemy extends Enemy implements Target {
+public abstract class TargetableEnemy extends Enemy {
     private Energy life;
-
-    AttackReceiver attackReceiver;
-
-    ArrayList<Attribute> attributes;
 
     public TargetableEnemy(GameMap map, Queue<Coordinate> path ) {
         super(map, path);
         this.life = new Energy( this.getLife() );
-        this.changeAttackReceiver();
     }
 
     @Override
@@ -52,11 +46,11 @@ public abstract class TargetableEnemy extends Enemy implements Target {
 
     }
 
-    private void changeAttackReceiver( ){
-        this.attributes = new ArrayList<>();
+    protected ArrayList<Attribute> getBuffeablesAttributes(){
+        ArrayList<Attribute> attributes = new ArrayList<>();
         attributes.add(this.speed);
         attributes.add(this.life);
-        this.setAttackReceiver( new LiveAttackReceiver(attributes) );
+        return  attributes;
     }
 
     public void advance(){
@@ -70,11 +64,7 @@ public abstract class TargetableEnemy extends Enemy implements Target {
         return ( this.life.lower(new Energy(0)) || this.life.equals(new Energy(0)));
     }
 
-    protected void setAttackReceiver( AttackReceiver attackReceiver){
-        this.attackReceiver = attackReceiver;
-    }
-
-    public void die( ArrayList< TargetableEnemy > finalWaysEnemies ){
+    public void die( ArrayList<TargetableEnemy> finalWaysEnemies ){
         if( this.isDead() ){
             finalWaysEnemies.add(this);
         }
