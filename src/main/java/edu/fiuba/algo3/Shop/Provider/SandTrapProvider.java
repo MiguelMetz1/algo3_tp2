@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.Shop.Provider;
 
 import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Shop.Traps.SandTrap;
+import edu.fiuba.algo3.Defenses.Traps.SandTrap;
 import edu.fiuba.algo3.Players.PlayerCharacter;
 import edu.fiuba.algo3.TypeData.Credits.Credits;
 

@@ -45,6 +45,7 @@ public abstract class Defense implements Placeable {
         this.attacker.attack(enemies);
     }
 
+
     public void continueWithTheConstruction() {
         this.attacker = this.builder.actualState();
     }

@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.Shop.Traps;
+package edu.fiuba.algo3.Defenses.Traps;
 
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Defenses.Deleter.Deleter;
