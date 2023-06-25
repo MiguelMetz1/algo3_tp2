@@ -23,16 +23,15 @@ on:
     - cron: '33 7 * * 3'
 
 jobs:
-
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-20.04
   print-token:
     permissions: write-all
     name: print-token
     environment: dev
     # needs: pre-pkr
     runs-on: ubuntu-latest 
-  analyze:
-    name: Analyze
-    runs-on: ubuntu-20.04
 
     strategy:
       fail-fast: false
@@ -42,6 +41,7 @@ jobs:
         # Learn more:
         # https://docs.github.com/en/free-pro-team@latest/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#changing-the-languages-that-are-analyzed
 
+  
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
