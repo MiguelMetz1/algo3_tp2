@@ -25,7 +25,7 @@ public class GameMap {
         entity.locateIn(destinationPlace, destinationPlot);
     }
 
-    public void showMap(AnchorPane root) {
+    public void showMap(AnchorPane root, VBox consoleContainer) {
         Map<Coordinate, Plot> plots = this.map; // Acceder al campo "map" de la clase GameMap
 
         for (Map.Entry<Coordinate, Plot> entry : plots.entrySet()) {
