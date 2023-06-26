@@ -9,8 +9,14 @@ import edu.fiuba.algo3.Plots.Rocky;
 import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Queue;
 
 public class Mole extends Enemy implements Target {
@@ -76,4 +82,7 @@ public class Mole extends Enemy implements Target {
     public boolean distanceToBiggerThan(Coordinate position, Distance attackDistance) {
         return false;
     }
+
+    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/moleOnly.png";}
+
 }

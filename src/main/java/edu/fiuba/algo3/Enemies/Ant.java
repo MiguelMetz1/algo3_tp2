@@ -6,8 +6,14 @@ import edu.fiuba.algo3.Enemies.Loot.LooteableEnemy;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Queue;
 
 public class Ant extends LooteableEnemy {
@@ -46,4 +52,6 @@ public class Ant extends LooteableEnemy {
 
         return 1;
     }
+
+    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/antOnly.png";}
 }

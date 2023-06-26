@@ -3,6 +3,7 @@ package edu.fiuba.algo3.View;
 import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import edu.fiuba.algo3.View.Events.BuyDefenseButtonEventHandler;
 import edu.fiuba.algo3.View.Events.EndTurnButtonEventHandler;
@@ -20,6 +21,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class PrincipalContainer extends BorderPane {
 
@@ -31,14 +35,17 @@ public class PrincipalContainer extends BorderPane {
     Name name;
 
     Game game;
+
+    Map<Coordinate, Button> buttonMap;
     public PrincipalContainer(Stage stage, Game game, Name name){
         this.game = game;
         this.name = name;
+        this.buttonMap = new HashMap<>();
         this.setMenu(stage);
-        this.setButtonPanel(name);
         this.setMessagePanel();
 
         this.showMap(game, this.consoleContainer);
+        this.setButtonPanel(name);
 
         Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
@@ -72,7 +79,8 @@ public class PrincipalContainer extends BorderPane {
         endTurn.setText("End turn");
         setButtonStyle(endTurn);
 
-        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this.game);
+
+        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this,this.game,this.buttonMap);
         endTurn.setOnAction(endTurnButtonEventHandler);
 
 
@@ -111,7 +119,7 @@ public class PrincipalContainer extends BorderPane {
 
         AnchorPane root = new AnchorPane();
 
-        game.showMap(root, consoleContainer);
+        game.showMap(root, consoleContainer,this.buttonMap);
 
 
         this.centralConteiner = new VBox(root);
@@ -124,6 +132,10 @@ public class PrincipalContainer extends BorderPane {
 
 
 
+    }
+
+    public void showMap(){
+        this.showMap(this.game,this.consoleContainer);
     }
 
     private void setMenu(Stage stage) {

@@ -24,12 +24,15 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
     Button button;
 
-    public PlotButtonEventHandler(VBox consoleContainer, Plot plot, Game game, Coordinate coordinate, Button button){
+    StackPane stackPane;
+
+    public PlotButtonEventHandler(StackPane stackPane,VBox consoleContainer, Plot plot, Game game, Coordinate coordinate, Button button){
         this.consoleContainer = consoleContainer;
         this.plot = plot;
         this.coordinate = coordinate;
         this.game = game;
         this.button = button;
+        this.stackPane = stackPane;
     }
 
 
@@ -57,8 +60,10 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
         overlayImageView1.setFitHeight(20);
         overlayImageView1.setFitWidth(20);
 
-        StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(overlayImageView1);
+
+        this.stackPane.getChildren().addAll(overlayImageView1);
+        overlayImageView1.toBack();
+
 
         button.setGraphic(stackPane);
     }

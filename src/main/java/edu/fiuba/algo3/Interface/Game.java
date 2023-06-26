@@ -14,11 +14,14 @@ import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Queue;
 
 public class Game {
@@ -33,7 +36,7 @@ public class Game {
 
     ArrayList<LooteableEnemy> looteableEnemies;
 
-    public Game(String name) {
+    public Game(String name){
         ExternalResources resources = new ExternalResources();
         this.map = resources.getMap();
         this.troops = resources.getEnemies();
@@ -46,34 +49,34 @@ public class Game {
     }
 
 
-    private void chargeShop() {
-        this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
-        this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
-        this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.player));
+    private void chargeShop(){
+            this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
+            this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
+            this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.player));
     }
 
     private String sandTrapKey() {
         return "Sand Trap";
     }
 
-    private String whiteTowerKey() {
+    private String whiteTowerKey(){
         return "White Tower";
     }
 
-    private String silverTowerKey() {
+    private String silverTowerKey(){
         return "Silver Tower";
     }
 
-    public void buyDefense(String defense) throws InsuficientCredits, NonExistentArticle {
+    public void buyDefense( String defense ) throws InsuficientCredits, NonExistentArticle {
         this.shop.buy(defense);
     }
 
-    public void locateLastBoughtDefenseIn(Coordinate coordinate) throws WrongPlace {
+    public void locateLastBoughtDefenseIn( Coordinate coordinate ) throws WrongPlace {
         player.locateLastDefense(coordinate);
     }
 
-    public void lootEnemies() {
-        for (Looteable enemy : looteableEnemies) {
+    public void lootEnemies(){
+        for(Looteable enemy: looteableEnemies){
             enemy.transferLootTo(player);
         }
     }
@@ -81,7 +84,7 @@ public class Game {
     private void removeFinalizedWayEnemies() {
 
         ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
-        for (Enemy enemy : enemies) {
+        for( Enemy enemy: enemies){
 
             enemy.finalizeYourWay(enemiesToRemove);
 
@@ -91,7 +94,7 @@ public class Game {
     }
 
     private void printearFinales(ArrayList<Enemy> enemiesToRemove) {
-        for (Enemy enemy : enemiesToRemove) {
+        for (Enemy enemy: enemiesToRemove){
             System.out.println(enemy.getClass().getName());
         }
     }
@@ -99,7 +102,7 @@ public class Game {
     private void makeEnemiesAttack() {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player);
-        for (Enemy enemy : enemies) {
+        for(Enemy enemy: enemies){
             enemy.attack(players);
         }
         this.removeFinalizedWayEnemies();
@@ -110,12 +113,13 @@ public class Game {
     }
 
     public void advanceEnemies() {
-        for (Enemy enemy : enemies) {
+        for( Enemy enemy: enemies){
             enemy.advance();
         }
 
-        if (!this.troops.isEmpty())
+        if( !this.troops.isEmpty() )
             this.enemies.addAll(this.troops.poll());
+
 
 
         this.makeEnemiesAttack();
@@ -126,12 +130,12 @@ public class Game {
         player.buildDefenses();
     }
 
-    public String gameWon() {
-        return this.player.won();
+    public String gameWon(){
+            return this.player.won();
     }
 
-    public void showMap(AnchorPane root, VBox consoleContainer) {
-        this.map.showMap(root, consoleContainer, this);
+    public void showMap(AnchorPane root, VBox consoleContainer, Map<Coordinate, Button> buttonMap){
+        this.map.showMap(root, consoleContainer,this, buttonMap);
     }
 
     public void showPlayerCredist() {
@@ -146,4 +150,20 @@ public class Game {
         return this.player.lastDefenseImage();
     }
 
+    public void enemiesImages(Map<Coordinate, Button> buttonMap) {
+         for(Enemy enemy:enemies){
+             enemy.addImage(buttonMap);
+         }
+    }
+
+    /*public void updateMap(Map<Coordinate, Button> buttonMap) {
+        mapReset(buttonMap);
+        this.enemiesImages(buttonMap);
+    }*/
+
+   /* private void mapReset(Map<Coordinate, Button> buttonMap) {
+        for(Button button: buttonMap.values()){
+            button = new Button();
+        }
+    }*/
 }

@@ -20,8 +20,14 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Coordinate.HellsCoordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Speed.Speed;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Queue;
 
 public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
@@ -178,5 +184,21 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
     }
 
     protected abstract double getSpeed();
+
+    public void addImage( Map<Coordinate, Button> buttonMap){
+        if(buttonMap.containsKey(this.actualPosition)){
+            Button button = buttonMap.get(this.actualPosition);
+            Image overlayImage1 = new Image(enemyImage());
+            ImageView overlayImageView1 = new ImageView(overlayImage1);
+            overlayImageView1.setFitHeight(20);
+            overlayImageView1.setFitWidth(20);
+
+        /*StackPane stackPane = new StackPane();
+        stackPane.getChildren().addAll(overlayImageView1);*/
+            button.setGraphic(overlayImageView1);
+        }
+    }
+
+    protected abstract String enemyImage();
 
 }
