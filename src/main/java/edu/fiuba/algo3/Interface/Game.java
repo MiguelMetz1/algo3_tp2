@@ -33,7 +33,7 @@ public class Game {
 
     ArrayList<LooteableEnemy> looteableEnemies;
 
-    public Game(String name){
+    public Game(String name) {
         ExternalResources resources = new ExternalResources();
         this.map = resources.getMap();
         this.troops = resources.getEnemies();
@@ -46,34 +46,34 @@ public class Game {
     }
 
 
-    private void chargeShop(){
-            this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
-            this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
-            this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.player));
+    private void chargeShop() {
+        this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
+        this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
+        this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.player));
     }
 
     private String sandTrapKey() {
         return "Sand Trap";
     }
 
-    private String whiteTowerKey(){
+    private String whiteTowerKey() {
         return "White Tower";
     }
 
-    private String silverTowerKey(){
+    private String silverTowerKey() {
         return "Silver Tower";
     }
 
-    public void buyDefense( String defense ) throws InsuficientCredits, NonExistentArticle {
+    public void buyDefense(String defense) throws InsuficientCredits, NonExistentArticle {
         this.shop.buy(defense);
     }
 
-    public void locateLastBoughtDefenseIn( Coordinate coordinate ) throws WrongPlace {
+    public void locateLastBoughtDefenseIn(Coordinate coordinate) throws WrongPlace {
         player.locateLastDefense(coordinate);
     }
 
-    public void lootEnemies(){
-        for(Looteable enemy: looteableEnemies){
+    public void lootEnemies() {
+        for (Looteable enemy : looteableEnemies) {
             enemy.transferLootTo(player);
         }
     }
@@ -81,7 +81,7 @@ public class Game {
     private void removeFinalizedWayEnemies() {
 
         ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
-        for( Enemy enemy: enemies){
+        for (Enemy enemy : enemies) {
 
             enemy.finalizeYourWay(enemiesToRemove);
 
@@ -91,7 +91,7 @@ public class Game {
     }
 
     private void printearFinales(ArrayList<Enemy> enemiesToRemove) {
-        for (Enemy enemy: enemiesToRemove){
+        for (Enemy enemy : enemiesToRemove) {
             System.out.println(enemy.getClass().getName());
         }
     }
@@ -99,7 +99,7 @@ public class Game {
     private void makeEnemiesAttack() {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player);
-        for(Enemy enemy: enemies){
+        for (Enemy enemy : enemies) {
             enemy.attack(players);
         }
         this.removeFinalizedWayEnemies();
@@ -110,13 +110,12 @@ public class Game {
     }
 
     public void advanceEnemies() {
-        for( Enemy enemy: enemies){
+        for (Enemy enemy : enemies) {
             enemy.advance();
         }
 
-        if( !this.troops.isEmpty() )
+        if (!this.troops.isEmpty())
             this.enemies.addAll(this.troops.poll());
-
 
 
         this.makeEnemiesAttack();
@@ -127,12 +126,12 @@ public class Game {
         player.buildDefenses();
     }
 
-    public String gameWon(){
-            return this.player.won();
+    public String gameWon() {
+        return this.player.won();
     }
 
-    public void showMap(AnchorPane root, VBox consoleContainer){
-        this.map.showMap(root, consoleContainer,this);
+    public void showMap(AnchorPane root, VBox consoleContainer) {
+        this.map.showMap(root, consoleContainer, this);
     }
 
     public void showPlayerCredist() {
@@ -146,4 +145,5 @@ public class Game {
     public String lastDefenseImage() {
         return this.player.lastDefenseImage();
     }
+
 }

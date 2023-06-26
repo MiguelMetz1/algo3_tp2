@@ -4,12 +4,16 @@ package edu.fiuba.algo3.entrega_1;
 import edu.fiuba.algo3.Defenses.Towers.SilverTower;
 import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
 import edu.fiuba.algo3.Enemies.*;
+import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
-import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Players.Player;
-import edu.fiuba.algo3.Plots.Gangway;
+import edu.fiuba.algo3.Plots.*;
+import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
+import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
+import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Name.Name;
@@ -23,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EnemiesTest {
 
     @Test
-    public void AntsSpawnWithTheCorrectPointsOfLife() throws WrongPlace {
+    public void antsSpawnWithTheCorrectPointsOfLife() throws WrongPlace {
         /* Ants have one point of life. After one shot of white tower the ant should die */
 
         ExternalResources resources = new ExternalResources();
@@ -48,7 +52,7 @@ public class EnemiesTest {
     }
 
     @Test
-    public void SpidersSpawnWithTheCorrectPointsOfLife() throws WrongPlace {
+    public void spidersSpawnWithTheCorrectPointsOfLife() throws WrongPlace {
         /* Spiders have two points of life. After two hits of white tower the spider should die */
 
         ExternalResources resources = new ExternalResources();
@@ -74,7 +78,7 @@ public class EnemiesTest {
     }
 
     @Test
-    public void OwlsSpawnWithTheCorrectPointsOfLife() throws WrongPlace {
+    public void owlsSpawnWithTheCorrectPointsOfLife() throws WrongPlace {
 
 
         ExternalResources resources = new ExternalResources();
@@ -154,7 +158,7 @@ public class EnemiesTest {
     }
 
     @Test
-    public void OwlsStartWithTheCorrectAmountOfSpeed() throws WrongPlace {
+    public void owlsAdvanceCorrectly() {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
@@ -181,8 +185,9 @@ public class EnemiesTest {
     }
 
 
+
     @Test
-    public void molesStartWithTheCorrectAmountOfSpeed() throws WrongPlace {
+    public void molesAdvanceCorrectly() throws WrongPlace {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
@@ -224,31 +229,31 @@ public class EnemiesTest {
         assertFalse(isPosition5Correct);
     }
 
-    public void theMoleDoTheCorrectDamage(){
+    @Test
+    public void molesDoTheCorrectDamage(){
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
         ArrayList<Enemy> enemies = new ArrayList<>();
 
         ArrayList<Player> players = new ArrayList<>();
 
-        Player Player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
         Mole mole = new Mole(map, new Path().copyPath());
 
         enemies.add(mole);
-        players.add(Player);
+        players.add(player);
 
-        for (int i = 0;i < 13; i++)
+        for (int i = 0;i < 15; i++)
             mole.advance();
 
         for(int i = 0; i < 4; i++)
             mole.attack(players);
 
-
-        assertEquals( "Lose.", Player.won());
+        assertEquals( "Lose.", player.won());
     }
 
     @Test
-    public void theSpiderDoTheCorrectDamage() {
+    public void spidersDoTheCorrectDamage() {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
@@ -256,12 +261,12 @@ public class EnemiesTest {
 
         ArrayList<Player> players = new ArrayList<>();
 
-        Player Player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
         Spider spider = new Spider(map, new Path().copyPath());
 
 
         enemies.add(spider);
-        players.add(Player);
+        players.add(player);
 
 
         for (int i = 0;i < 13; i++)
@@ -271,12 +276,12 @@ public class EnemiesTest {
             spider.attack(players);
 
 
-        assertEquals( "Lose.", Player.won());
+        assertEquals( "Lose.", player.won());
 
     }
 
     @Test
-    public void theAntDoTheCorrectDamage() {
+    public void antsDoTheCorrectDamage() {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
@@ -284,12 +289,12 @@ public class EnemiesTest {
 
         ArrayList<Player> players = new ArrayList<>();
 
-        Player Player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
         Ant ant = new Ant(map, new Path().copyPath());
 
 
         enemies.add(ant);
-        players.add(Player);
+        players.add(player);
 
 
         for (int i = 0;i < 24; i++)
@@ -299,12 +304,12 @@ public class EnemiesTest {
             ant.attack(players);
 
 
-        assertEquals( "Lose.", Player.won());
+        assertEquals( "Lose.", player.won());
 
     }
 
     @Test
-    public void theOwlDoTheCorrectDamage() {
+    public void owlsDestroyTheFirstTowerIfAttackThePlayer() {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
@@ -351,8 +356,7 @@ public class EnemiesTest {
     }
 
     @Test
-    public void antGiveTheCorrectAmountOfCredits() {
-
+    public void owlsAttackThePlayerButCantDestroyTowersIfThereIsNoTowersInTheMap(){
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
         Owl owl = new Owl(map, new OwlPath().owlPath(), resources.getPath().getLast());
@@ -362,25 +366,16 @@ public class EnemiesTest {
 
         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
         Spider spider = new Spider(map, new Path().copyPath());
-        Ant ant = new Ant(map, new Path().copyPath());
-
 
         enemies.add(spider);
 
-
         players.add(player);
-
-        SilverTower silverTower = new SilverTower();
-        assertDoesNotThrow( ()->map.locateEntityIn(silverTower, new Coordinate(3,1)) );
-        silverTower.continueWithTheConstruction();
-        silverTower.continueWithTheConstruction();
-        player.addDefense(silverTower);
 
         spider.advance();
 
         player.makeDefensesAttack();
 
-        assertEquals( "Won.", player.won());
+        assertEquals( "In game.", player.won());
 
         owl.advance();
         owl.advance();
@@ -390,11 +385,236 @@ public class EnemiesTest {
         owl.advance();
         owl.attack(players);
 
-        enemies.add(ant);
         enemies.add(owl);
 
         player.makeDefensesAttack();
         assertEquals("In game.", player.won());
+
     }
+
+
+    @Test
+    public void spidersGivesTheCorrectAmountOfCredits() throws InsuficientCredits, NonExistentArticle, WrongPlace {
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+
+
+        players.add(player);
+
+        Shop shop = new Shop(player);
+        shop.addArticle("Silver Tower", new SilverTowerProvider());
+        shop.addArticle("White Tower", new WhiteTowerProvider());
+
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(3, 1));
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(1, 3));
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(1, 4));
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(1, 5));
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(1, 6));
+
+        player.buildDefenses();
+        player.buildDefenses();
+
+        assertThrows(InsuficientCredits.class, () -> {
+            shop.buy("Silver Tower");
+        });
+
+        for (int i = 0; i < 10; i++) {
+            Spider spider = new Spider(map, new Path().getPath());
+            enemies.add(spider);
+            spider.advance();
+            player.makeDefensesAttack();
+            spider.transferLootTo(player);
+            spider.finalizeYourWay(deadEnemies);
+            enemies.removeAll(deadEnemies);
+
+        }
+
+        assertDoesNotThrow(()->shop.buy("White Tower"));
+        player.locateLastDefense(new Coordinate(3, 3));
+        player.buildDefenses();
+
+
+    }
+
+    @Test
+    public void antsGivesTheCorrectAmountOfCredits() throws InsuficientCredits, NonExistentArticle, WrongPlace {
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        players.add(player);
+
+        Shop shop = new Shop(player);
+        shop.addArticle("Silver Tower", new SilverTowerProvider());
+        shop.addArticle("White Tower", new WhiteTowerProvider());
+
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(3, 1));
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(1, 3));
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(1, 4));
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(1, 5));
+        shop.buy("Silver Tower");
+        player.locateLastDefense(new Coordinate(1, 6));
+
+        player.buildDefenses();
+        player.buildDefenses();
+
+        assertThrows(InsuficientCredits.class, () -> {
+            shop.buy("Silver Tower");
+        });
+
+
+
+        for (int i = 0; i < 10; i++) {
+            Ant ant = new Ant(map, new Path().getPath());
+            enemies.add(ant);
+            ant.advance();
+            player.makeDefensesAttack();
+            ant.transferLootTo(player);
+            ant.finalizeYourWay(deadEnemies);
+            enemies.removeAll(deadEnemies);
+
+        }
+
+        shop.buy("White Tower");
+        player.locateLastDefense(new Coordinate(3, 3));
+        player.buildDefenses();
+
+        assertThrows(InsuficientCredits.class, () -> shop.buy("White Tower"));
+
+
+        for (int i = 0; i < 5; i++) {
+            Ant ant = new Ant(map, new Path().getPath());
+            enemies.add(ant);
+            ant.advance();
+            player.makeDefensesAttack();
+            ant.transferLootTo(player);
+            ant.finalizeYourWay(deadEnemies);
+
+        }
+
+        shop.buy("White Tower");
+        player.locateLastDefense(new Coordinate(4, 3));
+        player.buildDefenses();
+
+        assertThrows(InsuficientCredits.class, () -> {
+            shop.buy("White Tower");
+        });
+    }
+
+    @Test
+    public void antsOnlyMovesOnGangways(){
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Ant ant = new Ant(map, new Path().getPath());
+
+        Ground ground = new Ground(new Coordinate(3, 1));
+        Rocky rocky = new Rocky(new Coordinate(1, 1));
+        Gangway gangway = new Gangway(new Coordinate(2, 2));
+        InitialGangway initialGangway = new InitialGangway(new Coordinate(2,1));
+        FinalGangway finalGangway = new FinalGangway(new Coordinate(15, 11));
+
+        assertThrows( WrongPlace.class ,()->{ ant.locateIn( new Coordinate(3,1), ground ); } );
+        assertThrows( WrongPlace.class ,()->{ ant.locateIn(new Coordinate(1,1), rocky); } );
+        assertDoesNotThrow( ()->{ ant.locateIn( new Coordinate(2,2), gangway); } );
+        assertDoesNotThrow( ()->{ ant.locateIn( new Coordinate(15,11), finalGangway); } );
+        assertDoesNotThrow( ()->{ ant.locateIn( new Coordinate(2,1), initialGangway); } );
+    }
+    @Test
+    public void spidersOnlyMovesOnGangways(){
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Spider spider = new Spider(map, new Path().getPath());
+
+        Ground ground = new Ground(new Coordinate(3, 1));
+        Rocky rocky = new Rocky(new Coordinate(1, 1));
+        Gangway gangway = new Gangway(new Coordinate(2, 2));
+        InitialGangway initialGangway = new InitialGangway(new Coordinate(2,1));
+        FinalGangway finalGangway = new FinalGangway(new Coordinate(15, 11));
+
+        assertThrows( WrongPlace.class ,()->{ spider.locateIn( new Coordinate(3,1), ground ); } );
+        assertThrows( WrongPlace.class ,()->{ spider.locateIn(new Coordinate(1,1), rocky); } );
+        assertDoesNotThrow( ()->{ spider.locateIn( new Coordinate(2,2), gangway); } );
+        assertDoesNotThrow( ()->{ spider.locateIn( new Coordinate(15,11), finalGangway); } );
+        assertDoesNotThrow( ()->{ spider.locateIn( new Coordinate(2,1), initialGangway); } );
+
+    }
+    @Test
+    public void molesOnlyMovesOnGangways(){
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Mole mole = new Mole(map, new Path().getPath());
+
+        Ground ground = new Ground(new Coordinate(3, 1));
+        Rocky rocky = new Rocky(new Coordinate(1, 1));
+        Gangway gangway = new Gangway(new Coordinate(2, 2));
+        FinalGangway finalGangway = new FinalGangway(new Coordinate(15, 11));
+        InitialGangway initialGangway = new InitialGangway(new Coordinate(2,1));
+
+        assertThrows( WrongPlace.class ,()->{ mole.locateIn( new Coordinate(3,1), ground ); } );
+        assertThrows( WrongPlace.class ,()->{ mole.locateIn(new Coordinate(1,1), rocky); } );
+        assertDoesNotThrow( ()->{ mole.locateIn( new Coordinate(2,2), gangway); } );
+        assertDoesNotThrow( ()->{ mole.locateIn( new Coordinate(15,11), finalGangway); } );
+        assertDoesNotThrow( ()->{ mole.locateIn( new Coordinate(2,1), initialGangway); } );
+
+    }
+    @Test
+    public void owlsCanMovesOnAnyPlot(){
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Owl owl = new Owl(map, new OwlPath().owlPath(), resources.getPath().getLast());
+
+        Ground ground = new Ground(new Coordinate(3, 1));
+        Rocky rocky = new Rocky(new Coordinate(1, 1));
+        Gangway gangway = new Gangway(new Coordinate(2, 2));
+        InitialGangway initialGangway = new InitialGangway(new Coordinate(2,1));
+        FinalGangway finalGangway = new FinalGangway(new Coordinate(15, 11));
+
+        assertDoesNotThrow( ()->{ owl.locateIn( new Coordinate(3,1), ground); } );
+        assertDoesNotThrow( ()->{ owl.locateIn( new Coordinate(1,1), rocky); } );
+        assertDoesNotThrow( ()->{ owl.locateIn( new Coordinate(2,2), gangway); } );
+        assertDoesNotThrow( ()->{ owl.locateIn( new Coordinate(15,11), finalGangway); } );
+        assertDoesNotThrow( ()->{ owl.locateIn( new Coordinate(2,1), initialGangway); } );
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }

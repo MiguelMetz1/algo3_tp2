@@ -23,7 +23,6 @@ public class Ant extends LooteableEnemy {
     public void takeBuff( Buff buff ){
         super.takeBuff(buff);
         if( this.isDead() ) {
-            deadAnts.remove(this);
             deadAnts.add(this);
         }
     }
@@ -41,7 +40,7 @@ public class Ant extends LooteableEnemy {
     }
 
     protected int amountOfCredits(){
-        if ( deadAnts.size() > 10 ){
+        if ( deadAnts.size() >= 10 ){
             return 2;
         }
 

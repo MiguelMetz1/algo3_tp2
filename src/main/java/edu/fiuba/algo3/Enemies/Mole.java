@@ -21,13 +21,13 @@ public class Mole extends Enemy implements Target {
         super(map, path);
         this.advances = 0;
         this.setAttacker( new LifeAttacker( this.actualPosition, getDamage() ) );
-        this.addMolePassablePlots();
+       /* this.addMolePassablePlots();*/
     }
 
-    private void addMolePassablePlots(){
+/*    private void addMolePassablePlots(){
         this.addPassablePlot(Rocky.class.getName());
         this.addPassablePlot(Ground.class.getName());
-    }
+    }*/
 
     public void advance(){
         super.advance();

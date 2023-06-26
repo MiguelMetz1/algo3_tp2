@@ -9,6 +9,7 @@ import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Players.Player;
+import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
 import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
@@ -18,6 +19,7 @@ import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -407,7 +409,7 @@ public class DefenseTest {
         OwlPath owlPath = new OwlPath();
         Owl owl = new Owl(map, owlPath.owlPath(), playerCoordinate);
         ArrayList<Enemy> enemies = new ArrayList<>();
-        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
         SandTrap sandTrap = new SandTrap(player);
 
@@ -426,4 +428,148 @@ public class DefenseTest {
         boolean isPosition2Correct = owl.distanceToBiggerThan(new Coordinate(2,11), new Distance(0));
         assertFalse(isPosition2Correct);
     }
+
+    @Test
+    public void whiteTowersAttackEnemiesWithinTheExpectedRange() throws WrongPlace {
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Path path = new Path();
+        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+
+        WhiteTower whiteTower = new WhiteTower();
+        map.locateEntityIn(whiteTower, new Coordinate(2,8));
+        whiteTower.continueWithTheConstruction();
+        whiteTower.continueWithTheConstruction();
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        enemies.add(ant);
+        ant.advance();
+
+        whiteTower.attack(enemies);
+        ant.finalizeYourWay(deadEnemies);
+        assertFalse(deadEnemies.contains(ant));
+
+        ant.advance();
+        ant.advance();
+        ant.advance();
+        ant.advance();
+
+        whiteTower.attack(enemies);
+        ant.finalizeYourWay(deadEnemies);
+        assertTrue(deadEnemies.contains(ant));
+
+    }
+
+    @Test
+    public void silverTowersAttackEnemiesWithinTheExpectedRange() throws WrongPlace {
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Path path = new Path();
+        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+
+        SilverTower silverTower = new SilverTower();
+        map.locateEntityIn(silverTower, new Coordinate(2,8));
+        silverTower.continueWithTheConstruction();
+        silverTower.continueWithTheConstruction();
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        enemies.add(ant);
+        ant.advance();
+
+        silverTower.attack(enemies);
+        ant.finalizeYourWay(deadEnemies);
+        assertFalse(deadEnemies.contains(ant));
+
+        ant.advance();
+        ant.advance();
+
+
+        silverTower.attack(enemies);
+        ant.finalizeYourWay(deadEnemies);
+        assertTrue(deadEnemies.contains(ant));
+
+    }
+
+    @Test
+    public void whiteTowersCanOnlyBeBuildOnGround(){
+
+        WhiteTower whiteTower = new WhiteTower();
+
+        Ground ground = new Ground(new Coordinate(3, 1));
+        Gangway gangway = new Gangway(new Coordinate(2, 2));
+        InitialGangway initialGangway = new InitialGangway(new Coordinate(2,1));
+        FinalGangway finalGangway = new FinalGangway(new Coordinate(15, 11));
+        Rocky rocky = new Rocky(new Coordinate(1, 1));
+
+        assertDoesNotThrow(()->{whiteTower.locateIn(new Coordinate(3,1), ground);});
+        assertThrows(WrongPlace.class, ()-> {whiteTower.locateIn(new Coordinate(2,2), gangway);} );
+        assertThrows(WrongPlace.class, ()-> {whiteTower.locateIn(new Coordinate(2,1), initialGangway);} );
+        assertThrows(WrongPlace.class, ()-> {whiteTower.locateIn(new Coordinate(15,11), finalGangway);} );
+        assertThrows(WrongPlace.class, ()-> {whiteTower.locateIn(new Coordinate(1,1), rocky);} );
+
+    }
+    @Test
+    public void silverTowersCanOnlyBeBuildOnGround(){
+
+        SilverTower silverTower = new SilverTower();
+
+        Ground ground = new Ground(new Coordinate(3, 1));
+        Gangway gangway = new Gangway(new Coordinate(2, 2));
+        InitialGangway initialGangway = new InitialGangway(new Coordinate(2,1));
+        FinalGangway finalGangway = new FinalGangway(new Coordinate(15, 11));
+        Rocky rocky = new Rocky(new Coordinate(1, 1));
+
+        assertDoesNotThrow(()->{silverTower.locateIn(new Coordinate(3,1), ground);});
+        assertThrows(WrongPlace.class, ()-> {silverTower.locateIn(new Coordinate(2,2), gangway);} );
+        assertThrows(WrongPlace.class, ()-> {silverTower.locateIn(new Coordinate(2,1), initialGangway);} );
+        assertThrows(WrongPlace.class, ()-> {silverTower.locateIn(new Coordinate(15,11), finalGangway);} );
+        assertThrows(WrongPlace.class, ()-> {silverTower.locateIn(new Coordinate(1,1), rocky);} );
+
+
+    }
+
+    @Test
+    public void sandTrapCanOnlyBeBuildOnNormalGangways(){
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
+
+        SandTrap sandTrap = new SandTrap(player);
+
+        Ground ground = new Ground(new Coordinate(3, 1));
+        Gangway gangway = new Gangway(new Coordinate(2, 2));
+        InitialGangway initialGangway = new InitialGangway(new Coordinate(2,1));
+        FinalGangway finalGangway = new FinalGangway(new Coordinate(15, 11));
+
+        Rocky rocky = new Rocky(new Coordinate(1, 1));
+
+        assertThrows(WrongPlace.class, ()-> {sandTrap.locateIn(new Coordinate(2,2), ground);} );
+        assertDoesNotThrow(()-> {sandTrap.locateIn(new Coordinate(2,2), gangway);} );
+        assertThrows(WrongPlace.class, ()-> {sandTrap.locateIn(new Coordinate(2,1), initialGangway);} );
+        assertThrows(WrongPlace.class, ()-> {sandTrap.locateIn(new Coordinate(15,11), finalGangway);} );
+        assertThrows(WrongPlace.class, ()-> {sandTrap.locateIn(new Coordinate(1,1), rocky);} );
+
+
+    }
+
+
+
+
+
+
 }
+
+
