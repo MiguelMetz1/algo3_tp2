@@ -1,20 +1,24 @@
 package edu.fiuba.algo3.entrega_1;
 
 
+import edu.fiuba.algo3.Defenses.Towers.SilverTower;
 import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
 import edu.fiuba.algo3.Enemies.*;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
+import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Parsers.ExternalResources;
+import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Plots.Gangway;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
+import edu.fiuba.algo3.TypeData.Name.Name;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EnemiesTest {
 
@@ -218,9 +222,132 @@ public class EnemiesTest {
         mole.advance();
         boolean isPosition5Correct = mole.distanceToBiggerThan(new Coordinate(10,11), new Distance(0));
         assertFalse(isPosition5Correct);
+    }
+
+    public void theMoleDoTheCorrectDamage(){
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player Player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Mole mole = new Mole(map, new Path().copyPath());
+
+        enemies.add(mole);
+        players.add(Player);
+
+        for (int i = 0;i < 13; i++)
+            mole.advance();
+
+        for(int i = 0; i < 4; i++)
+            mole.attack(players);
+
+
+        assertEquals( "Lose.", Player.won());
+    }
+
+    @Test
+    public void theSpiderDoTheCorrectDamage() {
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player Player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Spider spider = new Spider(map, new Path().copyPath());
+
+
+        enemies.add(spider);
+        players.add(Player);
+
+
+        for (int i = 0;i < 13; i++)
+            spider.advance();
+
+        for(int i = 0; i < 10; i++)
+            spider.attack(players);
+
+
+        assertEquals( "Lose.", Player.won());
 
     }
 
+    @Test
+    public void theAntDoTheCorrectDamage() {
 
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player Player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Ant ant = new Ant(map, new Path().copyPath());
+
+
+        enemies.add(ant);
+        players.add(Player);
+
+
+        for (int i = 0;i < 24; i++)
+            ant.advance();
+
+        for(int i = 0; i < 20; i++)
+            ant.attack(players);
+
+
+        assertEquals( "Lose.", Player.won());
+
+    }
+
+    @Test
+    public void theOwlDoTheCorrectDamage() {
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Owl owl = new Owl(map, new OwlPath().owlPath(), resources.getPath().getLast());
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Spider spider = new Spider(map, new Path().copyPath());
+        Ant ant = new Ant(map, new Path().copyPath());
+
+
+        enemies.add(spider);
+
+
+        players.add(player);
+
+        SilverTower silverTower = new SilverTower();
+        assertDoesNotThrow(()->map.locateEntityIn(silverTower, new Coordinate(3,1)));
+        silverTower.continueWithTheConstruction();
+        silverTower.continueWithTheConstruction();
+        player.addDefense(silverTower);
+
+        spider.advance();
+
+        player.makeDefensesAttack();
+
+        assertEquals( "Won.", player.won());
+
+        owl.advance();
+        owl.advance();
+        owl.advance();
+        owl.advance();
+        owl.advance();
+        owl.advance();
+        owl.attack(players);
+
+        enemies.add(ant);
+        enemies.add(owl);
+
+        player.makeDefensesAttack();
+        assertEquals("In game.", player.won());
+    }
 
 }
