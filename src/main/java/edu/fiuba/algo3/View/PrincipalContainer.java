@@ -1,7 +1,11 @@
 package edu.fiuba.algo3.View;
 
 import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
+import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.View.Events.BuyDefenseButtonEventHandler;
+import edu.fiuba.algo3.View.Events.EndTurnButtonEventHandler;
 import edu.fiuba.algo3.View.Events.ShowUserButtonEventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
@@ -25,13 +29,16 @@ public class PrincipalContainer extends BorderPane {
 
     VBox consoleContainer;
     Name name;
-    public PrincipalContainer(Stage stage, AlgoDefense algoDefense, Name name){
+
+    Game game;
+    public PrincipalContainer(Stage stage, Game game, Name name){
+        this.game = game;
         this.name = name;
         this.setMenu(stage);
         this.setButtonPanel(name);
         this.setMessagePanel();
 
-        this.showMap(algoDefense, this.consoleContainer);
+        this.showMap(game, this.consoleContainer);
 
         Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
@@ -41,14 +48,32 @@ public class PrincipalContainer extends BorderPane {
     }
 
     private void setButtonPanel(Name name) {
-        Button buyDefense = new Button();
-        buyDefense.setText("Buy defense");
-        setButtonStyle(buyDefense);
+        Button buyWhiteTower = new Button();
+        buyWhiteTower.setText("Buy White Tower");
+        setButtonStyle(buyWhiteTower);
+        BuyDefenseButtonEventHandler buyWhiteTowerButtonEventHandler = new BuyDefenseButtonEventHandler("White Tower",this.game);
+        buyWhiteTower.setOnAction(buyWhiteTowerButtonEventHandler);
+
+        Button buySilverTower = new Button();
+        buySilverTower.setText("Buy Silver Tower");
+        setButtonStyle(buySilverTower);
+        BuyDefenseButtonEventHandler buySilverTowerButtonEventHandler = new BuyDefenseButtonEventHandler("Silver Tower",this.game);
+        buySilverTower.setOnAction(buySilverTowerButtonEventHandler);
+
+        Button buySandTrap = new Button();
+        buySandTrap.setText("Buy Sand Trap");
+        setButtonStyle(buySandTrap);
+        BuyDefenseButtonEventHandler buySandTrapButtonEventHandler = new BuyDefenseButtonEventHandler("Sand Trap",this.game);
+        buySandTrap.setOnAction(buySandTrapButtonEventHandler);
+
 
 
         Button endTurn = new Button();
         endTurn.setText("End turn");
         setButtonStyle(endTurn);
+
+        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this.game);
+        endTurn.setOnAction(endTurnButtonEventHandler);
 
 
 
@@ -57,7 +82,7 @@ public class PrincipalContainer extends BorderPane {
 
 
 
-        VBox verticalConteiner = new VBox(user,buyDefense,endTurn);
+        VBox verticalConteiner = new VBox(user,buyWhiteTower,buySandTrap,buySilverTower,endTurn);
         verticalConteiner.setSpacing(10);
         verticalConteiner.setPadding(new Insets(15));
 
@@ -76,15 +101,17 @@ public class PrincipalContainer extends BorderPane {
 
         button.setFont(Font.font(null, FontWeight.BOLD, 20));
         button.setEffect(lighting);
+
+        button.setMaxWidth(200);
     }
 
-    private void showMap(AlgoDefense algoDefense, VBox consoleContainer) {
+    private void showMap(Game game, VBox consoleContainer){
 
 
 
         AnchorPane root = new AnchorPane();
 
-        algoDefense.showMap(root, consoleContainer);
+        game.showMap(root, consoleContainer);
 
 
         this.centralConteiner = new VBox(root);

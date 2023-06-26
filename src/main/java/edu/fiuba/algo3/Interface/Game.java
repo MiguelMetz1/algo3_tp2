@@ -33,17 +33,18 @@ public class Game {
 
     ArrayList<LooteableEnemy> looteableEnemies;
 
-    public Game(){
+    public Game(String name){
         ExternalResources resources = new ExternalResources();
         this.map = resources.getMap();
         this.troops = resources.getEnemies();
         this.looteableEnemies = resources.getLooteables();
         this.enemies = this.troops.poll();
         Coordinate playerCharacterPosition = resources.getPlayerCharacterCoordinate();
-        this.player = new Player(new Name("Fabricio"), map, playerCharacterPosition, troops, enemies);
+        this.player = new Player(new Name(name), map, playerCharacterPosition, troops, enemies);
         this.shop = new Shop(player);
         this.chargeShop();
     }
+
 
     private void chargeShop(){
             this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
@@ -130,8 +131,8 @@ public class Game {
             return this.player.won();
     }
 
-    public void showMap(AnchorPane root, VBox consoleContainer) {
-        this.map.showMap(root, consoleContainer);
+    public void showMap(AnchorPane root, VBox consoleContainer){
+        this.map.showMap(root, consoleContainer,this);
     }
 
     public void showPlayerCredist() {
@@ -140,5 +141,9 @@ public class Game {
 
     public Name getName() {
         return this.player.getName();
+    }
+
+    public String lastDefenseImage() {
+        return this.player.lastDefenseImage();
     }
 }

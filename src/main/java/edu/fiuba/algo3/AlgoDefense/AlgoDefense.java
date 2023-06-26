@@ -18,30 +18,28 @@ public class AlgoDefense {
 
     Game game;
 
-    String[] args;
 
-    public AlgoDefense(){
-        this.game = new Game();
+    public AlgoDefense(Game game){
+        this.game = game;
         this.playerTurn = new PlayerTurn(game);
         this.computerTurn = new ComputerTurn(game);
     }
 
-    public AlgoDefense(String[] args){
+   /* public AlgoDefense(String[] args){
         this.game = new Game();
         this.playerTurn = new PlayerTurn(game);
         this.computerTurn = new ComputerTurn(game);
         this.args = args;
-    }
+    }*/
 
 
-    public AlgoDefense(PrincipalContainer principalConteiner) {
+   /* public AlgoDefense(PrincipalContainer principalConteiner) {
         this();
         this.principalConteiner = principalConteiner;
 
-    }
+    }*/
 
     public void startGame(){
-        GameStart.main(args);
 
         while (this.game.gameWon().equals("In game.")){
             playerTurn.executeTurn();
@@ -51,7 +49,5 @@ public class AlgoDefense {
         playerTurn.close();
     }
 
-    public void showMap(AnchorPane root, VBox consoleContainer) {
-        this.game.showMap(root, consoleContainer);
-    }
+
 }

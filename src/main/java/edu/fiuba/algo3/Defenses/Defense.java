@@ -106,4 +106,6 @@ public abstract class Defense implements Placeable {
     public void removeFromYourPlot() {
         this.positionedPlot.remove(this);
     }
+
+    public abstract String image();
 }

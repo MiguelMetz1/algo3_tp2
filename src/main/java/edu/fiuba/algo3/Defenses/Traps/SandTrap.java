@@ -75,4 +75,8 @@ public class SandTrap extends Defense {
         passablePlots.add( Gangway.class.getName() );
         return passablePlots;
     }
+
+    public String image(){
+        return "file:src/main/java/edu/fiuba/algo3/View/Images/sandTrap.jpeg";
+    }
 }

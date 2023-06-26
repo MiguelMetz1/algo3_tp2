@@ -211,4 +211,7 @@ public class Player implements Target, Placeable, Buyer, Looter {
     }
 
 
+    public String lastDefenseImage() {
+        return this.defenses.getLast().image();
+    }
 }

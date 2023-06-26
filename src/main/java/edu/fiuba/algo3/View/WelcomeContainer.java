@@ -31,14 +31,13 @@ public class WelcomeContainer extends VBox {
     Stage stage;
     Name name;
 
-    AlgoDefense algoDefense;
 
 
-    public WelcomeContainer(Stage stage, AlgoDefense algoDefense){
+    public WelcomeContainer(Stage stage){
         super();
 
-        this.algoDefense = algoDefense;
-        //this.name = algoDefense.getName();
+        this.name = new Name("");
+
         this.stage = stage;
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);
@@ -89,7 +88,7 @@ public class WelcomeContainer extends VBox {
         TextEventHandler textEventHandler = new TextEventHandler(startButton);
         text.setOnKeyPressed(textEventHandler);
 
-        StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler(text,label1,stage, name,this.algoDefense);
+        StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler(text,label1,stage, name);
         startButton.setOnAction(startButtonEventHandler);
 
         VBox conteiner = new VBox(text,label1);
