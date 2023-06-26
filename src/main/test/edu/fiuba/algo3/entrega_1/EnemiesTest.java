@@ -186,8 +186,6 @@ public class EnemiesTest {
         Path path = new Path();
         Mole mole = new Mole(map, path.copyPath());
 
-        ArrayList<Enemy> deadEnemies = new ArrayList<>();
-
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(2,9));
 
@@ -197,6 +195,7 @@ public class EnemiesTest {
         mole.advance();
         boolean isPosition1Correct = mole.distanceToBiggerThan(new Coordinate(2,1), new Distance(0));
         assertFalse(isPosition1Correct);
+
         mole.advance();
         mole.advance();
         mole.advance();
@@ -204,15 +203,18 @@ public class EnemiesTest {
         mole.advance();
         boolean isPosition2Correct = mole.distanceToBiggerThan(new Coordinate(2,6), new Distance(0));
         assertFalse(isPosition2Correct);
+
         mole.advance();
         boolean isPosition3Correct = mole.distanceToBiggerThan(new Coordinate(3,7), new Distance(0));
         assertFalse(isPosition3Correct);
+
         mole.advance();
         mole.advance();
         mole.advance();
         mole.advance();
         boolean isPosition4Correct = mole.distanceToBiggerThan(new Coordinate(9,9), new Distance(0));
         assertFalse(isPosition4Correct);
+
         mole.advance();
         boolean isPosition5Correct = mole.distanceToBiggerThan(new Coordinate(10,11), new Distance(0));
         assertFalse(isPosition5Correct);
