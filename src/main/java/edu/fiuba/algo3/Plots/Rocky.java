@@ -30,6 +30,6 @@ public class Rocky extends Plot{
     }
 
     public String getName(){
-        return "Rocky" + this.coordinate.toIntString();
+        return "Rocky" + this.coordinate.toString();
     }
 }

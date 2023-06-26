@@ -15,7 +15,7 @@ public class HellsPlot extends Plot{
     }
 
     @Override
-    public void receive(Defense defense) throws WrongPlace {
+    public void receive(Defense defense){
         nullPlot.receive(defense);
     }
 

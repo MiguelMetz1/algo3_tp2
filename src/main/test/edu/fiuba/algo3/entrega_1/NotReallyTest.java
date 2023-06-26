@@ -7,8 +7,10 @@ import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Players.Player;
+import edu.fiuba.algo3.Plots.Rocky;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import javafx.scene.image.Image;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -42,5 +44,6 @@ public class NotReallyTest{
         assert(sandTrap.image() ==   "file:src/main/java/edu/fiuba/algo3/View/Images/sandTrap.jpeg");
 
     }
+
 
 }

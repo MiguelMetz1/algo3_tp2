@@ -4,17 +4,20 @@ import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Spider;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
+import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Exceptions.WrongPlayerName;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
 import edu.fiuba.algo3.Players.Player;
 
+import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
 import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.entrega_1.Path.Path;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -117,6 +120,41 @@ public class PlayerTest {
                 new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies));
 
     }
+
+
+
+    @Test
+    public void playerCantBePlacedInOtherPlotThatIsntFinalGangway(){
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
+        assertThrows(WrongPlace.class,
+                () -> player.locateIn(new Coordinate(2,2), new Gangway( new Coordinate(2,2))));
+
+        assertThrows(WrongPlace.class,
+                () -> player.locateIn(new Coordinate(3,1), new Ground( new Coordinate(3,1))));
+
+        assertThrows(WrongPlace.class,
+                () -> player.locateIn(new Coordinate(1,1), new Rocky( new Coordinate(1,1))));
+
+        assertThrows(WrongPlace.class,
+                () -> player.locateIn(new Coordinate(2,1), new InitialGangway( new Coordinate(2,1))));
+
+        assertDoesNotThrow(() -> player.locateIn(playerCoordinate, new FinalGangway( new Coordinate(15,11))));
+
+    }
+
+
+
+
+
+
 
 
 }

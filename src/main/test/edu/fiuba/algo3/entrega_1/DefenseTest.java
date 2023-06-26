@@ -17,6 +17,8 @@ import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.entrega_1.Path.OwlPath;
+import edu.fiuba.algo3.entrega_1.Path.Path;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
