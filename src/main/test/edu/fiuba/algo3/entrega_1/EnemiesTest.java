@@ -17,8 +17,8 @@ import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Name.Name;
-import edu.fiuba.algo3.entrega_1.Path.OwlPath;
-import edu.fiuba.algo3.entrega_1.Path.Path;
+import edu.fiuba.algo3.entrega_1.PathForTheTest.NormalPath;
+import edu.fiuba.algo3.entrega_1.PathForTheTest.PathFromTheOwl;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class EnemiesTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class EnemiesTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Spider spider = new Spider(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -87,7 +87,7 @@ public class EnemiesTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Owl owl = new Owl(map, path.copyPath(), playerCoordinate);
 
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
@@ -121,7 +121,7 @@ public class EnemiesTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
 
         ant.advance();
@@ -143,7 +143,7 @@ public class EnemiesTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Spider spider = new Spider(map, path.copyPath());
 
         spider.advance();
@@ -166,7 +166,7 @@ public class EnemiesTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        OwlPath owlPath = new OwlPath();
+        PathFromTheOwl owlPath = new PathFromTheOwl();
         Owl owl = new Owl(map, owlPath.owlPath(), playerCoordinate);
         owl.advance();
 
@@ -193,7 +193,7 @@ public class EnemiesTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        OwlPath owlPath = new OwlPath();
+        PathFromTheOwl owlPath = new PathFromTheOwl();
         Owl owl = new Owl(map, owlPath.owlPath(), playerCoordinate);
         ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(owl);
@@ -244,7 +244,7 @@ public class EnemiesTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Mole mole = new Mole(map, path.copyPath());
 
         WhiteTower whiteTower = new WhiteTower();
@@ -290,7 +290,7 @@ public class EnemiesTest {
         ArrayList<Player> players = new ArrayList<>();
 
         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
-        Mole mole = new Mole(map, new Path().copyPath());
+        Mole mole = new Mole(map, new NormalPath().copyPath());
 
         enemies.add(mole);
         players.add(player);
@@ -314,7 +314,7 @@ public class EnemiesTest {
         ArrayList<Player> players = new ArrayList<>();
 
         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
-        Spider spider = new Spider(map, new Path().copyPath());
+        Spider spider = new Spider(map, new NormalPath().copyPath());
 
 
         enemies.add(spider);
@@ -342,7 +342,7 @@ public class EnemiesTest {
         ArrayList<Player> players = new ArrayList<>();
 
         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
-        Ant ant = new Ant(map, new Path().copyPath());
+        Ant ant = new Ant(map, new NormalPath().copyPath());
 
 
         enemies.add(ant);
@@ -365,14 +365,14 @@ public class EnemiesTest {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Owl owl = new Owl(map, new OwlPath().owlPath(), resources.getPath().getLast());
+        Owl owl = new Owl(map, new PathFromTheOwl().owlPath(), resources.getPath().getLast());
         ArrayList<Enemy> enemies = new ArrayList<>();
 
         ArrayList<Player> players = new ArrayList<>();
 
         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
-        Spider spider = new Spider(map, new Path().copyPath());
-        Ant ant = new Ant(map, new Path().copyPath());
+        Spider spider = new Spider(map, new NormalPath().copyPath());
+        Ant ant = new Ant(map, new NormalPath().copyPath());
 
 
         enemies.add(spider);
@@ -411,13 +411,13 @@ public class EnemiesTest {
     public void owlsAttackThePlayerButCantDestroyTowersIfThereIsNoTowersInTheMap(){
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Owl owl = new Owl(map, new OwlPath().owlPath(), resources.getPath().getLast());
+        Owl owl = new Owl(map, new PathFromTheOwl().owlPath(), resources.getPath().getLast());
         ArrayList<Enemy> enemies = new ArrayList<>();
 
         ArrayList<Player> players = new ArrayList<>();
 
         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
-        Spider spider = new Spider(map, new Path().copyPath());
+        Spider spider = new Spider(map, new NormalPath().copyPath());
 
         enemies.add(spider);
 
@@ -485,7 +485,7 @@ public class EnemiesTest {
         });
 
         for (int i = 0; i < 10; i++) {
-            Spider spider = new Spider(map, new Path().getPath());
+            Spider spider = new Spider(map, new NormalPath().getPath());
             enemies.add(spider);
             spider.advance();
             player.makeDefensesAttack();
@@ -542,7 +542,7 @@ public class EnemiesTest {
 
 
         for (int i = 0; i < 10; i++) {
-            Ant ant = new Ant(map, new Path().getPath());
+            Ant ant = new Ant(map, new NormalPath().getPath());
             enemies.add(ant);
             ant.advance();
             player.makeDefensesAttack();
@@ -560,7 +560,7 @@ public class EnemiesTest {
 
 
         for (int i = 0; i < 5; i++) {
-            Ant ant = new Ant(map, new Path().getPath());
+            Ant ant = new Ant(map, new NormalPath().getPath());
             enemies.add(ant);
             ant.advance();
             player.makeDefensesAttack();
@@ -583,7 +583,7 @@ public class EnemiesTest {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Ant ant = new Ant(map, new Path().getPath());
+        Ant ant = new Ant(map, new NormalPath().getPath());
 
         Ground ground = new Ground(new Coordinate(3, 1));
         Rocky rocky = new Rocky(new Coordinate(1, 1));
@@ -602,7 +602,7 @@ public class EnemiesTest {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Spider spider = new Spider(map, new Path().getPath());
+        Spider spider = new Spider(map, new NormalPath().getPath());
 
         Ground ground = new Ground(new Coordinate(3, 1));
         Rocky rocky = new Rocky(new Coordinate(1, 1));
@@ -622,7 +622,7 @@ public class EnemiesTest {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Mole mole = new Mole(map, new Path().getPath());
+        Mole mole = new Mole(map, new NormalPath().getPath());
 
         Ground ground = new Ground(new Coordinate(3, 1));
         Rocky rocky = new Rocky(new Coordinate(1, 1));
@@ -642,7 +642,7 @@ public class EnemiesTest {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Owl owl = new Owl(map, new OwlPath().owlPath(), resources.getPath().getLast());
+        Owl owl = new Owl(map, new PathFromTheOwl().owlPath(), resources.getPath().getLast());
 
         Ground ground = new Ground(new Coordinate(3, 1));
         Rocky rocky = new Rocky(new Coordinate(1, 1));
@@ -695,7 +695,7 @@ public class EnemiesTest {
         });
 
 
-        Spider spider = new Spider(map, new Path().getPath());
+        Spider spider = new Spider(map, new NormalPath().getPath());
         enemies.add(spider);
         spider.advance();
         player.makeDefensesAttack();
@@ -779,7 +779,7 @@ public class EnemiesTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -813,7 +813,7 @@ public class EnemiesTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
         ArrayList<Enemy> enemies = new ArrayList<>();

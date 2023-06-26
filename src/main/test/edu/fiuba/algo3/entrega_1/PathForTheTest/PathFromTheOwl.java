@@ -1,11 +1,10 @@
-package edu.fiuba.algo3.entrega_1.Path;
+package edu.fiuba.algo3.entrega_1.PathForTheTest;
 
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 
 import java.util.LinkedList;
-import java.util.ListIterator;
 
-public class OwlPath {
+public class PathFromTheOwl {
 
     public LinkedList<Coordinate> owlPath(){
         LinkedList<Coordinate> owlPath = new LinkedList<>();

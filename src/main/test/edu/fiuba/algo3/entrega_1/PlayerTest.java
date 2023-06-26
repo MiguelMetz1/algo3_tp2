@@ -17,7 +17,7 @@ import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
-import edu.fiuba.algo3.entrega_1.Path.Path;
+import edu.fiuba.algo3.entrega_1.PathForTheTest.NormalPath;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class PlayerTest {
         ArrayList<Player> players = new ArrayList<>();
 
         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
-        Spider spider = new Spider(map, new Path().copyPath());
+        Spider spider = new Spider(map, new NormalPath().copyPath());
 
         enemies.add(spider);
         players.add(player);
