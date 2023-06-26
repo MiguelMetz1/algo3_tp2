@@ -6,7 +6,7 @@ import edu.fiuba.algo3.Enemies.AttackReceiver.AttackReceiver;
 import edu.fiuba.algo3.Enemies.Advancer.NullAdvancer;
 import edu.fiuba.algo3.Enemies.AttackReceiver.NullAttackReceiver;
 import edu.fiuba.algo3.GameMap.GameMap;
-import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.TypeData.Buff.Attribute;
 import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
@@ -37,7 +37,7 @@ public abstract class TargetableEnemy extends Enemy {
 
     }
 
-    public void attack( ArrayList<PlayerCharacter> targets ){
+    public void attack(ArrayList<Player> targets ){
 
         if( this.isDead() ){
             this.setAttacker( new NullAttacker() );

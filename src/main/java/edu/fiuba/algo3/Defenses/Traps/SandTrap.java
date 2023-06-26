@@ -8,7 +8,7 @@ import edu.fiuba.algo3.Defenses.Builder.Builder;
 import edu.fiuba.algo3.Defenses.Builder.NullBuilder;
 import edu.fiuba.algo3.Defenses.Builder.UnderDestructionSandTrap;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
-import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Plots.Gangway;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Buff.Buff;
@@ -25,11 +25,11 @@ public class SandTrap extends Defense {
 
     private Deleter deleter;
 
-    private PlayerCharacter playerCharacter;
+    private Player player;
 
 
-    public SandTrap( PlayerCharacter playerCharacter ){
-        this.playerCharacter = playerCharacter;
+    public SandTrap( Player player){
+        this.player = player;
         this.deleter = new NullDeleter();
         this.deleterBuilder = new NullBuilder();
         this.attacker = new ReadyAttacker(this.getBuff(), this.position, new Distance(this.range()));
@@ -52,7 +52,7 @@ public class SandTrap extends Defense {
 
     public void locateIn(Coordinate position, Plot plot) throws WrongPlace {
         super.locateIn(position, plot);
-        this.deleterBuilder = new UnderDestructionSandTrap( 3, this.playerCharacter );
+        this.deleterBuilder = new UnderDestructionSandTrap( 3, this.player);
     }
 
     public void continueWithTheConstruction() {

@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.AlgoDefense;
 
-import edu.fiuba.algo3.GameMap.GameMap;
+
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Turn.ComputerTurn;
 import edu.fiuba.algo3.Turn.PlayerTurn;

@@ -10,7 +10,7 @@ import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
-import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
@@ -30,7 +30,7 @@ public class Game {
 
     Queue<ArrayList<Enemy>> troops;
 
-    PlayerCharacter playerCharacter;
+    Player player;
     GameMap map;
 
     Shop shop;
@@ -50,15 +50,15 @@ public class Game {
         this.looteableEnemies = resources.getLooteables();
         this.enemies = this.troops.poll();
         Coordinate playerCharacterPosition = resources.getPlayerCharacterCoordinate();
-        this.playerCharacter = new PlayerCharacter(new Name("Fabricio"), map, playerCharacterPosition, troops, enemies);
-        this.shop = new Shop(playerCharacter);
+        this.player = new Player(new Name("Fabricio"), map, playerCharacterPosition, troops, enemies);
+        this.shop = new Shop(player);
         this.chargeShop();
     }
 
     private void chargeShop(){
             this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
             this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
-            this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.playerCharacter));
+            this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.player));
     }
 
     private String sandTrapKey() {
@@ -78,12 +78,12 @@ public class Game {
     }
 
     public void locateLastBoughtDefenseIn( Coordinate coordinate ) throws WrongPlace {
-        playerCharacter.locateLastDefense(coordinate);
+        player.locateLastDefense(coordinate);
     }
 
     public void lootEnemies(){
         for(Looteable enemy: looteableEnemies){
-            enemy.transferLootTo(playerCharacter);
+            enemy.transferLootTo(player);
         }
     }
 
@@ -96,8 +96,8 @@ public class Game {
     }
 
     private void makeEnemiesAttack() {
-        ArrayList<PlayerCharacter> players = new ArrayList<>();
-        players.add(playerCharacter);
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player);
         for(Enemy enemy: enemies){
             enemy.attack(players);
         }
@@ -121,11 +121,11 @@ public class Game {
     }
 
     public void buildDefenses() {
-        playerCharacter.buildDefenses();
+        player.buildDefenses();
     }
 
     public String gameWon(){
-            return this.playerCharacter.won();
+            return this.player.won();
     }
 
     public void showMap(AnchorPane root, VBox consoleContainer) {
@@ -133,10 +133,10 @@ public class Game {
     }
 
     public void showPlayerCredist() {
-        this.playerCharacter.showCredits();
+        this.player.showCredits();
     }
 
     public Name getName() {
-        return this.playerCharacter.getName();
+        return this.player.getName();
     }
 }

@@ -1,19 +1,18 @@
 package edu.fiuba.algo3.Defenses.Deleter;
 
 import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Defenses.Deleter.Deleter;
-import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Players.Player;
 
 public class SandTrapDeleter implements Deleter {
-    PlayerCharacter playerCharacter;
+    Player player;
 
-    public SandTrapDeleter( PlayerCharacter playerCharacter ){
-        this.playerCharacter = playerCharacter;
+    public SandTrapDeleter( Player player){
+        this.player = player;
     }
 
     @Override
     public void delete(Defense defense) {
-        this.playerCharacter.destroyDefense(defense);
+        this.player.destroyDefense(defense);
         defense.removeFromYourPlot();
     }
 }

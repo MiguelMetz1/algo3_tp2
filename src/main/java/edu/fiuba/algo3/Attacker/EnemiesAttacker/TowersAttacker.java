@@ -1,13 +1,13 @@
 package edu.fiuba.algo3.Attacker.EnemiesAttacker;
 
 import edu.fiuba.algo3.Attacker.Attacker;
-import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
 
-public class TowersAttacker implements Attacker<PlayerCharacter> {
+public class TowersAttacker implements Attacker<Player> {
 
     private final Coordinate position;
 
@@ -16,9 +16,9 @@ public class TowersAttacker implements Attacker<PlayerCharacter> {
     }
 
     @Override
-    public void attack(ArrayList<PlayerCharacter> players) {
+    public void attack(ArrayList<Player> players) {
 
-        for ( PlayerCharacter player : players) {
+        for ( Player player : players) {
 
             if( !player.distanceToBiggerThan( position, new Distance(0) ) ) {
 

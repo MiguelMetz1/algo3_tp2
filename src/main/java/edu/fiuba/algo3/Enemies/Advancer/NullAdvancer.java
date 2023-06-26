@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.Enemies.Advancer;
 
-import edu.fiuba.algo3.Enemies.Advancer.Advancer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
