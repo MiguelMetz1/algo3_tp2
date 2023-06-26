@@ -45,6 +45,7 @@ public class DamagedOwlAdvancer implements Advancer {
         try {
             this.map.locateEntityIn(owl, position);
             this.actualPosition.updateTo(position);
+
         } catch (WrongPlace e) {
             throw new RuntimeException(e);
         }

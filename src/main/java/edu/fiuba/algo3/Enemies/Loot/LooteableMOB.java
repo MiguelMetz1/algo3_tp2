@@ -14,6 +14,6 @@ public class LooteableMOB implements Looteable {
     @Override
     public void transferLootTo(Looter player){
         this.loot.transferLootTo( player );
-        this.loot = new LootedMOB();
+
     }
 }

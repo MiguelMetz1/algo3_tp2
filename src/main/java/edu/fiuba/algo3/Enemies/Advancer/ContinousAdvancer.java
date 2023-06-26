@@ -8,6 +8,8 @@ import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Speed.Speed;
 
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContinousAdvancer implements Advancer {
 
@@ -69,7 +71,7 @@ public class ContinousAdvancer implements Advancer {
         try {
             map.locateEntityIn(entityToAdvance, position);
         } catch (WrongPlace e) {
-            System.out.println("The entity can't advance to this place.");
+            Logger.getLogger("Advancer").log(Level.INFO, "The entity can't advance to this place.");
         }
     }
 

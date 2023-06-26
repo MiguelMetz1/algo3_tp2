@@ -18,11 +18,6 @@ public class FirstEnemyAdvancer implements Advancer {
 
     Coordinate actualPosition;
 
-    public FirstEnemyAdvancer(GameMap map, Coordinate firstStep, Placeable entityToAdvance){
-        this.map = map;
-        this.firstAdvanceCoordinate = firstStep;
-        this.entityToAdvance = entityToAdvance;
-    }
 
     public FirstEnemyAdvancer(GameMap map, Coordinate actualPosition, Coordinate firstAdvanceCoordinate, Placeable entityToAdvance){
         this.map = map;

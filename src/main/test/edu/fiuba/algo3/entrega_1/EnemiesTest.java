@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -158,7 +159,7 @@ public class EnemiesTest {
     }
 
     @Test
-    public void owlsAdvanceCorrectly() {
+    public void owlsMoreThan50PercentLifeAdvanceCorrectly() {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
@@ -180,6 +181,56 @@ public class EnemiesTest {
         owl.advance();
         boolean isPosition3Correct = owl.distanceToBiggerThan(new Coordinate(7,11), new Distance(0));
         assertFalse(isPosition3Correct);
+
+
+    }
+
+    @Test
+    public void owlsLessThan50PercentLifeAdvanceCorrectly(){
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+
+        OwlPath owlPath = new OwlPath();
+        Owl owl = new Owl(map, owlPath.owlPath(), playerCoordinate);
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        enemies.add(owl);
+
+        WhiteTower whiteTower = new WhiteTower();
+        assertDoesNotThrow(() -> map.locateEntityIn(whiteTower, new Coordinate(3,1)));
+        whiteTower.continueWithTheConstruction();
+
+        owl.advance();
+        whiteTower.attack(enemies);
+        whiteTower.attack(enemies);
+        whiteTower.attack(enemies);
+
+        Coordinate startCoordinate = new Coordinate(2,1 );
+        Coordinate finalCoordinate = new Coordinate(15,11);
+
+        Coordinate actualPosition = startCoordinate.nextCoordinateInDirectionWithDistance(finalCoordinate, new Distance(5));
+
+        owl.advance();
+        boolean isPosition1Correct = owl.distanceToBiggerThan(actualPosition, new Distance(0));
+        assertFalse(isPosition1Correct);
+
+        owl.advance();
+        actualPosition = actualPosition.nextCoordinateInDirectionWithDistance(finalCoordinate, new Distance(5));
+        boolean isPosition2Correct = owl.distanceToBiggerThan(actualPosition, new Distance(0));
+        assertFalse(isPosition2Correct);
+
+        owl.advance();
+        actualPosition = actualPosition.nextCoordinateInDirectionWithDistance(finalCoordinate, new Distance(5));
+        boolean isPosition3Correct = owl.distanceToBiggerThan(actualPosition, new Distance(0));
+        assertFalse(isPosition3Correct);
+
+        owl.advance();
+        actualPosition = actualPosition.nextCoordinateInDirectionWithDistance(finalCoordinate, new Distance(5));
+        boolean isPosition4Correct = owl.distanceToBiggerThan(finalCoordinate, new Distance(0));
+        assertFalse(isPosition4Correct);
+
+
 
 
     }
@@ -603,6 +654,190 @@ public class EnemiesTest {
         assertDoesNotThrow( ()->{ owl.locateIn( new Coordinate(2,2), gangway); } );
         assertDoesNotThrow( ()->{ owl.locateIn( new Coordinate(15,11), finalGangway); } );
         assertDoesNotThrow( ()->{ owl.locateIn( new Coordinate(2,1), initialGangway); } );
+
+    }
+
+
+
+    @Test
+    public void mobsCanBeLootedOnlyOneTime() throws InsuficientCredits, NonExistentArticle {
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+
+
+        players.add(player);
+
+        Shop shop = new Shop(player);
+        shop.addArticle("Silver Tower", new SilverTowerProvider());
+        shop.addArticle("White Tower", new WhiteTowerProvider());
+
+        shop.buy("Silver Tower");
+        shop.buy("Silver Tower");
+        shop.buy("Silver Tower");
+        shop.buy("Silver Tower");
+        shop.buy("Silver Tower");
+
+        player.buildDefenses();
+        player.buildDefenses();
+
+        assertThrows(InsuficientCredits.class, () -> {
+            shop.buy("Silver Tower");
+        });
+
+
+        Spider spider = new Spider(map, new Path().getPath());
+        enemies.add(spider);
+        spider.advance();
+        player.makeDefensesAttack();
+        spider.transferLootTo(player);
+        spider.transferLootTo(player);
+        spider.finalizeYourWay(deadEnemies);
+        enemies.removeAll(deadEnemies);
+
+
+
+        assertThrows(InsuficientCredits.class, () -> {
+            shop.buy("Silver Tower");
+        });
+
+    }
+
+    @Test
+    public void firstEnemyAdvancerOnlySpawnEnemiesInInitialGangway() throws WrongPlace {
+
+        /* coordinates -666 -666 means that the enemy doesn't spawn yer */
+
+
+        LinkedList<Coordinate> path = new LinkedList<>();
+        path.add(new Coordinate(3,1));
+        path.add(new Coordinate(3,2));
+
+
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Spider spider = new Spider(map, path);
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        enemies.add(spider);
+
+        spider.advance();
+        boolean isPosition1Correct = spider.distanceToBiggerThan(new Coordinate(-666,-666), new Distance(0));
+        assertTrue(isPosition1Correct);
+
+        boolean isPosition2Correct = spider.distanceToBiggerThan(new Coordinate(3,1), new Distance(0));
+        assertTrue(isPosition2Correct);
+
+
+    }
+
+    @Test
+    public void enemiesWithConstinousAdvancerMovesToTheCorrectPlace(){
+
+        LinkedList<Coordinate> path = new LinkedList<>();
+        path.add(new Coordinate(2,1));
+        path.add(new Coordinate(2,2));
+        path.add(new Coordinate(3,2));
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Ant ant = new Ant(map, path);
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        enemies.add(ant);
+
+        ant.advance();
+
+        ant.advance();
+        boolean isPosition1Correct = ant.distanceToBiggerThan(new Coordinate(2,2), new Distance(0));
+        assertFalse(isPosition1Correct);
+
+        ant.advance();
+        boolean isPosition2Correct = ant.distanceToBiggerThan(new Coordinate(3,2), new Distance(0));
+        assertTrue(isPosition2Correct);
+
+
+    }
+
+    @Test
+    public void deadEnemiesCantAdvanceAnyMore() {
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Path path = new Path();
+        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+
+        WhiteTower whiteTower = new WhiteTower();
+        assertDoesNotThrow(() -> map.locateEntityIn(whiteTower, new Coordinate(3,1)));
+        whiteTower.continueWithTheConstruction();
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        enemies.add(ant);
+        ant.advance();
+
+        boolean isPosition1Correct = ant.distanceToBiggerThan(new Coordinate(2,1), new Distance(0));
+        assertFalse(isPosition1Correct);
+
+        whiteTower.attack(enemies);
+
+        ant.advance();
+        boolean isPosition2Correct = ant.distanceToBiggerThan(new Coordinate(2,1), new Distance(0));
+        assertFalse(isPosition2Correct);
+
+
+
+
+    }
+
+    @Test
+    public void deadEnemiesCantAttackThePlayer() {
+
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        Path path = new Path();
+        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        players.add(player);
+
+        WhiteTower whiteTower = new WhiteTower();
+        assertDoesNotThrow(() -> map.locateEntityIn(whiteTower, new Coordinate(14,12)));
+        whiteTower.continueWithTheConstruction();
+
+
+
+        enemies.add(ant);
+
+        for(int i = 0; i < 24; i++)
+            ant.advance();
+
+        whiteTower.attack(enemies);
+
+        for(int i = 0; i < 20; i++)
+            ant.attack(players);
+
+        assertEquals( "In game.", player.won());
 
     }
 
