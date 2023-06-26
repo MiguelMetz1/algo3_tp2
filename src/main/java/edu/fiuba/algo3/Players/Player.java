@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 public class Player implements Target, Placeable, Buyer, Looter {
 
-    private Plot positionedPlace;
     private Life life;
 
     private ArrayList<Attribute> attributes;
@@ -53,7 +52,6 @@ public class Player implements Target, Placeable, Buyer, Looter {
         this.troops = troops;
         this.enemies = enemies;
         this.life = new Life(20);
-        this.positionedPlace = new NullPlot();
         this.attributes = new ArrayList<>();
         this.attributes.add(life);
         this.defenses = new LinkedList<>();
@@ -110,9 +108,6 @@ public class Player implements Target, Placeable, Buyer, Looter {
             for( Attribute attribute: attributes){
                 attribute.applyBuff(buff);
             }
-            if( this.isDead() ){
-                this.positionedPlace = new HellsPlot();
-            }
         }
 
     }
@@ -155,7 +150,6 @@ public class Player implements Target, Placeable, Buyer, Looter {
             throw new WrongPlace("The player character cannot be located here.");
         }
         this.position.updateTo(position);
-        this.positionedPlace = plot;
     }
 
     @Override

@@ -103,10 +103,9 @@ public class EnemiesTest {
 
     }
 
-
     @Test
 
-    public void AntsSpawnWithTheCorrectAmountOfSpeed(){
+    public void antsAdvanceCorrectly(){
 
 
         ExternalResources resources = new ExternalResources();
@@ -129,7 +128,7 @@ public class EnemiesTest {
     }
 
     @Test
-    public void SpidersSpawnWithTheCorrectAmountOfSpeed(){
+    public void spidersAdvanceCorrectly(){
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
@@ -179,14 +178,13 @@ public class EnemiesTest {
 
 
     @Test
-    public void MolesStartWithTheCorrectAmountOfSpeed() throws WrongPlace {
+    public void molesStartWithTheCorrectAmountOfSpeed() throws WrongPlace {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
         Path path = new Path();
-        Owl owl = new Owl(map, path.copyPath(), playerCoordinate);
+        Mole mole = new Mole(map, path.copyPath());
 
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -194,22 +192,30 @@ public class EnemiesTest {
         map.locateEntityIn(whiteTower, new Coordinate(2,9));
 
         ArrayList<Enemy> enemies = new ArrayList<>();
-        enemies.add(owl);
+        enemies.add(mole);
 
-        owl.advance();
-        owl.advance();
-        whiteTower.continueWithTheConstruction();
-
-        whiteTower.attack(enemies);
-        whiteTower.attack(enemies);
-        whiteTower.attack(enemies);
-        whiteTower.attack(enemies);
-        whiteTower.attack(enemies);
-
-
-        owl.finalizeYourWay(deadEnemies);
-        assertTrue(deadEnemies.contains(owl));
-
+        mole.advance();
+        boolean isPosition1Correct = mole.distanceToBiggerThan(new Coordinate(2,1), new Distance(0));
+        assertFalse(isPosition1Correct);
+        mole.advance();
+        mole.advance();
+        mole.advance();
+        mole.advance();
+        mole.advance();
+        boolean isPosition2Correct = mole.distanceToBiggerThan(new Coordinate(2,6), new Distance(0));
+        assertFalse(isPosition2Correct);
+        mole.advance();
+        boolean isPosition3Correct = mole.distanceToBiggerThan(new Coordinate(3,7), new Distance(0));
+        assertFalse(isPosition3Correct);
+        mole.advance();
+        mole.advance();
+        mole.advance();
+        mole.advance();
+        boolean isPosition4Correct = mole.distanceToBiggerThan(new Coordinate(9,9), new Distance(0));
+        assertFalse(isPosition4Correct);
+        mole.advance();
+        boolean isPosition5Correct = mole.distanceToBiggerThan(new Coordinate(10,11), new Distance(0));
+        assertFalse(isPosition5Correct);
 
     }
 

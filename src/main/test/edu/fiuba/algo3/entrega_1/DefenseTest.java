@@ -144,7 +144,7 @@ public class DefenseTest {
     }
 
     @Test
-    public void SilverTowersTakesThTwoTurnsUntilStartToAttackEnemies() throws WrongPlace {
+    public void SilverTowersTakesTwoTurnsUntilStartToAttackEnemies() throws WrongPlace {
 
         /* silver tower should be constructed in two turns. While under construction cant attack
         White towers make 2 points of damage this mean can oneshot ants  because ants have 1 point of life */
@@ -303,10 +303,6 @@ public class DefenseTest {
 
     }
 
-
-
-
-
     @Test
     public void WhiteTowersMakeTheCorrectAmountOfDamage() throws WrongPlace {
         /* White towers make one point of damage so should kill an spider in two shots that have one point of life */
@@ -337,7 +333,7 @@ public class DefenseTest {
     }
 
     @Test
-    public void SilversTowersMakeTheCorrectAmountOfDamage() throws WrongPlace {
+    public void silversTowersMakeTheCorrectAmountOfDamage() throws WrongPlace {
         /* Silver towers make two points of damage so should oneshot a spider that have two points of life */
 
 
@@ -365,7 +361,7 @@ public class DefenseTest {
     }
 
     @Test
-    public void SandTrapDisappearAfterTheCorrectAmountOfTurns() throws WrongPlace {
+    public void sandTrapDisappearAfterTheCorrectAmountOfTurns() throws WrongPlace {
 
         /* after three turns the ant is going to spawn an the sand trap should disappear */
 
@@ -401,5 +397,33 @@ public class DefenseTest {
         assertTrue(deadEnemies.contains(ant));
     }
 
+    @Test
+    public void sandTrapShouldNotAttackOwls(){
 
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+
+        OwlPath owlPath = new OwlPath();
+        Owl owl = new Owl(map, owlPath.owlPath(), playerCoordinate);
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+
+        SandTrap sandTrap = new SandTrap(player);
+
+        assertDoesNotThrow( ()-> map.locateEntityIn( sandTrap, new Coordinate(2,6) ) );
+
+        owl.advance();
+
+        owl.advance();
+        enemies.add(owl);
+        sandTrap.attack(enemies);
+
+        boolean isPosition1Correct = owl.distanceToBiggerThan(new Coordinate(2,6), new Distance(0));
+        assertFalse(isPosition1Correct);
+
+        owl.advance();
+        boolean isPosition2Correct = owl.distanceToBiggerThan(new Coordinate(2,11), new Distance(0));
+        assertFalse(isPosition2Correct);
+    }
 }
