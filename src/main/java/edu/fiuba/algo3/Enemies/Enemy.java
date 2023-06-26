@@ -57,8 +57,6 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
         this.changeAttackReceiver();
     }
 
-    public Enemy( ) {
-    }
 
     protected ArrayList<Attribute> getBuffeablesAttributes(){
         ArrayList<Attribute> attributes = new ArrayList<>();

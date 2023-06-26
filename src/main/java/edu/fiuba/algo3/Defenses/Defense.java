@@ -47,9 +47,9 @@ public abstract class Defense implements Placeable {
         this.attacker = this.builder.actualState();
     }
 
-    protected void setAttacker(Attacker attacker){
+  /*  protected void setAttacker(Attacker attacker){
         this.attacker = attacker;
-    }
+    }*/
 
     @Override
     public void locateIn( Coordinate position, Plot plot) throws WrongPlace {
@@ -72,9 +72,9 @@ public abstract class Defense implements Placeable {
 
     }
 
-    protected void setBuilder( Builder<Attacker>  builder){
+   /* protected void setBuilder( Builder<Attacker>  builder){
         this.builder = builder;
-    }
+    }*/
 
     protected Buff getBuff(){
         return new EnergyInstantDecrementerDebuff(new AdditiveDamage(damage()));

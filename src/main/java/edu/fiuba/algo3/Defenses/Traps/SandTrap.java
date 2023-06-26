@@ -65,15 +65,15 @@ public class SandTrap extends Defense {
     }
 
     @Override
-    public String toString() {
-        return "SandTrap";
-    }
-
-    @Override
     protected ArrayList<String> rightPlots(){
         ArrayList<String> passablePlots = new ArrayList<>();
         passablePlots.add( Gangway.class.getName() );
         return passablePlots;
+    }
+
+    @Override
+    public String toString() {
+        return "SandTrap";
     }
 
     public String image(){
