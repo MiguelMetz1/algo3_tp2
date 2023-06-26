@@ -8,7 +8,7 @@ import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
-import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
 import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
@@ -37,9 +37,9 @@ public class DefenseTest {
         ArrayList<Enemy> enemies = new ArrayList<>();
 
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
-        Shop shop = new Shop(playerCharacter);
+        Shop shop = new Shop(player);
         shop.addArticle("White Tower", new WhiteTowerProvider());
 
 
@@ -66,9 +66,9 @@ public class DefenseTest {
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
         ArrayList<Enemy> enemies = new ArrayList<>();
 
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
-        Shop shop = new Shop(playerCharacter);
+        Shop shop = new Shop(player);
         shop.addArticle("Silver Tower", new SilverTowerProvider());
 
 
@@ -93,10 +93,10 @@ public class DefenseTest {
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
         ArrayList<Enemy> enemies = new ArrayList<>();
-        PlayerCharacter playerCharacter = new PlayerCharacter( new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies );
+        Player player = new Player( new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies );
 
-        Shop shop = new Shop(playerCharacter);
-        shop.addArticle("Sand Trap", new SandTrapProvider(playerCharacter));
+        Shop shop = new Shop(player);
+        shop.addArticle("Sand Trap", new SandTrapProvider(player));
 
         for(int i = 0; i < 4; i++){
             assertDoesNotThrow(() -> {
@@ -188,7 +188,7 @@ public class DefenseTest {
 
         ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
         Path path = new Path();
@@ -198,7 +198,7 @@ public class DefenseTest {
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(2,8));
 
-        SandTrap sandTrap = new SandTrap(playerCharacter);
+        SandTrap sandTrap = new SandTrap(player);
         map.locateEntityIn(sandTrap, new Coordinate(2,2));
         sandTrap.continueWithTheConstruction();
 
@@ -231,14 +231,14 @@ public class DefenseTest {
 
         ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
         Path path = new Path();
         Spider spider = new Spider(map, path.copyPath());
 
 
-        SandTrap sandTrap = new SandTrap(playerCharacter);
+        SandTrap sandTrap = new SandTrap(player);
         map.locateEntityIn(sandTrap, new Coordinate(2,3));
         sandTrap.continueWithTheConstruction();
 
@@ -272,14 +272,14 @@ public class DefenseTest {
 
         ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
         Path path = new Path();
         Mole mole = new Mole(map, path.copyPath());
 
 
-        SandTrap sandTrap = new SandTrap(playerCharacter);
+        SandTrap sandTrap = new SandTrap(player);
         map.locateEntityIn(sandTrap, new Coordinate(2,3));
         sandTrap.continueWithTheConstruction();
 
@@ -375,7 +375,7 @@ public class DefenseTest {
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
         ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
+        Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
         Path path = new Path();
@@ -384,7 +384,7 @@ public class DefenseTest {
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(2,8));
 
-        SandTrap sandTrap = new SandTrap(playerCharacter);
+        SandTrap sandTrap = new SandTrap(player);
         map.locateEntityIn(sandTrap, new Coordinate(2,2));
 
         sandTrap.continueWithTheConstruction(); // turn 1
@@ -394,11 +394,11 @@ public class DefenseTest {
 
         enemies.add(ant); //ant should be in (2, 5) in 5 turn if there is no sand trap
         for(int i = 0; i < 5; i++)
-                ant.advance();
+            ant.advance();
 
-       whiteTower.attack(enemies);
-       ant.finalizeYourWay(deadEnemies);
-       assertTrue(deadEnemies.contains(ant));
+        whiteTower.attack(enemies);
+        ant.finalizeYourWay(deadEnemies);
+        assertTrue(deadEnemies.contains(ant));
     }
 
 

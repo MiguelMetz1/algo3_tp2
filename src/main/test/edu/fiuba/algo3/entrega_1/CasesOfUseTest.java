@@ -9,7 +9,7 @@ import edu.fiuba.algo3.Exceptions.*;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Parsers.ExternalResources;
-import edu.fiuba.algo3.Players.PlayerCharacter;
+import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
@@ -54,7 +54,10 @@ public class CasesOfUseTest {
     @Test
     public void playerStartsWithCorrespondingCredits() {
         //Vida:20     Creditos:100
-        Player player = new Player("Lisandro");
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
         Shop shop = new Shop(player);
         assertDoesNotThrow(()->{shop.addArticle("White Tower", new WhiteTowerProvider());});
         assertDoesNotThrow(()->{shop.addArticle("Silver Tower", new SilverTowerProvider());});
@@ -76,14 +79,14 @@ public class CasesOfUseTest {
         GameMap map = resources.getMap();
         ArrayList<Enemy> enemies = new ArrayList<>();
 
-        ArrayList<PlayerCharacter> players = new ArrayList<>();
+        ArrayList<Player> players = new ArrayList<>();
 
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Player Player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
         Spider spider = new Spider(map, this.copyPath());
 
 
         enemies.add(spider);
-        players.add(playerCharacter);
+        players.add(Player);
 
 
         for (int i = 0;i < 13; i++)
@@ -93,7 +96,7 @@ public class CasesOfUseTest {
             spider.attack(players);
 
 
-        assertEquals( "Lose.", playerCharacter.won());
+        assertEquals( "Lose.", Player.won());
 
     }
 
@@ -197,7 +200,10 @@ public class CasesOfUseTest {
      @Test
      public void amountOfCreditsIsSuficientToBuy(){
 
-         Player player = new Player("Lisandro");
+         ExternalResources resources = new ExternalResources();
+         GameMap map = resources.getMap();
+         ArrayList<Enemy> enemies = new ArrayList<>();
+         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
          Shop shop = new Shop(player);
          assertDoesNotThrow(()->{shop.addArticle("White Tower", new WhiteTowerProvider());});
          assertDoesNotThrow(()->{shop.addArticle("Silver Tower", new SilverTowerProvider());});
@@ -330,11 +336,11 @@ public class CasesOfUseTest {
         WhiteTower whiteTower = new WhiteTower();
         assertDoesNotThrow(()->{ map.locateEntityIn(whiteTower, new Coordinate(3,1)); });
         whiteTower.continueWithTheConstruction();
-        Player player = new Player("Lisandro");
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
         Shop shop = new Shop(player);
         assertDoesNotThrow(()->{shop.addArticle("White Tower", new WhiteTowerProvider());});
         assertDoesNotThrow(()->{shop.addArticle("Silver Tower", new SilverTowerProvider());});
-        ArrayList<Enemy> enemies = new ArrayList<>();
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
         for( int i = 0; i < 10; i++) {
             Ant ant = new Ant(map,this.copyPath());
