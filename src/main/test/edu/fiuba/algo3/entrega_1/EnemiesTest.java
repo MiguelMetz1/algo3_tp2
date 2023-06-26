@@ -324,7 +324,54 @@ public class EnemiesTest {
         players.add(player);
 
         SilverTower silverTower = new SilverTower();
-        assertDoesNotThrow(()->map.locateEntityIn(silverTower, new Coordinate(3,1)));
+        assertDoesNotThrow( ()->map.locateEntityIn(silverTower, new Coordinate(3,1)) );
+        silverTower.continueWithTheConstruction();
+        silverTower.continueWithTheConstruction();
+        player.addDefense(silverTower);
+
+        spider.advance();
+
+        player.makeDefensesAttack();
+
+        assertEquals( "Won.", player.won());
+
+        owl.advance();
+        owl.advance();
+        owl.advance();
+        owl.advance();
+        owl.advance();
+        owl.advance();
+        owl.attack(players);
+
+        enemies.add(ant);
+        enemies.add(owl);
+
+        player.makeDefensesAttack();
+        assertEquals("In game.", player.won());
+    }
+
+    @Test
+    public void antGiveTheCorrectAmountOfCredits() {
+
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        Owl owl = new Owl(map, new OwlPath().owlPath(), resources.getPath().getLast());
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        ArrayList<Player> players = new ArrayList<>();
+
+        Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Spider spider = new Spider(map, new Path().copyPath());
+        Ant ant = new Ant(map, new Path().copyPath());
+
+
+        enemies.add(spider);
+
+
+        players.add(player);
+
+        SilverTower silverTower = new SilverTower();
+        assertDoesNotThrow( ()->map.locateEntityIn(silverTower, new Coordinate(3,1)) );
         silverTower.continueWithTheConstruction();
         silverTower.continueWithTheConstruction();
         player.addDefense(silverTower);
