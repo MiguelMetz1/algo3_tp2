@@ -185,18 +185,25 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     protected abstract double getSpeed();
 
-    public void addImage( Map<Coordinate, Button> buttonMap){
-        if(buttonMap.containsKey(this.actualPosition)){
+    public void addImage( Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
+
+
             Button button = buttonMap.get(this.actualPosition);
+            StackPane stackPane = stackPaneMap.get(this.actualPosition);
             Image overlayImage1 = new Image(enemyImage());
             ImageView overlayImageView1 = new ImageView(overlayImage1);
             overlayImageView1.setFitHeight(20);
             overlayImageView1.setFitWidth(20);
 
-        /*StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(overlayImageView1);*/
-            button.setGraphic(overlayImageView1);
-        }
+            //System.out.println(stackPane.getChildren().size());
+
+            stackPane.getChildren().addAll(overlayImageView1);
+            overlayImageView1.toFront();
+
+            button.setGraphic(stackPane);
+
+            //stackPane.getChildren().remove(0);
+
     }
 
     protected abstract String enemyImage();

@@ -29,7 +29,7 @@ public class GameMap {
         entity.locateIn(destinationPlace, destinationPlot);
     }
 
-    public void showMap(AnchorPane root, VBox consoleContainer, Game game, Map<Coordinate, Button> buttonMap){
+    public void showMap(AnchorPane root, VBox consoleContainer, Game game, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
         Map<Coordinate, Plot> plots = this.map;
 
         for (Map.Entry<Coordinate, Plot> entry : plots.entrySet()) {
@@ -55,10 +55,10 @@ public class GameMap {
 
             //stackPane.getChildren().addAll(overlayImageView);
 
-
             button.setGraphic(stackPane);
 
             buttonMap.put(coordinate,button);
+            stackPaneMap.put(coordinate,stackPane);
             root.getChildren().add(button);
 
 

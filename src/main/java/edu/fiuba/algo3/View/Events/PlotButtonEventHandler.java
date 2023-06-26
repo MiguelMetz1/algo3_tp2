@@ -13,6 +13,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
     private Plot plot;
@@ -48,6 +53,7 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
         try {
             game.locateLastBoughtDefenseIn(coordinate);
+            //makeSound();
         } catch (WrongPlace e) {
             label.setText(e.getMessage());
             throw new RuntimeException(e);
@@ -62,9 +68,25 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
 
         this.stackPane.getChildren().addAll(overlayImageView1);
+        //this.stackPane.getChildren().addAll(overlayImageView1, overlayImageView2);
         overlayImageView1.toBack();
-
+        //stackPane.getChildrenUnmodifiable().remove(button.getChildrenUnmodifiable().get(1));
+        //button.getChildrenUnmodifiable().get(1);
 
         button.setGraphic(stackPane);
+
+
+    }
+
+    public void makeSound(){
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("src/main/java/edu/fiuba/algo3/View/Sounds/towerConstructed.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

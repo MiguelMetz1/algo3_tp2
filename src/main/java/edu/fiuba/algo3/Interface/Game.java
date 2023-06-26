@@ -41,7 +41,7 @@ public class Game {
         this.map = resources.getMap();
         this.troops = resources.getEnemies();
         this.looteableEnemies = resources.getLooteables();
-        this.enemies = this.troops.poll();
+        this.enemies = new ArrayList<>();
         Coordinate playerCharacterPosition = resources.getPlayerCharacterCoordinate();
         this.player = new Player(new Name(name), map, playerCharacterPosition, troops, enemies);
         this.shop = new Shop(player);
@@ -113,13 +113,13 @@ public class Game {
     }
 
     public void advanceEnemies() {
-        for( Enemy enemy: enemies){
-            enemy.advance();
-        }
-
         if( !this.troops.isEmpty() )
             this.enemies.addAll(this.troops.poll());
 
+
+        for( Enemy enemy: enemies){
+            enemy.advance();
+        }
 
 
         this.makeEnemiesAttack();
@@ -134,8 +134,8 @@ public class Game {
             return this.player.won();
     }
 
-    public void showMap(AnchorPane root, VBox consoleContainer, Map<Coordinate, Button> buttonMap){
-        this.map.showMap(root, consoleContainer,this, buttonMap);
+    public void showMap(AnchorPane root, VBox consoleContainer, Map<Coordinate, Button> buttonMap,  Map<Coordinate, StackPane> stackPaneMap){
+        this.map.showMap(root, consoleContainer,this, buttonMap, stackPaneMap);
     }
 
     public void showPlayerCredist() {
@@ -150,9 +150,9 @@ public class Game {
         return this.player.lastDefenseImage();
     }
 
-    public void enemiesImages(Map<Coordinate, Button> buttonMap) {
+    public void enemiesImages(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
          for(Enemy enemy:enemies){
-             enemy.addImage(buttonMap);
+             enemy.addImage(buttonMap, stackPaneMap);
          }
     }
 

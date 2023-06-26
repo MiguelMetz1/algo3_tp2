@@ -9,6 +9,7 @@ import edu.fiuba.algo3.View.Events.BuyDefenseButtonEventHandler;
 import edu.fiuba.algo3.View.Events.EndTurnButtonEventHandler;
 import edu.fiuba.algo3.View.Events.ShowUserButtonEventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,11 +37,17 @@ public class PrincipalContainer extends BorderPane {
 
     Game game;
 
+    Stage stage;
+
     Map<Coordinate, Button> buttonMap;
+
+    Map<Coordinate, StackPane> stackPaneMap;
     public PrincipalContainer(Stage stage, Game game, Name name){
         this.game = game;
         this.name = name;
         this.buttonMap = new HashMap<>();
+        this.stackPaneMap = new HashMap<>();
+        this.stage = stage;
         this.setMenu(stage);
         this.setMessagePanel();
 
@@ -80,7 +87,7 @@ public class PrincipalContainer extends BorderPane {
         setButtonStyle(endTurn);
 
 
-        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this,this.game,this.buttonMap);
+        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this,this.game,this.buttonMap, this.stackPaneMap);
         endTurn.setOnAction(endTurnButtonEventHandler);
 
 
@@ -119,7 +126,7 @@ public class PrincipalContainer extends BorderPane {
 
         AnchorPane root = new AnchorPane();
 
-        game.showMap(root, consoleContainer,this.buttonMap);
+        game.showMap(root, consoleContainer,this.buttonMap, this.stackPaneMap);
 
 
         this.centralConteiner = new VBox(root);
@@ -130,6 +137,9 @@ public class PrincipalContainer extends BorderPane {
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
         this.centralConteiner.setBackground(new Background(backgroundImage));*/
 
+        game.enemiesImages(this.buttonMap,  this.stackPaneMap);
+        Scene gameScene = new Scene(this,720,720);
+        this.stage.setScene(gameScene);
 
 
     }
