@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.Enemies.Loot;
 
-import edu.fiuba.algo3.Enemies.TargetableEnemy;
+import edu.fiuba.algo3.Enemies.KillableEnemy;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Players.Looter;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
@@ -8,7 +8,7 @@ import edu.fiuba.algo3.TypeData.Credits.Credits;
 
 import java.util.Queue;
 
-public abstract class LooteableEnemy extends TargetableEnemy implements Looteable {
+public abstract class LooteableEnemy extends KillableEnemy implements Looteable {
 
     Looteable looteable;
 

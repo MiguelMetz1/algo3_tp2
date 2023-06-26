@@ -5,21 +5,32 @@ import edu.fiuba.algo3.Enemies.Advancer.DamagedOwlAdvancer;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.Ground;
 import edu.fiuba.algo3.Plots.Rocky;
+import edu.fiuba.algo3.TypeData.Buff.Attribute;
 import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Energy.Energy;
 
+import java.util.ArrayList;
 import java.util.Queue;
 
-public class Owl extends TargetableEnemy {
+public class Owl extends KillableEnemy {
 
     Coordinate finalGangway;
+
+    private static int id = 0;
+    private int idPersonal;
 
     public Owl(GameMap map, Queue<Coordinate> path, Coordinate finalGangway) {
         super(map, path);
         this.addOwlPassablePlots();
         this.finalGangway = finalGangway;
         this.setAttacker( new TowersAttacker( actualPosition ) );
+    }
+
+    protected ArrayList<Attribute> getBuffeablesAttributes(){
+        ArrayList<Attribute> attributes = super.getBuffeablesAttributes();
+        attributes.remove(this.speed);
+        return  attributes;
     }
 
     private void addOwlPassablePlots(){

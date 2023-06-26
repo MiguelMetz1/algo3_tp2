@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.Defenses;
 import edu.fiuba.algo3.Defenses.Builder.NullBuilder;
-import edu.fiuba.algo3.Enemies.Interface.Target;
-import edu.fiuba.algo3.Enemies.TargetableEnemy;
+import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Attacker.Attacker;
 import edu.fiuba.algo3.Defenses.Builder.UnderConstructionAttacker;
 import edu.fiuba.algo3.Defenses.Builder.Builder;
@@ -40,12 +39,9 @@ public abstract class Defense implements Placeable {
 
     }
 
-
-
-    public void attack(ArrayList<TargetableEnemy> enemies){
+    public void attack(ArrayList<Enemy> enemies){
         this.attacker.attack(enemies);
     }
-
 
     public void continueWithTheConstruction() {
         this.attacker = this.builder.actualState();

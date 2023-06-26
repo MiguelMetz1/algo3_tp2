@@ -3,7 +3,6 @@ package edu.fiuba.algo3.Parsers;
 
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Loot.LooteableEnemy;
-import edu.fiuba.algo3.Enemies.TargetableEnemy;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 
@@ -46,7 +45,7 @@ public class ExternalResources {
         return this.enemiesJsonParser.getLooteables();
     }
 
-    public ArrayList<TargetableEnemy> getAttackables(){
+    public ArrayList<Enemy> getAttackables(){
         return this.enemiesJsonParser.getTargetableEnemies();
     }
 }

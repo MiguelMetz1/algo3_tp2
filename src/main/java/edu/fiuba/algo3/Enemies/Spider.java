@@ -8,6 +8,7 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import java.util.Queue;
 
 public class Spider extends LooteableEnemy {
+
     public Spider(GameMap map, Queue<Coordinate> path) {
         super(map, path);
         this.setAttacker( new LifeAttacker( this.actualPosition, getDamage() ) );

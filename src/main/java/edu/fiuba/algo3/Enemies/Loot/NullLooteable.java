@@ -1,8 +1,6 @@
 package edu.fiuba.algo3.Enemies.Loot;
 
-import edu.fiuba.algo3.Enemies.Loot.Looteable;
 import edu.fiuba.algo3.Players.Looter;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

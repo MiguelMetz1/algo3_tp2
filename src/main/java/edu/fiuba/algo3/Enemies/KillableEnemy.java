@@ -1,40 +1,28 @@
 package edu.fiuba.algo3.Enemies;
 
 import edu.fiuba.algo3.Attacker.NullAttacker;
-import edu.fiuba.algo3.Enemies.AttackReceiver.LiveAttackReceiver;
-import edu.fiuba.algo3.Enemies.AttackReceiver.AttackReceiver;
 import edu.fiuba.algo3.Enemies.Advancer.NullAdvancer;
-import edu.fiuba.algo3.Enemies.AttackReceiver.NullAttackReceiver;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.TypeData.Buff.Attribute;
-import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
-import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Energy.Energy;
 
 import java.util.ArrayList;
 import java.util.Queue;
 
-public abstract class TargetableEnemy extends Enemy {
+public abstract class KillableEnemy extends Enemy {
     private Energy life;
 
-    public TargetableEnemy(GameMap map, Queue<Coordinate> path ) {
+    public KillableEnemy(GameMap map, Queue<Coordinate> path ) {
         super(map, path);
         this.life = new Energy( this.getLife() );
         this.changeAttackReceiver();
     }
 
     @Override
-    public void takeBuff(Buff buff) {
-
-        AttackReceiver attackReceiver = this.attackReceiver;
-        if( this.isDead() || this.isBeforeTheStartPosition() ){
-            attackReceiver = new NullAttackReceiver();
-        }
-
-        attackReceiver.takeBuff(buff);
-
+    protected boolean isAvailableToReceiveAttack() {
+        return super.isAvailableToReceiveAttack() && !this.isDead();
     }
 
     public void attack(ArrayList<Player> targets ){
@@ -47,9 +35,15 @@ public abstract class TargetableEnemy extends Enemy {
 
     }
 
+    public void finalizeYourWay(ArrayList<Enemy> finalWaysEnemies ){
+        super.finalizeYourWay(finalWaysEnemies);
+        if( this.isDead() ){
+            finalWaysEnemies.add(this);
+        }
+    }
+
     protected ArrayList<Attribute> getBuffeablesAttributes(){
-        ArrayList<Attribute> attributes = new ArrayList<>();
-        attributes.add(this.speed);
+        ArrayList<Attribute> attributes = super.getBuffeablesAttributes();
         attributes.add(this.life);
         return  attributes;
     }
@@ -65,20 +59,8 @@ public abstract class TargetableEnemy extends Enemy {
         return ( this.life.lower(new Energy(0)) || this.life.equals(new Energy(0)));
     }
 
-    public void die( ArrayList<TargetableEnemy> finalWaysEnemies ){
-        if( this.isDead() ){
-            finalWaysEnemies.add(this);
-        }
-    }
-
     protected boolean actualLifeHigher( Energy otherLife ){
         return this.life.higher(otherLife);
-    }
-
-    public boolean distanceToBiggerThan(Coordinate position, Distance attackDistance ){
-        if( this.isBeforeTheStartPosition() )
-            return true;
-        return this.actualPosition.distanceTo(position).higher(attackDistance);
     }
 
     protected abstract double getLife();

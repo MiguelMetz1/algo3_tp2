@@ -144,21 +144,21 @@ public class CasesOfUseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
         Spider spider = new Spider(map, this.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
         WhiteTower tower = new WhiteTower();
         assertDoesNotThrow(()->{map.locateEntityIn(tower, new Coordinate(3,1));});
         spider.advance();
         spider.advance();
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(spider);
         tower.attack(enemies);
         tower.attack(enemies);
-        spider.die(deadEnemies);
+        spider.finalizeYourWay(deadEnemies);
         assertEquals( false, deadEnemies.contains(spider));
         tower.continueWithTheConstruction();
         tower.attack(enemies);
         tower.attack(enemies);
-        spider.die(deadEnemies);
+        spider.finalizeYourWay(deadEnemies);
         assertEquals( true, deadEnemies.contains(spider));
 
     }
@@ -465,16 +465,12 @@ public class CasesOfUseTest {
 
         Game game = new Game();
 
-        assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
-        assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(3,1)));
-        assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
-        assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(1,3)));
-        assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
-        assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(3,2)));
-        assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
-        assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(1,2)));
-        assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
+        assertDoesNotThrow(()->game.buyDefense("White Tower"));
         assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(3,3)));
+        assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
+        assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(3,4)));
+        assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
+        assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(2,8)));
         game.buildDefenses();
         game.buildDefenses();
 
@@ -485,7 +481,10 @@ public class CasesOfUseTest {
             game.makeDefensesAttack();
             game.makeDefensesAttack();
             game.makeDefensesAttack();
-        }
+            game.makeDefensesAttack();
+            System.out.println("------------------------Cambio de turno----------------------------");
+
+        }*/
 
         for( int i = 0; i < 36; i++ ) {
             game.advanceEnemies();

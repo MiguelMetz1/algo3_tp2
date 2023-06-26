@@ -1,10 +1,8 @@
 package edu.fiuba.algo3.Interface;
 
-import edu.fiuba.algo3.Defenses.Builder.UnderDestructionSandTrap;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Loot.Looteable;
 import edu.fiuba.algo3.Enemies.Loot.LooteableEnemy;
-import edu.fiuba.algo3.Enemies.TargetableEnemy;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
@@ -19,7 +17,6 @@ import edu.fiuba.algo3.TypeData.Name.Name;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.Queue;
@@ -32,21 +29,14 @@ public class Game {
 
     Player player;
     GameMap map;
-
     Shop shop;
-
-    ArrayList<Enemy> deadEnemies;
-
-    ArrayList<TargetableEnemy> attackableEnemies;
 
     ArrayList<LooteableEnemy> looteableEnemies;
 
     public Game(){
         ExternalResources resources = new ExternalResources();
         this.map = resources.getMap();
-        this.deadEnemies = new ArrayList<>();
         this.troops = resources.getEnemies();
-        this.attackableEnemies = resources.getAttackables();
         this.looteableEnemies = resources.getLooteables();
         this.enemies = this.troops.poll();
         Coordinate playerCharacterPosition = resources.getPlayerCharacterCoordinate();
@@ -88,10 +78,20 @@ public class Game {
     }
 
     private void removeFinalizedWayEnemies() {
-        ArrayList<Enemy> enemiesCopy = new ArrayList<>();
-        enemiesCopy.addAll(enemies);
-        for( Enemy enemy: enemiesCopy){
-            enemy.finalizeYourWay(enemies);
+
+        ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
+        for( Enemy enemy: enemies){
+
+            enemy.finalizeYourWay(enemiesToRemove);
+
+        }
+        printearFinales(enemiesToRemove);
+        this.enemies.removeAll(enemiesToRemove);
+    }
+
+    private void printearFinales(ArrayList<Enemy> enemiesToRemove) {
+        for (Enemy enemy: enemiesToRemove){
+            System.out.println(enemy.getClass().getName());
         }
     }
 
@@ -105,7 +105,7 @@ public class Game {
     }
 
     public void makeDefensesAttack() {
-        playerCharacter.makeDefensesAttack(this.attackableEnemies);
+        player.makeDefensesAttack();
     }
 
     public void advanceEnemies() {
@@ -115,6 +115,8 @@ public class Game {
 
         if( !this.troops.isEmpty() )
             this.enemies.addAll(this.troops.poll());
+
+
 
         this.makeEnemiesAttack();
 

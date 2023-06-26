@@ -14,7 +14,7 @@ public class EnemiesJsonParser extends JsonParser{
 
     private MapJsonParser mapJsonParser;
 
-    private ArrayList<TargetableEnemy> attackReceivers;
+    private ArrayList<Enemy> attackReceivers;
 
     private ArrayList<LooteableEnemy> looteables;
 
@@ -100,6 +100,7 @@ public class EnemiesJsonParser extends JsonParser{
                 for(int i = 0; i < amountOfEnemyType; i++) {
                     Mole mole = new Mole(this.mapJsonParser.get(), this.mapJsonParser.getPath());
                     enemies.add( mole );
+                    attackReceivers.add(mole);
                 }
                 break;
             case "lechuza":
@@ -136,7 +137,7 @@ public class EnemiesJsonParser extends JsonParser{
 
     }
 
-    public ArrayList<TargetableEnemy> getTargetableEnemies(){
+    public ArrayList<Enemy> getTargetableEnemies(){
         return this.attackReceivers;
     }
 

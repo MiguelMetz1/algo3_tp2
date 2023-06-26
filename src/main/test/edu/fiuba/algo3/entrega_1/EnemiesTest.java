@@ -6,7 +6,6 @@ import edu.fiuba.algo3.Enemies.*;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
-import edu.fiuba.algo3.Plots.FinalGangway;
 import edu.fiuba.algo3.Plots.Gangway;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
@@ -28,12 +27,12 @@ public class EnemiesTest {
 
         Path path = new Path();
         Ant ant = new Ant(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(3,1));
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
 
         enemies.add(ant);
         ant.locateIn((new Coordinate(2,2)), new Gangway(new Coordinate(2,2)));
@@ -53,12 +52,12 @@ public class EnemiesTest {
 
         Path path = new Path();
         Spider spider = new Spider(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(3,1));
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
 
         enemies.add(spider);
         spider.locateIn((new Coordinate(2,2)), new Gangway(new Coordinate(2,2)));
@@ -81,12 +80,12 @@ public class EnemiesTest {
         Path path = new Path();
         Owl owl = new Owl(map, path.copyPath(), playerCoordinate);
 
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(3,1));
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(owl);
 
         owl.locateIn((new Coordinate(2,2)), new Gangway(new Coordinate(2,2)));
@@ -168,7 +167,7 @@ public class EnemiesTest {
         assertFalse(isPosition1Correct);
 
         owl.advance();
-        boolean isPosition2Correct = owl.distanceToBiggerThan(new Coordinate(6,7), new Distance(0));
+        boolean isPosition2Correct = owl.distanceToBiggerThan(new Coordinate(2,11), new Distance(0));
         assertFalse(isPosition2Correct);
 
         owl.advance();
@@ -177,6 +176,7 @@ public class EnemiesTest {
 
 
     }
+
 
     @Test
     public void MolesStartWithTheCorrectAmountOfSpeed() throws WrongPlace {
@@ -188,12 +188,12 @@ public class EnemiesTest {
         Path path = new Path();
         Owl owl = new Owl(map, path.copyPath(), playerCoordinate);
 
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(2,9));
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(owl);
 
         owl.advance();

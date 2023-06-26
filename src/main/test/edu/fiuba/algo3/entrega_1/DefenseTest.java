@@ -3,11 +3,7 @@ package edu.fiuba.algo3.entrega_1;
 import edu.fiuba.algo3.Defenses.Towers.SilverTower;
 import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
 import edu.fiuba.algo3.Defenses.Traps.SandTrap;
-import edu.fiuba.algo3.Enemies.Ant;
-import edu.fiuba.algo3.Enemies.Interface.Target;
-import edu.fiuba.algo3.Enemies.Mole;
-import edu.fiuba.algo3.Enemies.Spider;
-import edu.fiuba.algo3.Enemies.TargetableEnemy;
+import edu.fiuba.algo3.Enemies.*;
 import edu.fiuba.algo3.Exceptions.InsuficientCredits;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
@@ -127,12 +123,12 @@ public class DefenseTest {
 
         Path path = new Path();
         Ant ant = new Ant(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(3,1));
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(ant);
         ant.advance();
         whiteTower.attack(enemies); /* not constructed yet so cant attack*/

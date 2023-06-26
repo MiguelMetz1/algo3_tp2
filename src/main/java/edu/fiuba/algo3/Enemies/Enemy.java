@@ -4,14 +4,21 @@ import edu.fiuba.algo3.Enemies.Advancer.Advancer;
 import edu.fiuba.algo3.Attacker.Attacker;
 import edu.fiuba.algo3.Attacker.NullAttacker;
 import edu.fiuba.algo3.Enemies.Advancer.LiveAdvancer;
+import edu.fiuba.algo3.Enemies.AttackReceiver.AttackReceiver;
+import edu.fiuba.algo3.Enemies.AttackReceiver.LiveAttackReceiver;
+import edu.fiuba.algo3.Enemies.AttackReceiver.NullAttackReceiver;
 import edu.fiuba.algo3.Enemies.Interface.Advanceable;
 import edu.fiuba.algo3.Enemies.Advancer.NullAdvancer;
+import edu.fiuba.algo3.Enemies.Interface.Target;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Plots.*;
+import edu.fiuba.algo3.TypeData.Buff.Attribute;
+import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Coordinate.HellsCoordinate;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Speed.Speed;
 
 import java.util.ArrayList;
@@ -32,6 +39,10 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     Queue<Coordinate> path;
 
+    AttackReceiver attackReceiver;
+
+    ArrayList<Attribute> attributes;
+
     GameMap map;
 
     public Enemy(GameMap map, Queue<Coordinate> path){
@@ -43,12 +54,31 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
         this.attacker = new NullAttacker();
         this.positionedPlace = new NullPlot();
         this.passablePlots = this.passablePlots();
+        this.changeAttackReceiver();
+    }
+
+    public Enemy( ) {
+    }
+
+    protected ArrayList<Attribute> getBuffeablesAttributes(){
+        ArrayList<Attribute> attributes = new ArrayList<>();
+        attributes.add(this.speed);
+        return  attributes;
+    }
+
+    protected void changeAttackReceiver( ){
+        this.attributes = this.getBuffeablesAttributes();
+        this.setAttackReceiver( new LiveAttackReceiver(this.attributes) );
+    }
+
+    protected void setAttackReceiver( AttackReceiver attackReceiver){
+        this.attackReceiver = attackReceiver;
     }
 
     public  void attack( ArrayList<Player> targets ){
 
         Attacker attacker = this.attacker;
-        if( this.isBeforeTheStartPosition() ) {
+        if( !this.reachedTheFinal() ) {
             attacker = new NullAttacker();
         }
 
@@ -111,15 +141,36 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
     protected ArrayList<String> passablePlots(){
         ArrayList<String> passablePlots = new ArrayList<>();
         passablePlots.add( Gangway.class.getName() );
-        passablePlots.add(FinalGangway.class.getName());
-        passablePlots.add(InitialGangway.class.getName());
+        passablePlots.add( FinalGangway.class.getName() );
+        passablePlots.add( InitialGangway.class.getName() );
         return passablePlots;
     }
 
     public void finalizeYourWay(ArrayList<Enemy> finalWaysEnemies ){
         if( this.reachedTheFinal() ){
-            finalWaysEnemies.remove(this);
+            finalWaysEnemies.add(this);
         }
+    }
+
+    @Override
+    public void takeBuff(Buff buff) {
+        AttackReceiver attackReceiver = this.attackReceiver;
+
+        if( !this.isAvailableToReceiveAttack() ) {
+            attackReceiver = new NullAttackReceiver();
+        }
+
+        attackReceiver.takeBuff(buff);
+    }
+
+    protected boolean isAvailableToReceiveAttack(){
+        return !this.isBeforeTheStartPosition();
+    }
+
+    public boolean distanceToBiggerThan(Coordinate position, Distance attackDistance ){
+        if( this.isBeforeTheStartPosition() )
+            return true;
+        return this.actualPosition.distanceTo(position).higher(attackDistance);
     }
 
     protected void addPassablePlot( String passablePlot ){
