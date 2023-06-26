@@ -39,7 +39,7 @@ public class EnemiesTest {
         ant.locateIn((new Coordinate(2,2)), new Gangway(new Coordinate(2,2)));
         whiteTower.continueWithTheConstruction();
         whiteTower.attack(enemies);
-        ant.die(deadEnemies);
+        ant.finalizeYourWay(deadEnemies);
         assertTrue(deadEnemies.contains(ant));
 
     }
@@ -65,7 +65,7 @@ public class EnemiesTest {
         whiteTower.continueWithTheConstruction();
         whiteTower.attack(enemies);
         whiteTower.attack(enemies);
-        spider.die(deadEnemies);
+        spider.finalizeYourWay(deadEnemies);
         assertTrue(deadEnemies.contains(spider));
 
     }
@@ -99,7 +99,7 @@ public class EnemiesTest {
         whiteTower.attack(enemies);
 
 
-        owl.die(deadEnemies);
+        owl.finalizeYourWay(deadEnemies);
         assertTrue(deadEnemies.contains(owl));
 
     }
@@ -207,7 +207,7 @@ public class EnemiesTest {
         whiteTower.attack(enemies);
 
 
-        owl.die(deadEnemies);
+        owl.finalizeYourWay(deadEnemies);
         assertTrue(deadEnemies.contains(owl));
 
 

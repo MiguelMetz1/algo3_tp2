@@ -23,6 +23,7 @@ import edu.fiuba.algo3.TypeData.Name.Name;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,12 +36,16 @@ public class DefenseTest {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
         Shop shop = new Shop(playerCharacter);
         shop.addArticle("White Tower", new WhiteTowerProvider());
+
 
 
         for(int i = 0; i < 10; i++){
@@ -61,9 +66,11 @@ public class DefenseTest {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
         Shop shop = new Shop(playerCharacter);
         shop.addArticle("Silver Tower", new SilverTowerProvider());
@@ -89,11 +96,11 @@ public class DefenseTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        PlayerCharacter playerCharacter = new PlayerCharacter( new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies );
 
         Shop shop = new Shop(playerCharacter);
-        shop.addArticle("Sand Trap", new SandTrapProvider(playerCharacter)); //TODO por que pide un player character?
-
+        shop.addArticle("Sand Trap", new SandTrapProvider(playerCharacter));
 
         for(int i = 0; i < 4; i++){
             assertDoesNotThrow(() -> {
@@ -129,13 +136,13 @@ public class DefenseTest {
         enemies.add(ant);
         ant.advance();
         whiteTower.attack(enemies); /* not constructed yet so cant attack*/
-        ant.die(deadEnemies); /* ant is not dead so deanEnemies should de empty */
+        ant.finalizeYourWay(deadEnemies); /* ant is not dead so deanEnemies should de empty */
         assertFalse(deadEnemies.contains(ant));
 
         ant.advance();
         whiteTower.continueWithTheConstruction();
         whiteTower.attack(enemies); /* construction time is done so tower can attack */
-        ant.die(deadEnemies); /* ant is now dead so deanEnemies shouldn't empty */
+        ant.finalizeYourWay(deadEnemies); /* ant is now dead so deanEnemies shouldn't empty */
         assertTrue(deadEnemies.contains(ant));
 
     }
@@ -151,27 +158,27 @@ public class DefenseTest {
 
         Path path = new Path();
         Ant ant = new Ant(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         SilverTower silverTower = new SilverTower();
         map.locateEntityIn(silverTower, new Coordinate(3,1));
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(ant);
         ant.advance();
         silverTower.attack(enemies); /* not constructed yet so cant attack*/
-        ant.die(deadEnemies); /* ant is not dead so deanEnemies should de empty */
+        ant.finalizeYourWay(deadEnemies); /* ant is not dead so deanEnemies should de empty */
         assertFalse(deadEnemies.contains(ant));
 
         silverTower.attack(enemies);
         silverTower.continueWithTheConstruction();
-        ant.die(deadEnemies);
+        ant.finalizeYourWay(deadEnemies);
         assertFalse(deadEnemies.contains(ant));
 
         ant.advance();
         silverTower.continueWithTheConstruction();
         silverTower.attack(enemies); /* construction time is done so tower can attack */
-        ant.die(deadEnemies); /* ant is now dead so deanEnemies shouldn't empty */
+        ant.finalizeYourWay(deadEnemies); /* ant is now dead so deanEnemies shouldn't empty */
         assertTrue(deadEnemies.contains(ant));
 
     }
@@ -183,14 +190,14 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
+        ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
         Path path = new Path();
         Ant ant = new Ant(map, path.copyPath());
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(2,8));
@@ -226,14 +233,14 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
+        ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
         Path path = new Path();
         Spider spider = new Spider(map, path.copyPath());
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
 
         SandTrap sandTrap = new SandTrap(playerCharacter);
         map.locateEntityIn(sandTrap, new Coordinate(2,3));
@@ -266,20 +273,21 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
         Path path = new Path();
         Mole mole = new Mole(map, path.copyPath());
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
 
         SandTrap sandTrap = new SandTrap(playerCharacter);
         map.locateEntityIn(sandTrap, new Coordinate(2,3));
         sandTrap.continueWithTheConstruction();
 
-        /*enemies.add(mole);*/
+        enemies.add(mole);
         mole.advance();
         mole.advance();
         boolean position1 = mole.distanceToBiggerThan(new Coordinate(2,3), new Distance(0));
@@ -313,19 +321,19 @@ public class DefenseTest {
 
         Path path = new Path();
         Ant ant = new Ant(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(3,1));
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
 
         enemies.add(ant);
         ant.advance();
         whiteTower.continueWithTheConstruction();
         whiteTower.attack(enemies);
         whiteTower.attack(enemies);
-        ant.die(deadEnemies);
+        ant.finalizeYourWay(deadEnemies);
         assertTrue(deadEnemies.contains(ant));
 
 
@@ -342,19 +350,19 @@ public class DefenseTest {
 
         Path path = new Path();
         Spider spider = new Spider(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         SilverTower silverTower = new SilverTower();
         map.locateEntityIn(silverTower, new Coordinate(3,1));
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
 
         enemies.add(spider);
         spider.advance();
         silverTower.continueWithTheConstruction();
         silverTower.continueWithTheConstruction();
         silverTower.attack(enemies);
-        spider.die(deadEnemies);
+        spider.finalizeYourWay(deadEnemies);
         assertTrue(deadEnemies.contains(spider));
 
 
@@ -368,14 +376,14 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
         Path path = new Path();
         Ant ant = new Ant(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(2,8));
@@ -393,7 +401,7 @@ public class DefenseTest {
                 ant.advance();
 
        whiteTower.attack(enemies);
-       ant.die(deadEnemies);
+       ant.finalizeYourWay(deadEnemies);
        assertTrue(deadEnemies.contains(ant));
     }
 

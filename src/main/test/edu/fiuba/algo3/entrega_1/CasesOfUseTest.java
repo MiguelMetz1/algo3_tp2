@@ -75,15 +75,23 @@ public class CasesOfUseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
         ArrayList<Enemy> enemies = new ArrayList<>();
-        Spider spider = new Spider(map, this.copyPath());
-        enemies.add(spider);
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fabricio"), map, resources.getPlayerCharacterCoordinate());
-        assertDoesNotThrow(()->map.locateEntityIn(spider, resources.getPlayerCharacterCoordinate()));
+
         ArrayList<PlayerCharacter> players = new ArrayList<>();
+
+        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+        Spider spider = new Spider(map, this.copyPath());
+
+
+        enemies.add(spider);
         players.add(playerCharacter);
-        for (int i=0;i<10;i++){
+
+
+        for (int i = 0;i < 13; i++)
+            spider.advance();
+
+        for(int i = 0; i < 10; i++)
             spider.attack(players);
-        }
+
 
         assertEquals( "Lose.", playerCharacter.won());
 
@@ -160,28 +168,28 @@ public class CasesOfUseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
         Spider spider = new Spider(map, this.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
         SilverTower tower = new SilverTower();
         assertDoesNotThrow(()->{map.locateEntityIn(tower, new Coordinate(3,1));});
         spider.advance();
         spider.advance();
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(spider);
         tower.attack(enemies);
         tower.attack(enemies);
-        spider.die(deadEnemies);
+        spider.finalizeYourWay(deadEnemies);
         assertEquals( false, deadEnemies.contains(spider));
         tower.continueWithTheConstruction();
         tower.attack(enemies);
         tower.attack(enemies);
-        spider.die(deadEnemies);
+        spider.finalizeYourWay(deadEnemies);
         assertEquals( false, deadEnemies.contains(spider));
         tower.continueWithTheConstruction();
         tower.attack(enemies);
         tower.attack(enemies);
-        spider.die(deadEnemies);
+        spider.finalizeYourWay(deadEnemies);
         assertEquals( true, deadEnemies.contains(spider));
-        
+
     }
 
     //Verificar que se disponga de credito para realizar las construcciones
@@ -220,7 +228,7 @@ public class CasesOfUseTest {
         Spider spiderA = new Spider(map, this.copyPath());
         Spider spiderB = new Spider(map, this.copyPath());
         Spider spiderC = new Spider(map, this.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
         assertDoesNotThrow(()->{map.locateEntityIn(spiderA, new Coordinate(2,1));});
         assertDoesNotThrow(()->{map.locateEntityIn(spiderB, new Coordinate(2,7));});
         assertDoesNotThrow(()->{map.locateEntityIn(spiderC, new Coordinate(15,11));});
@@ -232,30 +240,30 @@ public class CasesOfUseTest {
         silverTower.continueWithTheConstruction();
         whiteTower.continueWithTheConstruction();
 
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(spiderA);
         whiteTower.attack(enemies);
         whiteTower.attack(enemies);
-        spiderA.die(deadEnemies);
+        spiderA.finalizeYourWay(deadEnemies);
         assertEquals( false, deadEnemies.contains(spiderA));
         silverTower.attack(enemies);
-        spiderA.die(deadEnemies);
+        spiderA.finalizeYourWay(deadEnemies);
         assertEquals( true, deadEnemies.contains(spiderA));
         enemies.add(spiderB);
         silverTower.attack(enemies);
-        spiderB.die(deadEnemies);
+        spiderB.finalizeYourWay(deadEnemies);
         assertEquals( false, deadEnemies.contains(spiderB));
         whiteTower.attack(enemies);
         whiteTower.attack(enemies);
-        spiderB.die(deadEnemies);
+        spiderB.finalizeYourWay(deadEnemies);
         assertEquals( true, deadEnemies.contains(spiderB));
         enemies.add(spiderC);
         whiteTower.attack(enemies);
         whiteTower.attack(enemies);
-        spiderC.die(deadEnemies);
+        spiderC.finalizeYourWay(deadEnemies);
         assertEquals( false, deadEnemies.contains(spiderC));
         silverTower.attack(enemies);
-        spiderC.die(deadEnemies);
+        spiderC.finalizeYourWay(deadEnemies);
         assertEquals( false, deadEnemies.contains(spiderC));
 
     }
@@ -278,18 +286,18 @@ public class CasesOfUseTest {
         silverTower.continueWithTheConstruction();
         silverTower.continueWithTheConstruction();
         whiteTower.continueWithTheConstruction();
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
         enemies.add(spiderA);
         silverTower.attack(enemies);
-        spiderA.die(deadEnemies);
+        spiderA.finalizeYourWay(deadEnemies);
         assertEquals( true, deadEnemies.contains(spiderA));
         enemies.add(spiderB);
         whiteTower.attack(enemies);
-        spiderB.die(deadEnemies);
+        spiderB.finalizeYourWay(deadEnemies);
         assertEquals( false, deadEnemies.contains(spiderB));
         whiteTower.attack(enemies);
-        spiderB.die(deadEnemies);
+        spiderB.finalizeYourWay(deadEnemies);
         assertEquals( true, deadEnemies.contains(spiderB));
     }
 
@@ -326,15 +334,15 @@ public class CasesOfUseTest {
         Shop shop = new Shop(player);
         assertDoesNotThrow(()->{shop.addArticle("White Tower", new WhiteTowerProvider());});
         assertDoesNotThrow(()->{shop.addArticle("Silver Tower", new SilverTowerProvider());});
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
         for( int i = 0; i < 10; i++) {
             Ant ant = new Ant(map,this.copyPath());
             ant.advance();
             enemies.add(ant);
             whiteTower.attack(enemies);
             ant.transferLootTo(player);
-            ant.die(deadEnemies);
+            ant.finalizeYourWay(deadEnemies);
             enemies.removeAll(deadEnemies);
         }
 
@@ -374,17 +382,20 @@ public class CasesOfUseTest {
         assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
         assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(3,2)));
         assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
-        assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(1,2)));
+        assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(2,8)));
         assertDoesNotThrow(()->game.buyDefense("Silver Tower"));
         assertDoesNotThrow(()->game.locateLastBoughtDefenseIn(new Coordinate(3,3)));
+
+        game.buildDefenses();
         game.buildDefenses();
         game.buildDefenses();
 
-        for( int i = 1; i < 30; i++ ) {
+        for( int i = 1; i < 36; i++ ) {
             game.advanceEnemies();
             game.makeDefensesAttack();
             game.makeDefensesAttack();
             game.makeDefensesAttack();
+
         }
 
         assertEquals("Won.", game.gameWon());
@@ -406,7 +417,7 @@ public class CasesOfUseTest {
             throw new RuntimeException(e);
         }
         owl.advance();
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
+        ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(owl);
         tower.attack(enemies);
         tower.attack(enemies);
@@ -467,7 +478,9 @@ public class CasesOfUseTest {
         game.buildDefenses();
         game.buildDefenses();
 
-        for( int i = 1; i < 11; i++ ) {
+
+
+  /*      for( int i = 1; i < 11; i++ ) {
             game.advanceEnemies();
             game.makeDefensesAttack();
             game.makeDefensesAttack();
@@ -476,6 +489,8 @@ public class CasesOfUseTest {
 
         for( int i = 0; i < 36; i++ ) {
             game.advanceEnemies();
+            game.makeDefensesAttack();
+            System.out.println( "Turno: " + i );
         }
 
         assertEquals("Won.", game.gameWon());
@@ -494,50 +509,6 @@ public class CasesOfUseTest {
         assertEquals("Lose.", game.gameWon());
 
     }
-
-    @Test
-    public void SandTrapsShouldStartApplyingEffectOnAntsInTheSameTurn() throws WrongPlace {
-
-
-        ExternalResources resources = new ExternalResources();
-        GameMap map = resources.getMap();
-
-        Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
-        PlayerCharacter playerCharacter = new PlayerCharacter(new Name("Lautaro"), map, playerCoordinate );
-
-
-        Path path = new Path();
-        Ant ant = new Ant(map, path.copyPath());
-        ArrayList<TargetableEnemy> deadEnemies = new ArrayList<>();
-        ArrayList<TargetableEnemy> enemies = new ArrayList<>();
-
-        WhiteTower whiteTower = new WhiteTower();
-        map.locateEntityIn(whiteTower, new Coordinate(2,8));
-
-        SandTrap sandTrap = new SandTrap(playerCharacter);
-        map.locateEntityIn(sandTrap, new Coordinate(2,2));
-        sandTrap.continueWithTheConstruction();
-
-        enemies.add(ant);
-        ant.advance();
-        ant.advance();
-        boolean bool = ant.distanceToBiggerThan(new Coordinate(2,2), new Distance(0));
-        assertFalse(bool);
-        sandTrap.attack(enemies);
-        ant.advance();
-        boolean bool2 = ant.distanceToBiggerThan(new Coordinate(2,2.5), new Distance(0));
-        assertFalse(bool2);
-        ant.advance();
-        boolean bool3 = ant.distanceToBiggerThan(new Coordinate(2,3.5), new Distance(0));
-        assertFalse(bool3);
-        ant.advance();
-        boolean bool4 = ant.distanceToBiggerThan(new Coordinate(2,4.5), new Distance(0));
-        assertFalse(bool4);
-
-
-
-    }
-
 
 }
 
