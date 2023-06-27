@@ -35,6 +35,10 @@ public class Credits {
         System.out.println("Remaining credits: " + this.credits);
     }
 
+    public String toString(){
+        return Double.toString(credits);
+    }
+
 }
 
 

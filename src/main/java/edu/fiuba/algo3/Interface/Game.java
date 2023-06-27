@@ -162,6 +162,14 @@ public class Game {
         player.defenseImage(buttonMap,stackPaneMap);
     }
 
+    public String remainingLife() {
+        return player.remainingLife();
+    }
+
+    public String remainingCredits() {
+        return player.remainingCredits();
+    }
+
     /*public void updateMap(Map<Coordinate, Button> buttonMap) {
         mapReset(buttonMap);
         this.enemiesImages(buttonMap);

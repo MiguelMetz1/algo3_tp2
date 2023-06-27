@@ -57,4 +57,8 @@ public abstract class Attribute {
 
     protected abstract String type();
 
+    public String toString(){
+        return Double.toString(this.pointsOfAttribute);
+    }
+
 }

@@ -219,4 +219,12 @@ public class Player implements Target, Placeable, Buyer, Looter {
             defense.addImage(buttonMap, stackPaneMap);
         }
     }
+
+    public String remainingLife() {
+        return this.life.toString();
+    }
+
+    public String remainingCredits() {
+        return this.credits.toString();
+    }
 }

@@ -7,6 +7,7 @@ import edu.fiuba.algo3.View.Events.BuyDefenseButtonEventHandler;
 import edu.fiuba.algo3.View.Events.EndTurnButtonEventHandler;
 import edu.fiuba.algo3.View.Events.ShowUserButtonEventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -50,7 +51,7 @@ public class PrincipalContainer extends BorderPane {
         this.setMessagePanel();
 
         this.showMap(game, this.consoleContainer);
-        this.setButtonPanel(name);
+        //this.setButtonPanel(name);
 
         Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
@@ -59,7 +60,7 @@ public class PrincipalContainer extends BorderPane {
 
     }
 
-    private void setButtonPanel(Name name) {
+    private void setButtonPanel(Name name, VBox userInfo) {
         Button buyWhiteTower = new Button();
         buyWhiteTower.setText("Buy White Tower");
         setButtonStyle(buyWhiteTower);
@@ -94,8 +95,8 @@ public class PrincipalContainer extends BorderPane {
         user.setStyle("-fx-background-color: #fafafa; -fx-font-family: 'Minecraft'; -fx-font-size: 16px; -fx-padding: 10px;-fx-background-radius: 4px;");
 
 
+        VBox verticalConteiner = new VBox(user,buyWhiteTower,buySandTrap,buySilverTower,endTurn, userInfo);
 
-        VBox verticalConteiner = new VBox(user,buyWhiteTower,buySandTrap,buySilverTower,endTurn);
         verticalConteiner.setSpacing(10);
         verticalConteiner.setPadding(new Insets(15));
 
@@ -135,6 +136,16 @@ public class PrincipalContainer extends BorderPane {
 
         game.defensesImage(this.buttonMap,this.stackPaneMap);
 
+        HBox life = new HBox(new Label("Life: " + game.remainingLife()));
+        life.setStyle("-fx-background-color: Black; -fx-padding: 0 0 0 0");
+        HBox credits = new HBox(new Label("Credits: " + game.remainingCredits()));
+        credits.setStyle("-fx-background-color: Black; -fx-padding: 0 0 0 0");
+        VBox userInfo = new VBox(life,credits);
+        userInfo.setStyle("-fx-padding: 100px 0 0 0");
+
+        userInfo.setAlignment(Pos.BOTTOM_CENTER);
+
+        this.setButtonPanel(this.name,userInfo);
 
         this.stage.getScene().getWindow().setWidth(this.stage.getWidth());
 
@@ -159,10 +170,10 @@ public class PrincipalContainer extends BorderPane {
         /*VBox consoleContainer = new VBox(label);*/
         consoleContainer.setSpacing(10);
         //consoleContainer.setStyle("-fx-background-color: black");
-        consoleContainer.setMinWidth(100);
+        consoleContainer.setMinWidth(200);
         consoleContainer.setMinHeight(100);
 
-        this.setBottom(consoleContainer);
+        this.setRight(consoleContainer);
     }
 
 }

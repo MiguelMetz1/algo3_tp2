@@ -47,10 +47,9 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
         Label label = new Label();
         label.setText(plot.getName());
-        label.setStyle("-fx-font-size: 40; -fx-padding: 0 0 0 100px;");
+        label.setStyle("-fx-font-size: 20; -fx-padding: 0 50 0 0px;");
 
         consoleContainer.getChildren().clear();
-
 
         try {
             game.locateLastBoughtDefenseIn(coordinate);

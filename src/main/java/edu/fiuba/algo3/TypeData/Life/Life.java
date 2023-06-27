@@ -12,4 +12,6 @@ public class Life extends Attribute {
         return this.getClass().getName();
     }
 
+
+
 }

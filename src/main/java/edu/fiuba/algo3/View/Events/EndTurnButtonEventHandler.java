@@ -47,10 +47,8 @@ public class EndTurnButtonEventHandler implements EventHandler<ActionEvent> {
 
        endGameAlert.setHeaderText("You " + this.game.gameWon());
        if(this.game.gameWon().equals("Lose.") || this.game.gameWon().equals("Won.") ){
-           System.out.println(this.game.gameWon());
 
            endGameAlert.showAndWait();
-
 
            GameStart gameStart = new GameStart();
            gameStart.start(this.stage);
