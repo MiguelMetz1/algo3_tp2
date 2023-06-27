@@ -85,7 +85,7 @@ public class PrincipalContainer extends BorderPane {
         setButtonStyle(endTurn);
 
 
-        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this,this.game,this.buttonMap, this.stackPaneMap);
+        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this.stage,this,this.game,this.buttonMap, this.stackPaneMap);
         endTurn.setOnAction(endTurnButtonEventHandler);
 
 
@@ -136,7 +136,7 @@ public class PrincipalContainer extends BorderPane {
         game.defensesImage(this.buttonMap,this.stackPaneMap);
 
 
-        this.stage.getScene().getWindow().setWidth(this.stage.getScene().getWidth()*1);
+        this.stage.getScene().getWindow().setWidth(this.stage.getWidth());
 
 
 

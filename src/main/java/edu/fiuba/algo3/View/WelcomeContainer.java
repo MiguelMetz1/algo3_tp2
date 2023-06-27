@@ -37,10 +37,11 @@ public class WelcomeContainer extends VBox {
         this.name = new Name("");
 
         this.stage = stage;
+        stage.setResizable(false);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(20);
         Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/algoDefenseFrontCover.jpg");
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
 
 
@@ -55,7 +56,7 @@ public class WelcomeContainer extends VBox {
         exitButton.setOnAction(exitButtonEventHandler);
 
         Label label = new Label();
-        createTitle(label);
+        createTitle(label,"AlgoDefense",60);
         label.setPadding(new Insets(20, 0, 0, 0));
 
         this.getChildren().add(label);
@@ -69,17 +70,24 @@ public class WelcomeContainer extends VBox {
     private void createUser(Button startButton, Name name) {
 
 
+        Label label = new Label();
+        label.setMaxWidth(300);
+        label.setBackground(Background.EMPTY);
+        label.setAlignment(Pos.CENTER);
+        createTitle(label,"Introduce your name",18);
+
         TextField text = new TextField();
         text.setPromptText("Enter your name");
         text.setMaxWidth(300);
-        text.setStyle("-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-border-width: 2px; -fx-border-color: black");
+        text.setStyle("-fx-text-fill: white;-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-border-width: 2px; -fx-border-color: black");
+
 
         text.setFont(Font.font("Arial", 18));
 
 
         Label label1 = new Label();
         label1.setText(text.getText());
-        label1.setStyle("-fx-background-color: #ef4335;-fx-border-radius: 10px");
+        label1.setStyle("-fx-background-color: #ef4300;-fx-border-radius: 10px");
 
 
 
@@ -89,20 +97,20 @@ public class WelcomeContainer extends VBox {
         StartButtonEventHandler startButtonEventHandler = new StartButtonEventHandler(text,label1,stage, name);
         startButton.setOnAction(startButtonEventHandler);
 
-        VBox conteiner = new VBox(text,label1);
+        VBox conteiner = new VBox(label,text,label1);
         //conteiner.setStyle("-fx-background-color: white");
         conteiner.setAlignment(Pos.CENTER);
-        conteiner.setSpacing(20);
-        conteiner.setPadding(new Insets(10));
+        conteiner.setSpacing(10);
+        conteiner.setPadding(new Insets(5));
         conteiner.setMaxWidth(350);
 
         this.getChildren().addAll(conteiner);
 
     }
 
-    private void createTitle(Label label){
-        Text text = new Text("AlgoDefense");
-        text.setFont(Font.font("Arial", FontWeight.BOLD,60));
+    private void createTitle(Label label, String string, int size){
+        Text text = new Text(string);
+        text.setFont(Font.font("Arial", FontWeight.BOLD,size));
         LinearGradient gradient = new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                 new Stop(0, Color.ORANGE), new Stop(1, Color.RED));
 

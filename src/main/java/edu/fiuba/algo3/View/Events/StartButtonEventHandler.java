@@ -34,11 +34,13 @@ public class StartButtonEventHandler implements EventHandler<ActionEvent> {
 
             this.label.setText("You must introduce a name");
             this.label.setTextFill(Color.web("#fafafa"));
+            this.textField.requestFocus();
 
         }
         else if (this.textField.getText().trim().length() > 10 || this.textField.getText().trim().length() < 6 ) {
             this.label.setText("The name must be between 6 and 10 letters");
             this.label.setTextFill(Color.web("#fafafa"));
+            this.textField.requestFocus();
         } else {
             this.name.setName(this.textField.getText());
             Game game = new Game(this.textField.getText());
@@ -46,7 +48,8 @@ public class StartButtonEventHandler implements EventHandler<ActionEvent> {
             PrincipalContainer principalContainer = new PrincipalContainer(stage,game,name);
             Scene gameScene = new Scene(principalContainer,720,720);
             this.stage.setScene(gameScene);
-            this.stage.setFullScreen(false);
+            this.stage.setFullScreen(true);
+            this.stage.setResizable(true);
         }
 
 

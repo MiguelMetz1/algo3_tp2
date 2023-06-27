@@ -3,7 +3,9 @@ package edu.fiuba.algo3.View.Events;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,51 +21,143 @@ public class AboutButtonEventHandler implements EventHandler<ActionEvent> {
         alert.setTitle("About");
         alert.setHeaderText("Map references");
         setMapReferences(alert);
-        String message = "Initial Gangway: this is the plot where enemies spawn.\n\nFinal Gangway: this is the plot where the player is located and is the ed of the path.\n\n Ground: this is the plot where towers can be constructed.\n\nRocky: this is a plot where nothing can be constructed\n\nGangway: this is the plot which enemies such as spiders, ants and moles follow to reach the end of the path. Here is where sand traps can be constructed.\n";
-        alert.setContentText(message);
+        //alert.setContentText(message);
+
         alert.show();
     }
 
     private void setMapReferences(Alert alert){
-        Image image1 = new Image( "file:src/main/java/edu/fiuba/algo3/View/Images/orangeWool.png");
-        ImageView imageView1 = new ImageView(image1);
-        imageView1.setFitHeight(20);
-        imageView1.setFitWidth(20);
-        Text text1 = new Text("Final Gangway");
-        HBox hor1 = new HBox(imageView1,text1);
+        Image finalGangwayImage = new Image( "file:src/main/java/edu/fiuba/algo3/View/Images/orangeWool.png");
+        ImageView finalGangwayImageView = new ImageView(finalGangwayImage);
+        finalGangwayImageView.setFitHeight(20);
+        finalGangwayImageView.setFitWidth(20);
+        Text finalGangwayText = new Text("Final Gangway");
+        HBox finalGangwayBox = new HBox(finalGangwayImageView,finalGangwayText);
 
-        Image image2 = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/redWool.png");
-        ImageView imageView2 = new ImageView(image2);
-        imageView2.setFitHeight(20);
-        imageView2.setFitWidth(20);
-        Text text2 = new Text("Initial Gangway");
-        HBox hor2 = new HBox(imageView2,text2);
+        Image initialGangwayImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/redWool.png");
+        ImageView initialGangwayImageView = new ImageView(initialGangwayImage);
+        initialGangwayImageView.setFitHeight(20);
+        initialGangwayImageView.setFitWidth(20);
+        Text initialGangwayText = new Text("Initial Gangway");
+        HBox initialGangwayBox = new HBox(initialGangwayImageView,initialGangwayText);
 
-        Image image3 = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/ground.png");
-        ImageView imageView3 = new ImageView(image3);
-        imageView3.setFitHeight(20);
-        imageView3.setFitWidth(20);
-        Text text3 = new Text("Ground");
-        HBox hor3 = new HBox(imageView3,text3);
+        Image groundImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/ground.png");
+        ImageView groundImageView = new ImageView(groundImage);
+        groundImageView.setFitHeight(20);
+        groundImageView.setFitWidth(20);
+        Text groundText = new Text("Ground");
+        HBox groundBox = new HBox(groundImageView,groundText);
 
-        Image image4 = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/rocky.jpg");
-        ImageView imageView4 = new ImageView(image4);
-        imageView4.setFitHeight(20);
-        imageView4.setFitWidth(20);
-        Text text4 = new Text("Rocky");
-        HBox hor4 = new HBox(imageView4,text4);
+        Image rockyImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/rocky.jpg");
+        ImageView rockyImageView = new ImageView(rockyImage);
+        rockyImageView.setFitHeight(20);
+        rockyImageView.setFitWidth(20);
+        Text rockyText = new Text("Rocky");
+        HBox rockyBox = new HBox(rockyImageView,rockyText);
 
-        Image image5 = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/madera.jpg");
-        ImageView imageView5 = new ImageView(image5);
-        imageView5.setFitHeight(20);
-        imageView5.setFitWidth(20);
-        Text text5 = new Text("Gangway");
-        HBox hor5 = new HBox(imageView5,text5);
+        Image gangwayImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/madera.jpg");
+        ImageView gangwayImageView = new ImageView(gangwayImage);
+        gangwayImageView.setFitHeight(20);
+        gangwayImageView.setFitWidth(20);
+        Text gangwayText = new Text("Gangway");
+        HBox gangwayBox = new HBox(gangwayImageView,gangwayText);
+
+        Image antImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/ant.png");
+        ImageView antImageView = new ImageView(antImage);
+        antImageView.setFitHeight(20);
+        antImageView.setFitWidth(20);
+        Text antText = new Text("Ant");
+        HBox antBox = new HBox(antImageView,antText);
+
+        Image moleImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/mole.png");
+        ImageView moleImageView = new ImageView(moleImage);
+        moleImageView.setFitHeight(20);
+        moleImageView.setFitWidth(20);
+        Text moleText = new Text("Mole");
+        HBox moleBox = new HBox(moleImageView,moleText);
+
+        Image owlImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/owl.png");
+        ImageView owlImageView = new ImageView(owlImage);
+        owlImageView.setFitHeight(20);
+        owlImageView.setFitWidth(20);
+        Text owlText = new Text("Owl");
+        HBox owlBox = new HBox(owlImageView,owlText);
+
+        Image spiderImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/spider.png");
+        ImageView spiderImageView = new ImageView(spiderImage);
+        spiderImageView.setFitHeight(20);
+        spiderImageView.setFitWidth(20);
+        Text spiderText = new Text("Spider");
+        HBox spiderBox = new HBox(spiderImageView,spiderText);
+
+        Image whiteTowerImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/whiteTower.png");
+        ImageView whiteTowerImageView = new ImageView(whiteTowerImage);
+        whiteTowerImageView.setFitHeight(20);
+        whiteTowerImageView.setFitWidth(20);
+        Text whiteTowerText = new Text("White Tower");
+        HBox whiteTowerBox = new HBox(whiteTowerImageView,whiteTowerText);
+
+        Image silverTowerImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/silverTower.png");
+        ImageView silverTowerImageView = new ImageView(silverTowerImage);
+        silverTowerImageView.setFitHeight(20);
+        silverTowerImageView.setFitWidth(20);
+        Text silverTowerText = new Text("Silver Tower");
+        HBox silverTowerBox = new HBox(silverTowerImageView,silverTowerText);
+
+        Image sandTrapImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/sandTrap.jpeg");
+        ImageView sandTrapImageView = new ImageView(sandTrapImage);
+        sandTrapImageView.setFitHeight(20);
+        sandTrapImageView.setFitWidth(20);
+        Text sandTrapText = new Text("Sand Trap");
+        HBox sandTrapBox = new HBox(sandTrapImageView,sandTrapText);
+
+        Button plots = new Button("Show Plot Instructions");
+        ShowMessageButtonEventHandler plotsInfoButtonEventHandler = new ShowMessageButtonEventHandler("Initial Gangway: this is the plot where enemies spawn.\n" +
+                "\n" +
+                "Final Gangway: this is the plot where the player is located and is the ed of the path.\n" +
+                "\n" +
+                "Ground: this is the plot where towers can be constructed.\n" +
+                "\n" +
+                "Rocky: this is a plot where nothing can be constructed\n" +
+                "\n" +
+                "Gangway: this is the plot which enemies such as spiders, ants and moles follow to reach the end of the path. Here is where sand traps can be constructed.");
+        plots.setOnAction(plotsInfoButtonEventHandler);
+
+        VBox plotsVBox = new VBox(finalGangwayBox,new Separator(),initialGangwayBox,new Separator(),groundBox,new Separator(),rockyBox,new Separator(),gangwayBox, new Separator(), plots);
+        plotsVBox.setMinWidth(200);
 
 
-        VBox vertical = new VBox(hor1,new Separator(),hor2,new Separator(),hor3,new Separator(),hor4,new Separator(),hor5);
-        alert.setGraphic(vertical);
+        Button enemies = new Button("Show Enemy Instructions");
+        ShowMessageButtonEventHandler enemiesInfoButtonEventHandler = new ShowMessageButtonEventHandler("Ant: advances 1 position per turn and makes 1 damage to the player when it reaches the end. It has 1 point of life but if it gets killed, 1 credits are given to the character. After 10 ants get killed they start to give 2 credits.\n" +
+                "\n" +
+                "Spider: advances 2 positions per turn and makes 2 damage to the player when it reaches the end. It has 2 points of life but the credits it gives to the character are a random number between 1 and 10.\n" +
+                "\n" +
+                "Mole: advances 1 position on the first 5 movements, then 2 on the next 5, and 3 after the 11th. If he reaches the end on an even turn makes 2 damage and 5 on odd ones. It has no life because it can't be damaged. \n" +
+                "\n" +
+                "Owl: advances 5 positions on \"L\" style to the end, but if it health is reduced to its 50% it goes directly to the end on the shortest path. When it reaches the end, the first constructed tower gets deleted. It has 5 points of life but if it gets killed, no credits are given to the character.");
+        enemies.setOnAction(enemiesInfoButtonEventHandler);
 
+        VBox enemiesVBox = new VBox(antBox,new Separator(),moleBox,new Separator(),owlBox,new Separator(),spiderBox, new Separator(), enemies);
+        enemiesVBox.setMinWidth(200);
+
+        Button defenses = new Button("Show Defense Instructions");
+        ShowMessageButtonEventHandler defensesInfoButtonEventHandler = new ShowMessageButtonEventHandler("Silver Tower: it attacks in a range of 5 plots and makes 2 points of damage. It gets constructed in 2 turns and then it can attack and costs 20 credits.\n" +
+                "\n" +
+                "White Tower: it attacks in a range of 3 plots and makes 1 points of damage. It gets constructed in 1 turns and then it can attack and costs 10 credits\n" +
+                "\n" +
+                "Sand Trap: it reduces enemies speed in half. It lasts for 3 turns and costs 25 credits.");
+        defenses.setOnAction(defensesInfoButtonEventHandler);
+
+        VBox defensesVBox = new VBox(whiteTowerBox,new Separator(),silverTowerBox,new Separator(),sandTrapBox, new Separator(), defenses);
+        defensesVBox.setMinWidth(200);
+
+
+        HBox principalBox = new HBox(plotsVBox,enemiesVBox,defensesVBox);
+        principalBox.setAlignment(Pos.CENTER);
+
+
+        principalBox.setMinWidth(700);
+        alert.setGraphic(principalBox);
 
     }
 
