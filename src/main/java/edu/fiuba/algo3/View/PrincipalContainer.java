@@ -142,6 +142,7 @@ public class PrincipalContainer extends BorderPane {
         this.stage.setScene(gameScene);
 
 
+
     }
 
     public void showMap(){
