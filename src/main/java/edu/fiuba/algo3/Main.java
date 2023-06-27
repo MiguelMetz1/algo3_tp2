@@ -1,7 +1,6 @@
 package edu.fiuba.algo3;
 
-import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
-import edu.fiuba.algo3.View.GameStart;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 

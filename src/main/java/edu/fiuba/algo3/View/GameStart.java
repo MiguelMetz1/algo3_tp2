@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.View;
 
-import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
-import edu.fiuba.algo3.TypeData.Name.Name;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

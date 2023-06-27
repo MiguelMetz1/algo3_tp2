@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.View.Events;
 
-import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import edu.fiuba.algo3.View.PrincipalContainer;
@@ -23,7 +22,6 @@ public class StartButtonEventHandler implements EventHandler<ActionEvent> {
     Label label;
     Name name;
 
-    AlgoDefense algoDefense;
     public StartButtonEventHandler(TextField textField, Label label, Stage stage, Name name){
         this.textField = textField;
         this.label = label;

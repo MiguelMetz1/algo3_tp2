@@ -1,14 +1,12 @@
 package edu.fiuba.algo3.View;
 
 
-import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import edu.fiuba.algo3.View.Events.ExitButtonEventHandler;
 import edu.fiuba.algo3.View.Events.StartButtonEventHandler;
 import edu.fiuba.algo3.View.Events.TextEventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

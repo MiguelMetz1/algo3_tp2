@@ -1,7 +1,5 @@
 package edu.fiuba.algo3.View;
 
-import edu.fiuba.algo3.AlgoDefense.AlgoDefense;
-import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
