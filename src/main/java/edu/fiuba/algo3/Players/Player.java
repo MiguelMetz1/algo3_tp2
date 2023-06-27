@@ -8,8 +8,6 @@ import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Exceptions.WrongPlayerName;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.FinalGangway;
-import edu.fiuba.algo3.Plots.HellsPlot;
-import edu.fiuba.algo3.Plots.NullPlot;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.Shop.Buyer;
 import edu.fiuba.algo3.TypeData.Buff.Attribute;

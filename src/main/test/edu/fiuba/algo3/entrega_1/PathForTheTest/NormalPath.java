@@ -1,11 +1,11 @@
-package edu.fiuba.algo3.entrega_1;
+package edu.fiuba.algo3.entrega_1.PathForTheTest;
 
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-public class Path {
+public class NormalPath {
 
     /* this is a class to help testing, its have hardcoded the path of enemies to simplify
     the test cases */

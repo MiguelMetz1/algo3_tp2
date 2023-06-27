@@ -13,7 +13,7 @@ public class NullPlot extends Plot{
         super(new Coordinate(0,0));
     }
 
-    public void receive(Defense defense) throws WrongPlace {
+    public void receive(Defense defense){
         Logger.getLogger("Placeable").log(Level.WARNING, "You can't place anything on this plot.");
     }
 

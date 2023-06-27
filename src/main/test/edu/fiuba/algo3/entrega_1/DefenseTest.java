@@ -17,9 +17,10 @@ import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.entrega_1.PathForTheTest.NormalPath;
+import edu.fiuba.algo3.entrega_1.PathForTheTest.PathFromTheOwl;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -123,7 +124,7 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -154,7 +155,7 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -193,7 +194,7 @@ public class DefenseTest {
         Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
 
 
@@ -236,7 +237,7 @@ public class DefenseTest {
         Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Spider spider = new Spider(map, path.copyPath());
 
 
@@ -277,7 +278,7 @@ public class DefenseTest {
         Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Mole mole = new Mole(map, path.copyPath());
 
 
@@ -313,7 +314,7 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -342,7 +343,7 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Spider spider = new Spider(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -370,17 +371,19 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        ArrayList<Enemy> deadEnemies = new ArrayList<>();
         ArrayList<Enemy> enemies = new ArrayList<>();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
         Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
+        enemies.add(ant);
 
         WhiteTower whiteTower = new WhiteTower();
         map.locateEntityIn(whiteTower, new Coordinate(2,8));
+
+
 
         SandTrap sandTrap = new SandTrap(player);
         map.locateEntityIn(sandTrap, new Coordinate(2,2));
@@ -388,15 +391,18 @@ public class DefenseTest {
         sandTrap.continueWithTheConstruction(); // turn 1
         sandTrap.continueWithTheConstruction(); // turn 2
         sandTrap.continueWithTheConstruction(); // turn 3
-        whiteTower.continueWithTheConstruction();
 
-        enemies.add(ant); //ant should be in (2, 5) in 5 turn if there is no sand trap
-        for(int i = 0; i < 5; i++)
-            ant.advance();
 
-        whiteTower.attack(enemies);
-        ant.finalizeYourWay(deadEnemies);
-        assertTrue(deadEnemies.contains(ant));
+
+        ant.advance();
+        sandTrap.attack(enemies);
+        ant.advance();
+        boolean isPosition1Correct = ant.distanceToBiggerThan(new Coordinate(2,2), new Distance(0));
+        assertFalse(isPosition1Correct);
+
+        ant.advance();
+        boolean isPosition2Correct = ant.distanceToBiggerThan(new Coordinate(2,3), new Distance(0));
+        assertFalse(isPosition2Correct);
     }
 
     @Test
@@ -406,7 +412,7 @@ public class DefenseTest {
         GameMap map = resources.getMap();
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
 
-        OwlPath owlPath = new OwlPath();
+        PathFromTheOwl owlPath = new PathFromTheOwl();
         Owl owl = new Owl(map, owlPath.owlPath(), playerCoordinate);
         ArrayList<Enemy> enemies = new ArrayList<>();
         Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
@@ -435,7 +441,7 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -470,7 +476,7 @@ public class DefenseTest {
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
 
-        Path path = new Path();
+        NormalPath path = new NormalPath();
         Ant ant = new Ant(map, path.copyPath());
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
@@ -564,6 +570,29 @@ public class DefenseTest {
 
 
     }
+
+    @Test
+    public void defenceInConstructionCantAttack() throws WrongPlace {
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+
+        NormalPath path = new NormalPath();
+        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+
+        SilverTower silverTower = new SilverTower();
+        map.locateEntityIn(silverTower, new Coordinate(3,1));
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        enemies.add(ant);
+        ant.advance();
+        silverTower.continueWithTheConstruction();
+        silverTower.attack(enemies);
+        ant.finalizeYourWay(deadEnemies);
+        assertFalse(deadEnemies.contains(ant));
+    }
+
+
 
 
 

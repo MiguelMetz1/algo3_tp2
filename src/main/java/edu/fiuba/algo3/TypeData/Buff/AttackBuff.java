@@ -2,6 +2,9 @@ package edu.fiuba.algo3.TypeData.Buff;
 
 import edu.fiuba.algo3.TypeData.Damage.Damage;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public abstract class AttackBuff extends Buff {
 
     public AttackBuff( Damage additiveDamage ){
@@ -10,7 +13,7 @@ public abstract class AttackBuff extends Buff {
 
     @Override
     protected void quitBuff(Attribute attribute) {
-        System.out.println("This buff can't be removed.");
+        Logger.getLogger("Buff").log(Level.INFO, "This buff cant be removed.");
     }
 
     @Override
