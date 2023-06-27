@@ -206,4 +206,10 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     protected abstract String enemyImage();
 
+    public void inPosition(Coordinate coordinate, ArrayList<String> enemiesList) {
+        if(this.actualPositionIs(coordinate))
+            enemiesList.add(this.getType());
+    }
+
+    protected abstract String getType();
 }

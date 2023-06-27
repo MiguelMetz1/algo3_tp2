@@ -14,6 +14,7 @@ import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -136,8 +137,8 @@ public class Game {
             return this.player.won();
     }
 
-    public void showMap(AnchorPane root, VBox consoleContainer, Map<Coordinate, Button> buttonMap,  Map<Coordinate, StackPane> stackPaneMap){
-        this.map.showMap(root, consoleContainer,this, buttonMap, stackPaneMap);
+    public void showMap(PrincipalContainer principalContainer,AnchorPane root, VBox consoleContainer, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
+        this.map.showMap(principalContainer,root, consoleContainer,this, buttonMap, stackPaneMap);
     }
 
     public void showPlayerCredist() {
@@ -168,6 +169,14 @@ public class Game {
 
     public String remainingCredits() {
         return player.remainingCredits();
+    }
+
+    public ArrayList<String> enemiesInPlot(Coordinate coordinate) {
+        ArrayList<String> enemiesList = new ArrayList<>();
+        for (Enemy enemy: enemies)
+            enemy.inPosition(coordinate, enemiesList);
+
+        return enemiesList;
     }
 
     /*public void updateMap(Map<Coordinate, Button> buttonMap) {

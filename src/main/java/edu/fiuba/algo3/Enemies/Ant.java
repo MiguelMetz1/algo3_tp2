@@ -54,4 +54,8 @@ public class Ant extends LooteableEnemy {
     }
 
     protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/ant.png";}
+
+    protected String getType(){
+        return "Ant";
+    }
 }

@@ -1,9 +1,11 @@
 package edu.fiuba.algo3.View.Events;
 
+import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -12,12 +14,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+
 import javax.sound.sampled.*;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
@@ -32,7 +37,10 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
     Map<Coordinate, Button> buttonMap;
     Map<Coordinate, StackPane> stackPaneMap;
 
-    public PlotButtonEventHandler(VBox consoleContainer, Plot plot, Game game, Coordinate coordinate, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
+    PrincipalContainer principalContainer;
+
+    public PlotButtonEventHandler(PrincipalContainer principalContainer,VBox consoleContainer, Plot plot, Game game, Coordinate coordinate, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
+        this.principalContainer = principalContainer;
         this.consoleContainer = consoleContainer;
         this.plot = plot;
         this.coordinate = coordinate;
@@ -45,24 +53,18 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
 
-        Label label = new Label();
-        label.setText(plot.getName());
-        label.setStyle("-fx-font-size: 20; -fx-padding: 0 50 0 0px;");
-
-        consoleContainer.getChildren().clear();
 
         try {
             game.locateLastBoughtDefenseIn(coordinate);
             //makeSound();
         } catch (WrongPlace e) {
-            label.setText(e.getMessage());
             throw new RuntimeException(e);
         }
-        consoleContainer.getChildren().addAll(label);
 
         game.defensesImage(buttonMap,stackPaneMap);
 
 
+        principalContainer.showMap();
 
 
 

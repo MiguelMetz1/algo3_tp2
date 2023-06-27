@@ -125,7 +125,7 @@ public class PrincipalContainer extends BorderPane {
 
         AnchorPane root = new AnchorPane();
 
-        game.showMap(root, consoleContainer,this.buttonMap, this.stackPaneMap);
+        game.showMap(this,root, consoleContainer,this.buttonMap, this.stackPaneMap);
 
 
         this.centralConteiner = new VBox(root);

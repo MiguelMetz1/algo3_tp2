@@ -85,4 +85,8 @@ public class Mole extends Enemy implements Target {
 
     protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/mole.png";}
 
+    protected String getType(){
+        return "Mole";
+    }
+
 }
