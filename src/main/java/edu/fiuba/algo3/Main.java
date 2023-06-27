@@ -7,11 +7,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static void main(String[] args) {
-       /* AlgoDefense algoDefense = new AlgoDefense(args);
-        algoDefense.startGame();*/
-       /* GameStart.main(args);*/
 
+    public static void main(String[] args) {
+        App.main(args);
     }
 
     @Override
