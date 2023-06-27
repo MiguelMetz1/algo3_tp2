@@ -41,5 +41,5 @@ public class Spider extends LooteableEnemy {
         return 10*(random);
     }
 
-    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/spiderOnly.png";}
+    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/spider.png";}
 }

@@ -62,5 +62,5 @@ public class Owl extends KillableEnemy {
         return 5;
     }
 
-    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/owlOnly.png";}
+    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/owl.png";}
 }

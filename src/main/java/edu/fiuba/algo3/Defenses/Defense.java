@@ -14,8 +14,13 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Coordinate.HellsCoordinate;
 import edu.fiuba.algo3.TypeData.Damage.AdditiveDamage;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public abstract class Defense implements Placeable {
@@ -108,4 +113,24 @@ public abstract class Defense implements Placeable {
     }
 
     public abstract String image();
+
+    public void addImage(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
+
+
+        Button button = buttonMap.get(this.position);
+        StackPane stackPane = stackPaneMap.get(this.position);
+
+        Image overlayImage1 = new Image(this.image());
+        ImageView overlayImageView1 = new ImageView(overlayImage1);
+        /*overlayImageView1.setStyle("-fx-max-height: 40px");
+        overlayImageView1.setStyle("-fx-max-width: 40px");*/
+        overlayImageView1.setFitHeight(30);
+        overlayImageView1.setFitWidth(30);
+
+
+        stackPane.getChildren().addAll(overlayImageView1);
+        overlayImageView1.toBack();
+
+        button.setGraphic(stackPane);
+    }
 }

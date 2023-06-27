@@ -15,6 +15,8 @@ import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -154,6 +156,10 @@ public class Game {
          for(Enemy enemy:enemies){
              enemy.addImage(buttonMap, stackPaneMap);
          }
+    }
+
+    public void defensesImage(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
+        player.defenseImage(buttonMap,stackPaneMap);
     }
 
     /*public void updateMap(Map<Coordinate, Button> buttonMap) {

@@ -37,10 +37,10 @@ public class GameMap {
             Plot plot = entry.getValue();
 
             Button button = new Button();
-            button.setLayoutX(coordinate.getX() * 40);
-            button.setLayoutY(coordinate.getY() * 40);
-            button.setPrefWidth(40);
-            button.setPrefHeight(40);
+            button.setLayoutX(coordinate.getX() * 45);
+            button.setLayoutY(coordinate.getY() * 45);
+            button.setPrefWidth(45);
+            button.setPrefHeight(45);
             button.setBackground(new Background(new BackgroundImage(plot.getImage(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(40,40,false,false,false,true))));
             button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
@@ -49,7 +49,7 @@ public class GameMap {
 
             StackPane stackPane = new StackPane();
 
-            PlotButtonEventHandler plotButtonEventHandler = new PlotButtonEventHandler(stackPane,consoleContainer, plot, game, coordinate, button);
+            PlotButtonEventHandler plotButtonEventHandler = new PlotButtonEventHandler(consoleContainer, plot, game, coordinate, buttonMap, stackPaneMap);
             button.setOnAction(plotButtonEventHandler);
 
 

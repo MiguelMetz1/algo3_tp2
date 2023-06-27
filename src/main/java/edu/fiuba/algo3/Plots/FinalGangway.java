@@ -10,7 +10,7 @@ public class FinalGangway extends Gangway {
     }
 
     public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/orangeWool.png");
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/finalGangway.png");
     }
 
     public String getName(){

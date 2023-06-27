@@ -74,7 +74,7 @@ public class WelcomeContainer extends VBox {
         TextField text = new TextField();
         text.setPromptText("Enter your name");
         text.setMaxWidth(300);
-        text.setStyle("-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-font-style: white; -fx-border-width: 2px; -fx-border-color: black");
+        text.setStyle("-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-border-width: 2px; -fx-border-color: black");
 
         text.setFont(Font.font("Arial", 18));
 

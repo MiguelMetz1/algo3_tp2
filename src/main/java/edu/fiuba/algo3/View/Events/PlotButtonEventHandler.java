@@ -17,6 +17,7 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
@@ -27,17 +28,16 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
     Coordinate coordinate;
 
-    Button button;
+    Map<Coordinate, Button> buttonMap;
+    Map<Coordinate, StackPane> stackPaneMap;
 
-    StackPane stackPane;
-
-    public PlotButtonEventHandler(StackPane stackPane,VBox consoleContainer, Plot plot, Game game, Coordinate coordinate, Button button){
+    public PlotButtonEventHandler(VBox consoleContainer, Plot plot, Game game, Coordinate coordinate, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
         this.consoleContainer = consoleContainer;
         this.plot = plot;
         this.coordinate = coordinate;
         this.game = game;
-        this.button = button;
-        this.stackPane = stackPane;
+        this.buttonMap = buttonMap;
+        this.stackPaneMap = stackPaneMap;
     }
 
 
@@ -60,20 +60,10 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
         }
         consoleContainer.getChildren().addAll(label);
 
-
-        Image overlayImage1 = new Image(game.lastDefenseImage());
-        ImageView overlayImageView1 = new ImageView(overlayImage1);
-        overlayImageView1.setFitHeight(20);
-        overlayImageView1.setFitWidth(20);
+        game.defensesImage(buttonMap,stackPaneMap);
 
 
-        this.stackPane.getChildren().addAll(overlayImageView1);
-        //this.stackPane.getChildren().addAll(overlayImageView1, overlayImageView2);
-        overlayImageView1.toBack();
-        //stackPane.getChildrenUnmodifiable().remove(button.getChildrenUnmodifiable().get(1));
-        //button.getChildrenUnmodifiable().get(1);
 
-        button.setGraphic(stackPane);
 
 
     }

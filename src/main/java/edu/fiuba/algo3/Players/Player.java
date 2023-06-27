@@ -17,9 +17,12 @@ import edu.fiuba.algo3.TypeData.Credits.Credits;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Life.Life;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -209,5 +212,11 @@ public class Player implements Target, Placeable, Buyer, Looter {
 
     public String lastDefenseImage() {
         return this.defenses.getLast().image();
+    }
+
+    public void defenseImage(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
+        for(Defense defense:defenses){
+            defense.addImage(buttonMap, stackPaneMap);
+        }
     }
 }

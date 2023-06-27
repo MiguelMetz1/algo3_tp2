@@ -132,14 +132,13 @@ public class PrincipalContainer extends BorderPane {
         this.centralConteiner = new VBox(root);
         this.centralConteiner.setMaxWidth(680);
         this.setCenter(this.centralConteiner);
-       /* this.centralConteiner.setAlignment(Pos.CENTER);*/
-        /*Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
-        this.centralConteiner.setBackground(new Background(backgroundImage));*/
 
         game.enemiesImages(this.buttonMap,  this.stackPaneMap);
-        Scene gameScene = new Scene(this,720,720);
-        this.stage.setScene(gameScene);
+
+        game.defensesImage(this.buttonMap,this.stackPaneMap);
+
+
+        this.stage.getScene().getWindow().setWidth(this.stage.getScene().getWidth()*1);
 
 
 

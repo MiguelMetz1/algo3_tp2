@@ -83,6 +83,6 @@ public class Mole extends Enemy implements Target {
         return false;
     }
 
-    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/moleOnly.png";}
+    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/mole.png";}
 
 }

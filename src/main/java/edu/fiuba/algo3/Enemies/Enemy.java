@@ -190,8 +190,8 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
             StackPane stackPane = stackPaneMap.get(this.actualPosition);
             Image overlayImage1 = new Image(enemyImage());
             ImageView overlayImageView1 = new ImageView(overlayImage1);
-            overlayImageView1.setFitHeight(20);
-            overlayImageView1.setFitWidth(20);
+            overlayImageView1.setFitHeight(30);
+            overlayImageView1.setFitWidth(30);
 
             //System.out.println(stackPane.getChildren().size());
 
