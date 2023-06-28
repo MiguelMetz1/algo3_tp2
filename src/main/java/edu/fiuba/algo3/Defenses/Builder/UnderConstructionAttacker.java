@@ -40,7 +40,7 @@ public class UnderConstructionAttacker implements Builder {
     public Attacker actualState() {
         this.timeOfConstruction--;
         if( this.timeOfConstruction == 0 ){
-            //this.makeSound();
+            this.makeSound();
         }
         if( this.timeOfConstruction <= 0 ){
             return new TowerAttacker(debuff, position, range);
