@@ -17,7 +17,8 @@ import edu.fiuba.algo3.TypeData.Distance.Distance;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -130,5 +131,11 @@ public abstract class Defense implements Placeable {
         overlayImageView1.toBack();
 
         button.setGraphic(stackPane);
+    }
+
+    public void showRange(Coordinate coordinate, Button button) {
+        if(!(coordinate.distanceTo(this.position).higher(new Distance(range())))){
+            button.setStyle("-fx-opacity: 0.8");
+        }
     }
 }

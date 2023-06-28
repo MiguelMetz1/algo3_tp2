@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.View.Events;
 
-import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Plots.Plot;
@@ -9,20 +8,10 @@ import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-
-import javax.sound.sampled.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
@@ -39,7 +28,11 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
     PrincipalContainer principalContainer;
 
-    public PlotButtonEventHandler(PrincipalContainer principalContainer,VBox consoleContainer, Plot plot, Game game, Coordinate coordinate, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
+    Map<Coordinate, Plot> plots;
+
+    Boolean clicked = false;
+
+    public PlotButtonEventHandler(Map<Coordinate, Plot> plots,PrincipalContainer principalContainer,VBox consoleContainer, Plot plot, Game game, Coordinate coordinate, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
         this.principalContainer = principalContainer;
         this.consoleContainer = consoleContainer;
         this.plot = plot;
@@ -47,11 +40,15 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
         this.game = game;
         this.buttonMap = buttonMap;
         this.stackPaneMap = stackPaneMap;
+        this.plots = plots;
     }
 
 
     @Override
     public void handle(ActionEvent actionEvent) {
+
+        opacityReset(buttonMap);
+        showRange( buttonMap,coordinate, Color.RED);
 
 
         try {
@@ -64,21 +61,26 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
         game.defensesImage(buttonMap,stackPaneMap);
 
 
+
         principalContainer.showMap();
 
 
 
     }
 
-    public void makeSound(){
-        AudioInputStream audioInputStream = null;
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File("src/main/java/edu/fiuba/algo3/View/Sounds/towerConstructed.wav").getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
+    public void showRange( Map<Coordinate, Button> buttonMap, Coordinate coordinate, Color color){
+        for (Map.Entry<Coordinate, Button> entry: buttonMap.entrySet()){
+            Coordinate ownCoordinate = entry.getKey();
+            Button button = entry.getValue();
+            this.plots.get(coordinate).showRange(ownCoordinate,button);
+        }
+    }
+    private void opacityReset(Map<Coordinate, Button> buttonMap) {
+        for (Map.Entry<Coordinate, Button> entry : buttonMap.entrySet()) {
+            Button button = entry.getValue();
+            button.setStyle("-fx-opacity: 1");
+
         }
     }
 }

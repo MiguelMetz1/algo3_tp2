@@ -35,7 +35,6 @@ public class Player implements Target, Placeable, Buyer, Looter {
 
     private LinkedList<Defense> defenses;
 
-    private LinkedList<SandTrap> traps;
 
     private ArrayList<Enemy> enemies;
     private Queue<ArrayList<Enemy>> troops;
@@ -56,7 +55,6 @@ public class Player implements Target, Placeable, Buyer, Looter {
         this.attributes = new ArrayList<>();
         this.attributes.add(life);
         this.defenses = new LinkedList<>();
-        this.traps = new LinkedList<>();
         this.map = map;
         this.position = new Coordinate(0, 0);
         this.locateCharacter(map, coordinate);

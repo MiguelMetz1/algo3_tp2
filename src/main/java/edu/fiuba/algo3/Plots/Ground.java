@@ -3,7 +3,9 @@ package edu.fiuba.algo3.Plots;
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -34,5 +36,11 @@ public class Ground extends Plot{
 
     public String getName(){
         return "Ground" + this.coordinate.toIntString();
+    }
+
+    public void showRange(Coordinate coordinate, Button button){
+       for (Defense defense: defenses){
+           defense.showRange(coordinate, button);
+       }
     }
 }

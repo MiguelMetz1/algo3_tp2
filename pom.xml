@@ -10,7 +10,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <junit.jupiter.version>5.4.0</junit.jupiter.version>
         <mockito-mockito-core-version>3.3.0</mockito-mockito-core-version>
-        <maven-surefire-version>3.1.2</maven-surefire-version>
+        <maven-surefire-version>3.0.0-M3</maven-surefire-version>
         <archunit-version>0.21.0</archunit-version>
         <javafx-version>15.0.1</javafx-version>
         <main-class>edu.fiuba.algo3.Main</main-class>
@@ -79,15 +79,9 @@
         <testSourceDirectory>src/main/test</testSourceDirectory>
         <plugins>
             <plugin>
-                <artifactId/>
-                <groupid>org.pitest</groupid>
-                <artifactid>pitest-maven</artifactid>
-                <version>LATEST</version>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
                 </configuration>
@@ -103,7 +97,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -131,7 +125,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
+                <version>0.8.2</version>
                 <executions>
                     <execution>
                         <goals>

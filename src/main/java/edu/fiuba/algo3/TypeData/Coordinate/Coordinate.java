@@ -2,6 +2,8 @@ package edu.fiuba.algo3.TypeData.Coordinate;
 
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 
+import java.util.ArrayList;
+
 public class Coordinate {
     double x;
     double y;
@@ -102,4 +104,6 @@ public class Coordinate {
     public String toIntString(){
         return ("("+(int)this.x+","+(int)this.y+")");
     }
+
+
 }

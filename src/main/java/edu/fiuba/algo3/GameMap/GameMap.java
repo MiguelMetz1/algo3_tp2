@@ -5,6 +5,7 @@ import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.View.Events.PlotButtonEventHandler;
 import edu.fiuba.algo3.View.Events.PlotInfoEventHandler;
 import edu.fiuba.algo3.View.PrincipalContainer;
@@ -51,14 +52,15 @@ public class GameMap {
 
             StackPane stackPane = new StackPane();
 
-            PlotButtonEventHandler plotButtonEventHandler = new PlotButtonEventHandler(principalContainer,consoleContainer, plot, game, coordinate, buttonMap, stackPaneMap);
+            PlotButtonEventHandler plotButtonEventHandler = new PlotButtonEventHandler(plots,principalContainer,consoleContainer, plot, game, coordinate, buttonMap, stackPaneMap);
             button.setOnAction(plotButtonEventHandler);
 
 
-            PlotInfoEventHandler plotInfoEventHandler = new PlotInfoEventHandler(button,coordinate,consoleContainer,game);
+            PlotInfoEventHandler plotInfoEventHandler = new PlotInfoEventHandler(buttonMap,button,coordinate,consoleContainer,game);
             button.setOnMouseEntered(plotInfoEventHandler);
 
-            button.setOnMouseExited(event -> {button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))); consoleContainer.getChildren().clear();});
+            button.setOnMouseExited(event -> { consoleContainer.getChildren().clear();button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));});
+            //button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 
             button.setGraphic(stackPane);
@@ -69,6 +71,18 @@ public class GameMap {
 
 
 
+        }
+    }
+
+    public void showRange( Map<Coordinate, Button> buttonMap, Coordinate coordinate){
+
+
+        for (Map.Entry<Coordinate, Button> entry: buttonMap.entrySet()){
+            Coordinate ownCoordinate = entry.getKey();
+            Button button = entry.getValue();
+            if(!(coordinate.distanceTo(ownCoordinate).higher(new Distance(2)))){
+                button.setStyle("-fx-border-color: black");
+            }
         }
     }
 

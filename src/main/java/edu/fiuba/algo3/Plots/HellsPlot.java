@@ -1,9 +1,11 @@
 package edu.fiuba.algo3.Plots;
 
 import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+
 
 public class HellsPlot extends Plot{
 
@@ -31,4 +33,6 @@ public class HellsPlot extends Plot{
     public String getName(){
         return null;
     }
+
+    public void showRange(Coordinate coordinate, Button button){}
 }
