@@ -18,7 +18,7 @@ public class SandTrapDeleter implements Deleter {
 
     @Override
     public void delete(Defense defense, Plot plot) {
-        this.makeSound();
+        //this.makeSound();
         this.player.destroyDefense(defense);
         plot.remove(defense);
     }

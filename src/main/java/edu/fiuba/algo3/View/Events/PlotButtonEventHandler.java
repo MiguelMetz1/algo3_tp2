@@ -47,8 +47,8 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
 
-        opacityReset(buttonMap);
-        showRange( buttonMap,coordinate, Color.RED);
+        this.opacityReset(buttonMap);
+        this.showRange( buttonMap,coordinate, Color.RED);
 
 
         try {
