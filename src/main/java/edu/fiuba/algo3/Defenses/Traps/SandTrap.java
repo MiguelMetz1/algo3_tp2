@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.Defenses.Traps;
 
-import edu.fiuba.algo3.Attacker.ReadyAttacker;
+import edu.fiuba.algo3.Attacker.DefenseAttacker.TrapAttacker;
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Defenses.Deleter.Deleter;
 import edu.fiuba.algo3.Defenses.Deleter.NullDeleter;
@@ -18,6 +18,9 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SandTrap extends Defense {
 
@@ -32,7 +35,7 @@ public class SandTrap extends Defense {
         this.player = player;
         this.deleter = new NullDeleter();
         this.deleterBuilder = new NullBuilder();
-        this.attacker = new ReadyAttacker(this.getBuff(), this.position, new Distance(this.range()));
+        this.attacker = new TrapAttacker(this.getBuff(), this.position, new Distance(this.range()));
     }
 
     @Override
@@ -52,12 +55,12 @@ public class SandTrap extends Defense {
 
     public void locateIn(Coordinate position, Plot plot) throws WrongPlace {
         super.locateIn(position, plot);
-        this.deleterBuilder = new UnderDestructionSandTrap( 3, this.player);
+        this.deleterBuilder = new UnderDestructionSandTrap( 3, this.player );
     }
 
     public void continueWithTheConstruction() {
         this.deleter = this.deleterBuilder.actualState();
-        this.deleter.delete(this);
+        this.deleter.delete(this, this.positionedPlot);
     }
 
     protected Buff getBuff(){
@@ -69,6 +72,10 @@ public class SandTrap extends Defense {
         ArrayList<String> passablePlots = new ArrayList<>();
         passablePlots.add( Gangway.class.getName() );
         return passablePlots;
+    }
+
+    public void destroyOn(LinkedList<Defense> activeDefenses ) {
+        Logger.getLogger("AttackReceiver").log(Level.INFO, "A sand trap can't be destroyed.");
     }
 
     @Override

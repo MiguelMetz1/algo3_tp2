@@ -31,6 +31,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
@@ -47,7 +48,7 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     ArrayList<String> passablePlots;
 
-    Queue<Coordinate> path;
+    LinkedList<Coordinate> path;
 
     AttackReceiver attackReceiver;
 
@@ -55,7 +56,7 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     GameMap map;
 
-    public Enemy(GameMap map, Queue<Coordinate> path){
+    public Enemy(GameMap map, LinkedList<Coordinate> path){
         this.speed = new Speed( this.getSpeed() );
         this.actualPosition = new HellsCoordinate();
         this.path = path;
@@ -113,7 +114,7 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
     }
 
     protected boolean reachedTheFinal(){
-        return this.path.isEmpty();
+        return this.path.isEmpty() || this.positionedPlace.equals(path.getLast());
     }
 
     protected boolean actualPositionIs( Coordinate coordinate ){
@@ -169,6 +170,20 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
         }
 
         attackReceiver.takeBuff(buff);
+    }
+
+    public static Enemy returnOneLifeDamageableBetween( ArrayList<Enemy> enemies ){
+
+        for( Enemy enemy: enemies){
+            if(enemy.isLifeDamageable())
+                return enemy;
+        }
+
+        return new NullEnemy(enemies.get(0).map);
+    }
+
+    protected  boolean isLifeDamageable(){
+        return true;
     }
 
     protected boolean isAvailableToReceiveAttack(){

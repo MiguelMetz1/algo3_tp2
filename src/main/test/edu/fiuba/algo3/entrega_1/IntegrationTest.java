@@ -28,7 +28,7 @@ public class IntegrationTest {
         game.buildDefenses();
         game.buildDefenses();
 
-        for( int i = 1; i < 36; i++ ) {
+        for( int i = 1; i < 40; i++ ) {
             game.advanceEnemies();
             game.makeDefensesAttack();
             game.makeDefensesAttack();

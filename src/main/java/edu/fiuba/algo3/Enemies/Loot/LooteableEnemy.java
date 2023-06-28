@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Players.Looter;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Credits.Credits;
 
+import java.util.LinkedList;
 import java.util.Queue;
 
 public abstract class LooteableEnemy extends KillableEnemy implements Looteable {
@@ -14,26 +15,24 @@ public abstract class LooteableEnemy extends KillableEnemy implements Looteable 
 
     Credits credits;
 
-    public LooteableEnemy(GameMap map, Queue<Coordinate> path ) {
+    public LooteableEnemy(GameMap map, LinkedList<Coordinate> path ) {
         super(map, path);
-
-        this.credits = new Credits(this.amountOfCredits());
-
-        Looteable looteable = new NullLooteable();
-        this.looteable = looteable;
+        this.credits = new Credits(amountOfCredits());
+        this.looteable = new LooteableMOB(this.credits);
     }
 
     @Override
     public void transferLootTo(Looter player) {
         if( this.isDead() ) {
-            this.looteable = new LooteableMOB( this.credits );
-
-
+            this.looteable.transferLootTo(player);
         }
-        this.looteable.transferLootTo(player);
     }
 
-    protected abstract int amountOfCredits();
+    protected void incrementCreditsIn(double amountOfIncrement ){
+        new Credits(amountOfIncrement).transferCreditsTo(this.credits);
+    }
+
+    protected abstract double amountOfCredits();
 
 
 }

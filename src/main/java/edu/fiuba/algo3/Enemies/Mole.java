@@ -2,39 +2,28 @@ package edu.fiuba.algo3.Enemies;
 
 import edu.fiuba.algo3.Attacker.Attacker;
 import edu.fiuba.algo3.Attacker.EnemiesAttacker.LifeAttacker;
-import edu.fiuba.algo3.Enemies.Interface.Target;
 import edu.fiuba.algo3.GameMap.GameMap;
-import edu.fiuba.algo3.Plots.Ground;
-import edu.fiuba.algo3.Plots.Rocky;
-import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.LinkedList;
 import java.util.Queue;
 
-public class Mole extends Enemy implements Target {
+public class Mole extends Enemy {
 
     private int advances;
 
-    public Mole(GameMap map, Queue<Coordinate> path){
+    public Mole(GameMap map, LinkedList<Coordinate> path){
         super(map, path);
         this.advances = 0;
         this.setAttacker( new LifeAttacker( this.actualPosition, getDamage() ) );
-       /* this.addMolePassablePlots();*/
     }
 
-/*    private void addMolePassablePlots(){
-        this.addPassablePlot(Rocky.class.getName());
-        this.addPassablePlot(Ground.class.getName());
-    }*/
+    protected  boolean isLifeDamageable(){
+        return false;
+    }
 
     public void advance(){
         super.advance();
@@ -74,10 +63,6 @@ public class Mole extends Enemy implements Target {
         return 1;
     }
 
-    @Override
-    public void takeBuff(Buff buff) {
-
-    }
 
     @Override
     public boolean distanceToBiggerThan(Coordinate position, Distance attackDistance) {

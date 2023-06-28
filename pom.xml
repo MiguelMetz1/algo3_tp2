@@ -79,6 +79,12 @@
         <testSourceDirectory>src/main/test</testSourceDirectory>
         <plugins>
             <plugin>
+                <artifactId/>
+                <groupid>org.pitest</groupid>
+                <artifactid>pitest-maven</artifactid>
+                <version>LATEST</version>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>

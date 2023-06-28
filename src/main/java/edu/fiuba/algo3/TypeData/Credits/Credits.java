@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.TypeData.Credits;
 
 public class Credits {
-    int credits;
+    double credits;
 
-    public Credits(int credits) {
+    public Credits(double credits) {
         this.credits = credits;
     }
 

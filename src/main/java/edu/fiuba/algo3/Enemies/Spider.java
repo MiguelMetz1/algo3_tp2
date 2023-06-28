@@ -11,12 +11,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.io.File;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
 public class Spider extends LooteableEnemy {
 
-    public Spider(GameMap map, Queue<Coordinate> path) {
+    public Spider(GameMap map, LinkedList<Coordinate> path) {
         super(map, path);
         this.setAttacker( new LifeAttacker( this.actualPosition, getDamage() ) );
     }
@@ -37,7 +38,7 @@ public class Spider extends LooteableEnemy {
     }
 
     @Override
-    protected int amountOfCredits() {
+    protected double amountOfCredits() {
         int random = (int) Math.round(Math.random());
         return 10*(random);
     }

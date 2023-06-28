@@ -9,12 +9,13 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Energy.Energy;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public abstract class KillableEnemy extends Enemy {
     private Energy life;
 
-    public KillableEnemy(GameMap map, Queue<Coordinate> path ) {
+    public KillableEnemy(GameMap map, LinkedList<Coordinate> path ) {
         super(map, path);
         this.life = new Energy( this.getLife() );
         this.changeAttackReceiver();

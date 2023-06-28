@@ -2,6 +2,7 @@ package edu.fiuba.algo3.Defenses.Deleter;
 
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Players.Player;
+import edu.fiuba.algo3.Plots.Plot;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -16,10 +17,10 @@ public class SandTrapDeleter implements Deleter {
     }
 
     @Override
-    public void delete(Defense defense) {
+    public void delete(Defense defense, Plot plot) {
         makeSound();
         this.player.destroyDefense(defense);
-        defense.removeFromYourPlot();
+        plot.remove(defense);
     }
 
     public void makeSound(){

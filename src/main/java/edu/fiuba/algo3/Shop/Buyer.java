@@ -6,5 +6,5 @@ import edu.fiuba.algo3.TypeData.Credits.Credits;
 
 public interface Buyer {
     void wasteCredits(Credits cost) throws InsuficientCredits;
-    void addDefense(Defense defense);
+    void giveDefense(Defense defense);
 }

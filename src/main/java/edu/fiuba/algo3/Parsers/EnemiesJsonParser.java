@@ -45,6 +45,7 @@ public class EnemiesJsonParser extends JsonParser{
         JSONObject turnAndEnemies;
         JSONObject enemies;
         Set <String> enemiesKeys;
+        ArrayList<Ant> deadAnts = new ArrayList<>();
 
         for ( int i = 0; i < enemiesOnTurnArray.length(); i++ ) {
             ArrayList<Enemy> enemiesList = new ArrayList<>();
@@ -60,7 +61,7 @@ public class EnemiesJsonParser extends JsonParser{
             for ( String key : enemiesKeys ) {
                 try {
                     int numberOfEnemies = enemies.getInt(key);
-                    enemiesList.addAll(this.createEnemies(key, numberOfEnemies));
+                    enemiesList.addAll(this.createEnemies(key, numberOfEnemies, deadAnts));
                 } catch ( JSONException|InvalidEnemy e ) {
                     throw new InvalidJson(e.getMessage());
                 }
@@ -70,7 +71,7 @@ public class EnemiesJsonParser extends JsonParser{
         return enemiesQueue;
     }
 
-    private ArrayList<Enemy> createEnemies(String enemy, int amountOfEnemyType) throws InvalidEnemy {
+    private ArrayList<Enemy> createEnemies(String enemy, int amountOfEnemyType, ArrayList<Ant> deadAnts) throws InvalidEnemy {
 
         if ( amountOfEnemyType < 0 ) {
             throw new InvalidEnemy(String.format("Number of enemies of each type must be greater or equal than zero (is %d).", amountOfEnemyType));
@@ -81,7 +82,7 @@ public class EnemiesJsonParser extends JsonParser{
         switch (enemy) {
             case "hormiga":
                 for(int i = 0; i < amountOfEnemyType; i++) {
-                    Ant ant = new Ant(this.mapJsonParser.get(), this.mapJsonParser.getPath());
+                    Ant ant = new Ant(this.mapJsonParser.get(), this.mapJsonParser.getPath(), deadAnts);
                     enemies.add( ant );
                     this.attackReceivers.add(ant);
                     this.looteables.add(ant);

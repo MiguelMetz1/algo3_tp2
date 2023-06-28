@@ -7,6 +7,6 @@ import java.util.logging.Logger;
 public class NullLooteable implements Looteable {
     @Override
     public void transferLootTo(Looter player) {
-        Logger.getLogger("Looteable").log(Level.WARNING, "In this moments this entity can't be looted.");
+        Logger.getLogger("Looteable").log(Level.WARNING, "This entity can't be looted.");
     }
 }

@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.Enemies;
 
-import edu.fiuba.algo3.Attacker.EnemiesAttacker.TowersAttacker;
+import edu.fiuba.algo3.Attacker.EnemiesAttacker.OwlAttacker;
 import edu.fiuba.algo3.Enemies.Advancer.DamagedOwlAdvancer;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Plots.Ground;
@@ -9,29 +9,21 @@ import edu.fiuba.algo3.TypeData.Buff.Attribute;
 import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Energy.Energy;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class Owl extends KillableEnemy {
 
     Coordinate finalGangway;
 
-    private static int id = 0;
-    private int idPersonal;
-
-    public Owl(GameMap map, Queue<Coordinate> path, Coordinate finalGangway) {
+    public Owl(GameMap map, LinkedList<Coordinate> path, Coordinate finalGangway) {
         super(map, path);
         this.addOwlPassablePlots();
         this.finalGangway = finalGangway;
-        this.setAttacker( new TowersAttacker( actualPosition ) );
+        this.setAttacker( new OwlAttacker( actualPosition ) );
     }
 
     protected ArrayList<Attribute> getBuffeablesAttributes(){

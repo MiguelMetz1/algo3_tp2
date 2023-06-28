@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.Players;
 import edu.fiuba.algo3.Defenses.Defense;
+import edu.fiuba.algo3.Defenses.Traps.SandTrap;
 import edu.fiuba.algo3.Enemies.Interface.Placeable;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Interface.Target;
@@ -20,10 +21,7 @@ import edu.fiuba.algo3.TypeData.Name.Name;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +34,8 @@ public class Player implements Target, Placeable, Buyer, Looter {
     private Coordinate position;
 
     private LinkedList<Defense> defenses;
+
+    private LinkedList<SandTrap> traps;
 
     private ArrayList<Enemy> enemies;
     private Queue<ArrayList<Enemy>> troops;
@@ -56,31 +56,13 @@ public class Player implements Target, Placeable, Buyer, Looter {
         this.attributes = new ArrayList<>();
         this.attributes.add(life);
         this.defenses = new LinkedList<>();
+        this.traps = new LinkedList<>();
         this.map = map;
         this.position = new Coordinate(0, 0);
         this.locateCharacter(map, coordinate);
         this.credits = new Credits(playerCredits());
         this.name = name;
     }
-
-    /*public PlayerCharacter( Name name, GameMap map, Coordinate coordinate ) {
-        if( !this.rightName(name.getName())){
-            throw new WrongPlayerName("The player needs as less a six characters name.");
-        }
-        this.life = new Life(20);
-        this.positionedPlace = new NullPlot();
-        this.attributes = new ArrayList<>();
-        this.attributes.add(life);
-        this.defenses = new LinkedList<>();
-        this.map = map;
-        this.position = new Coordinate(0,0);
-        this.locateCharacter(map, coordinate);
-        this.credits = new Credits(playerCredits());
-        this.name = name;
-        this.enemies = new ArrayList<>();
-        this.troops = new LinkedList<>();
-        this.defenses = new LinkedList<>();
-    }*/
 
     private boolean rightName(String name) {
         return (name.length() >= 6);
@@ -99,8 +81,10 @@ public class Player implements Target, Placeable, Buyer, Looter {
     }
 
     public void locateLastDefense(Coordinate coordinate) throws WrongPlace {
-        Defense lastDefense = defenses.getLast();
-        this.map.locateEntityIn(lastDefense, coordinate);
+        if( !defenses.isEmpty() ) {
+            Defense lastDefense = defenses.getLast();
+            this.map.locateEntityIn(lastDefense, coordinate);
+        }
     }
 
     @Override
@@ -113,17 +97,18 @@ public class Player implements Target, Placeable, Buyer, Looter {
 
     }
 
-    public void addDefense(Defense defense) {
+    public void giveDefense(Defense defense) {
         if (!this.isDead()) {
             this.defenses.add(defense);
         }
     }
 
     public void attackFirstDefense() {
-
-        if (!this.defenses.isEmpty()) {
-            Defense defense = this.defenses.poll();
-            defense.removeFromYourPlot();
+        int amountOfDefenses = this.defenses.size();
+        ArrayList<Defense> defensesCopy = new ArrayList<>(this.defenses);
+        Iterator<Defense> defenseIterator = defensesCopy.iterator();
+        while ( defenseIterator.hasNext() && amountOfDefenses == this.defenses.size() ) {
+                defenseIterator.next().destroyOn(this.defenses);
         }
 
     }

@@ -30,14 +30,12 @@ import java.util.Queue;
 public class Game {
 
     ArrayList<Enemy> enemies;
-
+    ArrayList<LooteableEnemy> looteableEnemies;
     Queue<ArrayList<Enemy>> troops;
-
     Player player;
     GameMap map;
     Shop shop;
 
-    ArrayList<LooteableEnemy> looteableEnemies;
 
     public Game(String name){
         ExternalResources resources = new ExternalResources();
@@ -88,19 +86,10 @@ public class Game {
 
         ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
         for( Enemy enemy: enemies){
-
             enemy.finalizeYourWay(enemiesToRemove);
-
         }
-        printearFinales(enemiesToRemove);
+
         this.enemies.removeAll(enemiesToRemove);
-    }
-
-    private void printearFinales(ArrayList<Enemy> enemiesToRemove) {
-        for (Enemy enemy: enemiesToRemove){
-            System.out.println(enemy.getClass().getName());
-            enemy.makeSound();
-        }
     }
 
     private void makeEnemiesAttack() {

@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 
 
@@ -77,10 +78,6 @@ public abstract class Defense implements Placeable {
 
     }
 
-   /* protected void setBuilder( Builder<Attacker>  builder){
-        this.builder = builder;
-    }*/
-
     protected Buff getBuff(){
         return new EnergyInstantDecrementerDebuff(new AdditiveDamage(damage()));
     }
@@ -108,7 +105,8 @@ public abstract class Defense implements Placeable {
         return passablePlots;
     }
 
-    public void removeFromYourPlot() {
+    public void destroyOn( LinkedList<Defense> activeDefenses ) {
+        activeDefenses.remove(this);
         this.positionedPlot.remove(this);
     }
 

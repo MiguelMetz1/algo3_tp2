@@ -123,9 +123,9 @@ public class DefenseTest {
 
         ExternalResources resources = new ExternalResources();
         GameMap map = resources.getMap();
-
+        ArrayList<Ant> deadAnts = new ArrayList<>();
         NormalPath path = new NormalPath();
-        Ant ant = new Ant(map, path.copyPath());
+        Ant ant = new Ant(map, path.copyPath(), deadAnts);
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
@@ -156,7 +156,8 @@ public class DefenseTest {
         GameMap map = resources.getMap();
 
         NormalPath path = new NormalPath();
-        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Ant> deadAnts = new ArrayList<>();
+        Ant ant = new Ant(map, path.copyPath(), deadAnts);
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         SilverTower silverTower = new SilverTower();
@@ -193,9 +194,9 @@ public class DefenseTest {
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
         Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
-
+        ArrayList<Ant> deadAnts = new ArrayList<>();
         NormalPath path = new NormalPath();
-        Ant ant = new Ant(map, path.copyPath());
+        Ant ant = new Ant(map, path.copyPath(), deadAnts);
 
 
         WhiteTower whiteTower = new WhiteTower();
@@ -315,7 +316,8 @@ public class DefenseTest {
         GameMap map = resources.getMap();
 
         NormalPath path = new NormalPath();
-        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Ant> deadAnts = new ArrayList<>();
+        Ant ant = new Ant(map, path.copyPath(), deadAnts);
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
@@ -375,9 +377,9 @@ public class DefenseTest {
         Coordinate playerCoordinate = resources.getPlayerCharacterCoordinate();
         Player player = new Player(new Name("Fitzgerald"), map, playerCoordinate, new LinkedList<>(), enemies);
 
-
+        ArrayList<Ant> deadAnts = new ArrayList<>();
         NormalPath path = new NormalPath();
-        Ant ant = new Ant(map, path.copyPath());
+        Ant ant = new Ant(map, path.copyPath(), deadAnts);
         enemies.add(ant);
 
         WhiteTower whiteTower = new WhiteTower();
@@ -442,7 +444,8 @@ public class DefenseTest {
         GameMap map = resources.getMap();
 
         NormalPath path = new NormalPath();
-        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Ant> deadAnts = new ArrayList<>();
+        Ant ant = new Ant(map, path.copyPath(), deadAnts);
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         WhiteTower whiteTower = new WhiteTower();
@@ -477,7 +480,8 @@ public class DefenseTest {
         GameMap map = resources.getMap();
 
         NormalPath path = new NormalPath();
-        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Ant> deadAnts = new ArrayList<>();
+        Ant ant = new Ant(map, path.copyPath(), deadAnts);
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         SilverTower silverTower = new SilverTower();
@@ -577,7 +581,8 @@ public class DefenseTest {
         GameMap map = resources.getMap();
 
         NormalPath path = new NormalPath();
-        Ant ant = new Ant(map, path.copyPath());
+        ArrayList<Ant> deadAnts = new ArrayList<>();
+        Ant ant = new Ant(map, path.copyPath(),deadAnts);
         ArrayList<Enemy> deadEnemies = new ArrayList<>();
 
         SilverTower silverTower = new SilverTower();

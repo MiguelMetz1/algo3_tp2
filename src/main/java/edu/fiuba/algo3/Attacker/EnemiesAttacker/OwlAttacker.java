@@ -7,11 +7,11 @@ import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
 
-public class TowersAttacker implements Attacker<Player> {
+public class OwlAttacker implements Attacker<Player> {
 
     private final Coordinate position;
 
-    public TowersAttacker(Coordinate actualPosition) {
+    public OwlAttacker(Coordinate actualPosition) {
         this.position = actualPosition;
     }
 
