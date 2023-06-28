@@ -16,8 +16,6 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -74,7 +72,7 @@ public class Game {
     }
 
     public void locateLastBoughtDefenseIn( Coordinate coordinate ) throws WrongPlace {
-        player.locateLastDefense(coordinate);
+        player.locateDefenses(coordinate);
     }
 
     public void lootEnemies(){
@@ -178,11 +176,13 @@ public class Game {
         return this.map.getType(actualCoordinate);
     }
 
-    public HashMap<Coordinate, ArrayList<String>> getEnemiesInGameType() {
+    public HashMap<Coordinate, ArrayList<String>> findEntities() {
         HashMap<Coordinate, ArrayList<String>> coordinateType = new HashMap<>();
+        player.findTowersPosition(coordinateType);
         for (Enemy enemy: enemies){
-            enemy.locateEnemy(coordinateType);
+            enemy.findPosition(coordinateType);
         }
+
         return coordinateType;
     }
 

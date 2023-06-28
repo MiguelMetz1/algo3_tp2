@@ -22,18 +22,15 @@ public class EndTurnButtonEventHandler implements EventHandler<ActionEvent> {
 
     Game game;
 
-    Map<Coordinate, Button> buttonMap;
-
     Map<Coordinate, StackPane> stackPaneMap;
 
     PrincipalContainer principal;
 
     Stage stage;
 
-    public EndTurnButtonEventHandler(Stage stage, PrincipalContainer principal,Game game, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
+    public EndTurnButtonEventHandler(Stage stage, PrincipalContainer principal,Game game, Map<Coordinate, StackPane> stackPaneMap){
         this.game = game;
         this.computerTurn = new ComputerTurn(game);
-        this.buttonMap = buttonMap;
         this.stackPaneMap = stackPaneMap;
         this.principal = principal;
         this.stage = stage;

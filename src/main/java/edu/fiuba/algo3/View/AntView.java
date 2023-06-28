@@ -2,7 +2,7 @@ package edu.fiuba.algo3.View;
 
 import javafx.scene.layout.StackPane;
 
-public class AntView extends EnemyView {
+public class AntView extends Paintable {
 
 
     public AntView(StackPane stackPane) {
@@ -10,7 +10,7 @@ public class AntView extends EnemyView {
     }
 
     @Override
-    protected String getEnemyImage() {
+    protected String getPaintableImageView() {
         return "file:src/main/java/edu/fiuba/algo3/View/Images/ant.png";
     }
 }

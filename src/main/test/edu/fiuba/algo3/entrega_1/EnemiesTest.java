@@ -469,15 +469,15 @@ public class EnemiesTest {
         shop.addArticle("White Tower", new WhiteTowerProvider());
 
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(3, 1));
+        player.locateDefenses(new Coordinate(3, 1));
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(1, 3));
+        player.locateDefenses(new Coordinate(1, 3));
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(1, 4));
+        player.locateDefenses(new Coordinate(1, 4));
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(1, 5));
+        player.locateDefenses(new Coordinate(1, 5));
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(1, 6));
+        player.locateDefenses(new Coordinate(1, 6));
 
         player.buildDefenses();
         player.buildDefenses();
@@ -498,7 +498,7 @@ public class EnemiesTest {
         }
 
         assertDoesNotThrow(()->shop.buy("White Tower"));
-        player.locateLastDefense(new Coordinate(3, 3));
+        player.locateDefenses(new Coordinate(3, 3));
         player.buildDefenses();
 
 
@@ -524,15 +524,15 @@ public class EnemiesTest {
         shop.addArticle("White Tower", new WhiteTowerProvider());
 
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(3, 1));
+        player.locateDefenses(new Coordinate(3, 1));
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(1, 3));
+        player.locateDefenses(new Coordinate(1, 3));
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(1, 4));
+        player.locateDefenses(new Coordinate(1, 4));
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(1, 5));
+        player.locateDefenses(new Coordinate(1, 5));
         shop.buy("Silver Tower");
-        player.locateLastDefense(new Coordinate(1, 6));
+        player.locateDefenses(new Coordinate(1, 6));
 
         player.buildDefenses();
         player.buildDefenses();
@@ -555,7 +555,7 @@ public class EnemiesTest {
         }
 
         shop.buy("White Tower");
-        player.locateLastDefense(new Coordinate(3, 3));
+        player.locateDefenses(new Coordinate(3, 3));
         player.buildDefenses();
 
         assertThrows(InsuficientCredits.class, () -> shop.buy("White Tower"));
@@ -572,7 +572,7 @@ public class EnemiesTest {
         }
 
         shop.buy("White Tower");
-        player.locateLastDefense(new Coordinate(4, 3));
+        player.locateDefenses(new Coordinate(4, 3));
         player.buildDefenses();
 
         assertThrows(InsuficientCredits.class, () -> {

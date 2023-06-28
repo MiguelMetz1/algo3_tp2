@@ -33,7 +33,7 @@ public class Coordinate {
 
     @Override
     public final int hashCode() {
-        int digitsOfY = this.digitsOf(this.y);
+
         int integerX = (int) this.x;
         int integerY = (int) this.y;
         if( this.x - integerX > 0 ){
@@ -42,6 +42,7 @@ public class Coordinate {
         if( this.y - integerY > 0 ){
             integerY++;
         }
+        int digitsOfY = this.digitsOf(integerY);
         return integerX * Math.round((float) Math.pow(10,digitsOfY+1)) + integerY;
     }
 
@@ -102,8 +103,12 @@ public class Coordinate {
         return y;
     }
     public String toIntString(){
-        return ("("+(int)this.x+","+(int)this.y+")");
+        return ("("+this.x+","+this.y+")");
     }
 
 
+    public void fillPositions(ArrayList<Double> positions) {
+        positions.add(this.x);
+        positions.add(this.y);
+    }
 }

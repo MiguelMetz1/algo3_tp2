@@ -2,21 +2,35 @@ package edu.fiuba.algo3.View.Events;
 
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
-import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
-import edu.fiuba.algo3.View.PrincipalContainer;
+import edu.fiuba.algo3.View.MapView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-
-
-import java.util.Map;
 
 public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
 
-    private Plot plot;
+    Game game;
+
+    MapView mapView;
+
+    Coordinate coordinate;
+    public  PlotButtonEventHandler(Game game, MapView mapView, Coordinate coordinate){
+        this.game = game;
+        this.mapView = mapView;
+        this.coordinate = coordinate;
+    }
+
+    @Override
+    public void handle(ActionEvent actionEvent) {
+        try {
+            this.game.locateLastBoughtDefenseIn(this.coordinate);
+            mapView.updateMap();
+        } catch (WrongPlace e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /*private Plot plot;
     private VBox consoleContainer;
 
     Game game;
@@ -82,5 +96,5 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
             button.setStyle("-fx-opacity: 1");
 
         }
-    }
+    }*/
 }

@@ -21,26 +21,22 @@ public class PlotInfoEventHandler implements EventHandler<MouseEvent> {
 
     private Button button;
 
-    Map<Coordinate, Button> buttonMap;
-
-
-    public PlotInfoEventHandler( Map<Coordinate, Button> buttonMap, Button button, Coordinate coordinate, VBox consoleContainer, Game game) {
+    public PlotInfoEventHandler( Button button, Coordinate coordinate, VBox consoleContainer, Game game) {
         this.coordinate = coordinate;
         this.consoleContainer = consoleContainer;
         this.game = game;
         this.button = button;
-        this.buttonMap = buttonMap;
+
     }
 
     @Override
     public void handle(MouseEvent mouseEvent) {
+        consoleContainer.getChildren().clear();
         Label label = new Label();
         label.setText(coordinate.toIntString());
         label.setStyle("-fx-font-size: 20; -fx-padding: 0 50 0 0px;");
 
         consoleContainer.getChildren().addAll(label);
-
-
 
         ArrayList<String> enemies = this.game.enemiesInPlot(this.coordinate);
 

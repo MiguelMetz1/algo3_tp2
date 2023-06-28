@@ -10,13 +10,23 @@ import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.Plots.Rocky;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
-import javafx.scene.image.Image;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class NotReallyTest{
+
+    @Test
+    public void theOwlCanAdvanceToSpecificPosition(){
+        Coordinate coordinate = new Coordinate(11.333456062030596,9.58979079308869);
+        ExternalResources resources = new ExternalResources();
+        GameMap map = resources.getMap();
+        SilverTower tower = new SilverTower();
+
+        assertDoesNotThrow(()->map.locateEntityIn(tower, coordinate));
+    }
 
     @Test
     public void theDefensesReturnCorrectlyTheirTypeInStringAndTheImage() {

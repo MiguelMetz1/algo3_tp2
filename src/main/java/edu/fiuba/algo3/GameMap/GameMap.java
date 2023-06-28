@@ -52,11 +52,11 @@ public class GameMap {
 
             StackPane stackPane = new StackPane();
 
-            PlotButtonEventHandler plotButtonEventHandler = new PlotButtonEventHandler(plots,principalContainer,consoleContainer, plot, game, coordinate, buttonMap, stackPaneMap);
-            button.setOnAction(plotButtonEventHandler);
+            //PlotButtonEventHandler plotButtonEventHandler = new PlotButtonEventHandler(plots,principalContainer,consoleContainer, plot, game, coordinate, buttonMap, stackPaneMap);
+            //button.setOnAction(plotButtonEventHandler);
 
 
-            PlotInfoEventHandler plotInfoEventHandler = new PlotInfoEventHandler(buttonMap,button,coordinate,consoleContainer,game);
+            PlotInfoEventHandler plotInfoEventHandler = new PlotInfoEventHandler(button,coordinate,consoleContainer,game);
             button.setOnMouseEntered(plotInfoEventHandler);
 
             button.setOnMouseExited(event -> { consoleContainer.getChildren().clear();button.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));});

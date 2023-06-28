@@ -23,7 +23,6 @@ import edu.fiuba.algo3.TypeData.Speed.Speed;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import javax.sound.sampled.AudioInputStream;
@@ -111,7 +110,7 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
     }
 
     protected boolean reachedTheFinal(){
-        return this.path.isEmpty() || this.positionedPlace.equals(path.getLast());
+        return this.path.isEmpty() || this.actualPosition.equals(path.getLast());
     }
 
     protected boolean actualPositionIs( Coordinate coordinate ){
@@ -243,7 +242,7 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     protected abstract File soundFile();
 
-    public void locateEnemy(HashMap<Coordinate, ArrayList<String>> coordinateType) {
+    public void findPosition(HashMap<Coordinate, ArrayList<String>> coordinateType) {
         ArrayList<String> types = coordinateType.getOrDefault(this.actualPosition, new ArrayList<>());
         types.add(this.getType());
         coordinateType.put(this.actualPosition, types);

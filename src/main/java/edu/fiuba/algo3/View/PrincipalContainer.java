@@ -5,23 +5,20 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import edu.fiuba.algo3.View.Events.BuyDefenseButtonEventHandler;
 import edu.fiuba.algo3.View.Events.EndTurnButtonEventHandler;
-import edu.fiuba.algo3.View.Events.ShowUserButtonEventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,8 +27,6 @@ public class PrincipalContainer extends BorderPane {
 
     OwnMenuBar menuBar;
 
-    VBox centralConteiner;
-
     VBox consoleContainer;
     Name name;
 
@@ -39,29 +34,26 @@ public class PrincipalContainer extends BorderPane {
 
     Stage stage;
 
-    Map<Coordinate, Button> buttonMap;
-
     Map<Coordinate, StackPane> stackPaneMap;
 
     MapView mapView;
     public PrincipalContainer(Stage stage, Game game, Name name){
         this.game = game;
         this.name = name;
-        this.buttonMap = new HashMap<>();
         this.stackPaneMap = new HashMap<>();
         this.stage = stage;
-        //this.setMenu(stage);
-        //this.setMessagePanel();
+        this.setMessagePanel();
         AnchorPane grid = new AnchorPane();
-         this.mapView = new MapView(game, grid);
-
         this.setCenter(grid);
+        this.mapView = new MapView(game, grid, this.consoleContainer);
         this.showMap(game, this.consoleContainer);
+        BackgroundImage backgroundImage = new BackgroundImage(new Image("file:src/main/java/edu/fiuba/algo3/View/Images/principalBackgroundV2.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        this.setBackground(new Background(backgroundImage));
         //this.setButtonPanel(name);
 
-        Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
-        this.setBackground(new Background(backgroundImage));
+        //Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
+        //BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
+        //this.setBackground(new Background(backgroundImage));
 
 
     }
@@ -92,7 +84,7 @@ public class PrincipalContainer extends BorderPane {
         setButtonStyle(endTurn);
 
 
-        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this.stage,this,this.game,this.buttonMap, this.stackPaneMap);
+        EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this.stage,this,this.game, this.stackPaneMap);
         endTurn.setOnAction(endTurnButtonEventHandler);
 
 
@@ -181,7 +173,7 @@ public class PrincipalContainer extends BorderPane {
     }
 
     public void updateMap() {
-        this.mapView.updateEnemies();
+        this.mapView.updateMap();
     }
 }
 

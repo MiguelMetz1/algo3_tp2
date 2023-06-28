@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.Players;
 import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Defenses.Traps.SandTrap;
 import edu.fiuba.algo3.Enemies.Interface.Placeable;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Interface.Target;
@@ -33,8 +32,9 @@ public class Player implements Target, Placeable, Buyer, Looter {
 
     private Coordinate position;
 
-    private LinkedList<Defense> defenses;
+    private LinkedList<Defense> activeDefenses;
 
+    private LinkedList<Defense> boughtDefenses;
 
     private ArrayList<Enemy> enemies;
     private Queue<ArrayList<Enemy>> troops;
@@ -54,7 +54,8 @@ public class Player implements Target, Placeable, Buyer, Looter {
         this.life = new Life(20);
         this.attributes = new ArrayList<>();
         this.attributes.add(life);
-        this.defenses = new LinkedList<>();
+        this.activeDefenses = new LinkedList<>();
+        this.boughtDefenses = new LinkedList<>();
         this.map = map;
         this.position = new Coordinate(0, 0);
         this.locateCharacter(map, coordinate);
@@ -78,10 +79,12 @@ public class Player implements Target, Placeable, Buyer, Looter {
         }
     }
 
-    public void locateLastDefense(Coordinate coordinate) throws WrongPlace {
-        if( !defenses.isEmpty() ) {
-            Defense lastDefense = defenses.getLast();
-            this.map.locateEntityIn(lastDefense, coordinate);
+    public void locateDefenses(Coordinate coordinate) throws WrongPlace {
+        if( !boughtDefenses.isEmpty() ) {
+            Defense firstBoughtdefense = boughtDefenses.getFirst();
+            this.map.locateEntityIn(firstBoughtdefense, coordinate);
+            boughtDefenses.remove(firstBoughtdefense);
+            this.activeDefenses.add(firstBoughtdefense);
         }
     }
 
@@ -97,22 +100,22 @@ public class Player implements Target, Placeable, Buyer, Looter {
 
     public void giveDefense(Defense defense) {
         if (!this.isDead()) {
-            this.defenses.add(defense);
+            this.boughtDefenses.add(defense);
         }
     }
 
     public void attackFirstDefense() {
-        int amountOfDefenses = this.defenses.size();
-        ArrayList<Defense> defensesCopy = new ArrayList<>(this.defenses);
+        int amountOfDefenses = this.activeDefenses.size();
+        ArrayList<Defense> defensesCopy = new ArrayList<>(this.activeDefenses);
         Iterator<Defense> defenseIterator = defensesCopy.iterator();
-        while ( defenseIterator.hasNext() && amountOfDefenses == this.defenses.size() ) {
-                defenseIterator.next().destroyOn(this.defenses);
+        while ( defenseIterator.hasNext() && amountOfDefenses == this.activeDefenses.size() ) {
+                defenseIterator.next().destroyOn(this.activeDefenses);
         }
 
     }
 
     public void makeDefensesAttack() {
-        for (Defense defense : defenses) {
+        for (Defense defense : activeDefenses) {
             defense.attack(enemies);
             removeDeadEnemies();
         }
@@ -141,7 +144,7 @@ public class Player implements Target, Placeable, Buyer, Looter {
     }
 
     public void buildDefenses() {
-        for (Defense defense : defenses) {
+        for (Defense defense : activeDefenses) {
             defense.continueWithTheConstruction();
         }
     }
@@ -181,7 +184,7 @@ public class Player implements Target, Placeable, Buyer, Looter {
     }
 
     public void destroyDefense(Defense defense) {
-        this.defenses.remove(defense);
+        this.activeDefenses.remove(defense);
     }
 
     public void showCredits() {
@@ -194,11 +197,11 @@ public class Player implements Target, Placeable, Buyer, Looter {
     }
 
     public String lastDefenseImage() {
-        return this.defenses.getLast().image();
+        return this.activeDefenses.getLast().image();
     }
 
     public void defenseImage(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
-        for(Defense defense:defenses){
+        for(Defense defense: activeDefenses){
             defense.addImage(buttonMap, stackPaneMap);
         }
     }
@@ -209,5 +212,11 @@ public class Player implements Target, Placeable, Buyer, Looter {
 
     public String remainingCredits() {
         return this.credits.toString();
+    }
+
+    public void findTowersPosition(HashMap<Coordinate, ArrayList<String>> coordinateType) {
+        for( Defense defense: activeDefenses){
+            defense.findPosition(coordinateType);
+        }
     }
 }

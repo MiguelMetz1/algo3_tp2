@@ -30,9 +30,9 @@ public class DamagedOwlAdvancer implements Advancer {
     public void advance() {
         Distance distanceToAdvance = this.speed.inDistancePerTurn();
         Coordinate nextPosition = this.actualPosition.nextCoordinateInDirectionWithDistance( destination, distanceToAdvance );
-        Distance distanceToReach = this.actualPosition.distanceTo(destination);
+        Distance distanceToFinal = this.actualPosition.distanceTo(destination);
 
-        if( distanceToReach.higher(distanceToAdvance) ) {
+        if( distanceToFinal.higher(distanceToAdvance) ) {
             this.locateEntityIn(nextPosition);
         }else{
             this.locateEntityIn(destination);
@@ -44,8 +44,6 @@ public class DamagedOwlAdvancer implements Advancer {
 
         try {
             this.map.locateEntityIn(owl, position);
-            this.actualPosition.updateTo(position);
-
         } catch (WrongPlace e) {
             throw new RuntimeException(e);
         }

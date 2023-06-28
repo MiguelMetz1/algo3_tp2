@@ -30,7 +30,6 @@ public class FirstEnemyAdvancer implements Advancer {
     public void advance() {
         try {
             this.map.locateEntityIn(entityToAdvance, firstAdvanceCoordinate);
-            actualPosition.updateTo(firstAdvanceCoordinate);
         } catch (WrongPlace e) {
             Logger.getLogger("Advancer").log(Level.INFO, "The entity can't advance to this place.");
         }

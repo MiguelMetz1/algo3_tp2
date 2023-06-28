@@ -21,6 +21,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public abstract class Defense implements Placeable {
 
     protected Attacker attacker;
 
-    protected Builder<Attacker> builder;
+    protected Builder<Attacker<Enemy>> builder;
 
     protected Plot positionedPlot;
 
@@ -134,8 +135,14 @@ public abstract class Defense implements Placeable {
     }
 
     public void showRange(Coordinate coordinate, Button button) {
-        if(!(coordinate.distanceTo(this.position).higher(new Distance(range())))){
+        if(!( coordinate.distanceTo(this.position).higher( new Distance(range()) ) )){
             button.setStyle("-fx-opacity: 0.8");
         }
+    }
+
+    public void findPosition(HashMap<Coordinate, ArrayList<String>> coordinateType) {
+        ArrayList<String> types = coordinateType.getOrDefault(this.position, new ArrayList<>());
+        types.add(this.toString());
+        coordinateType.put(this.position, types);
     }
 }

@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.Defenses.Traps;
 
 import edu.fiuba.algo3.Attacker.DefenseAttacker.TrapAttacker;
+import edu.fiuba.algo3.Attacker.NullDeleterBuilder;
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Defenses.Deleter.Deleter;
 import edu.fiuba.algo3.Defenses.Deleter.NullDeleter;
@@ -34,7 +35,7 @@ public class SandTrap extends Defense {
     public SandTrap( Player player){
         this.player = player;
         this.deleter = new NullDeleter();
-        this.deleterBuilder = new NullBuilder();
+        this.deleterBuilder = new NullDeleterBuilder();
         this.attacker = new TrapAttacker(this.getBuff(), this.position, new Distance(this.range()));
     }
 
