@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
+import java.io.File;
 import java.util.Map;
 import java.util.Queue;
 
@@ -44,6 +45,10 @@ public class Spider extends LooteableEnemy {
     protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/spider.png";}
 
     protected String getType(){
-        return "Spider";
+        return "Spider Life: " + Double.toString(this.getLife());
+    }
+
+    protected File soundFile(){
+        return new File("src/main/java/edu/fiuba/algo3/View/Sounds/spiderSound.wav").getAbsoluteFile();
     }
 }

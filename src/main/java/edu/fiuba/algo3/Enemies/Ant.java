@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Queue;
@@ -56,6 +57,9 @@ public class Ant extends LooteableEnemy {
     protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/ant.png";}
 
     protected String getType(){
-        return "Ant";
+        return "Ant Life: " +  Double.toString(this.getLife());
+    }
+    protected File soundFile(){
+        return new File("src/main/java/edu/fiuba/algo3/View/Sounds/antSound.wav").getAbsoluteFile();
     }
 }

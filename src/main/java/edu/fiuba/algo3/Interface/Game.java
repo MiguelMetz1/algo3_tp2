@@ -99,6 +99,7 @@ public class Game {
     private void printearFinales(ArrayList<Enemy> enemiesToRemove) {
         for (Enemy enemy: enemiesToRemove){
             System.out.println(enemy.getClass().getName());
+            enemy.makeSound();
         }
     }
 

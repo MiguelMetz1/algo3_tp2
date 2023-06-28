@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Queue;
@@ -87,6 +88,10 @@ public class Mole extends Enemy implements Target {
 
     protected String getType(){
         return "Mole";
+    }
+
+    protected File soundFile(){
+        return new File("src/main/java/edu/fiuba/algo3/View/Sounds/moleSound.wav").getAbsoluteFile();
     }
 
 }
