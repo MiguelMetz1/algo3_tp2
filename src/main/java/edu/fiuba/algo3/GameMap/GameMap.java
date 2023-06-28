@@ -86,4 +86,11 @@ public class GameMap {
         }
     }
 
+    public String getType(Coordinate coordinate) {
+        return this.map.get(coordinate).getName();
+    }
+
+    public double getDimension() {
+        return Math.pow(this.map.size(), 0.5);
+    }
 }

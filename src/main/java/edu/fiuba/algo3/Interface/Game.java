@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
@@ -167,6 +168,22 @@ public class Game {
             enemy.inPosition(coordinate, enemiesList);
 
         return enemiesList;
+    }
+
+    public double getMapDimension() {
+        return this.map.getDimension();
+    }
+
+    public String getMapPlotType(Coordinate actualCoordinate) {
+        return this.map.getType(actualCoordinate);
+    }
+
+    public HashMap<Coordinate, ArrayList<String>> getEnemiesInGameType() {
+        HashMap<Coordinate, ArrayList<String>> coordinateType = new HashMap<>();
+        for (Enemy enemy: enemies){
+            enemy.locateEnemy(coordinateType);
+        }
+        return coordinateType;
     }
 
     /*public void updateMap(Map<Coordinate, Button> buttonMap) {

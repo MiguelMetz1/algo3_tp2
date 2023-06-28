@@ -30,10 +30,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
     Advancer advancer;
@@ -246,4 +243,9 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     protected abstract File soundFile();
 
+    public void locateEnemy(HashMap<Coordinate, ArrayList<String>> coordinateType) {
+        ArrayList<String> types = coordinateType.getOrDefault(this.actualPosition, new ArrayList<>());
+        types.add(this.getType());
+        coordinateType.put(this.actualPosition, types);
+    }
 }

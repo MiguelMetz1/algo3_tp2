@@ -24,11 +24,11 @@ public class NullPlot extends Plot{
     }
 
     public Image getImage(){
-        return null;
+        return new Image("null.jpg");
     }
 
     public String getName(){
-        return null;
+        return "null";
     }
 
     public void showRange(Coordinate coordinate, Button button){}

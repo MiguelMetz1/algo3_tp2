@@ -28,11 +28,11 @@ public class Rocky extends Plot{
 
 
     public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/rocky.jpg");
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/rocky.png");
     }
 
     public String getName(){
-        return "Rocky" + this.coordinate.toString();
+        return "Rocky";
     }
 
     public void showRange(Coordinate coordinate, Button button){}

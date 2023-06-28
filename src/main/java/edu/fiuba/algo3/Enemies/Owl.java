@@ -58,7 +58,7 @@ public class Owl extends KillableEnemy {
     protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/owl.png";}
 
     protected String getType(){
-        return "Owl Life: "+  Double.toString(this.getLife());
+        return "Owl";
     }
 
     protected File soundFile(){

@@ -21,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,15 +42,20 @@ public class PrincipalContainer extends BorderPane {
     Map<Coordinate, Button> buttonMap;
 
     Map<Coordinate, StackPane> stackPaneMap;
+
+    MapView mapView;
     public PrincipalContainer(Stage stage, Game game, Name name){
         this.game = game;
         this.name = name;
         this.buttonMap = new HashMap<>();
         this.stackPaneMap = new HashMap<>();
         this.stage = stage;
-        this.setMenu(stage);
-        this.setMessagePanel();
+        //this.setMenu(stage);
+        //this.setMessagePanel();
+        AnchorPane grid = new AnchorPane();
+         this.mapView = new MapView(game, grid);
 
+        this.setCenter(grid);
         this.showMap(game, this.consoleContainer);
         //this.setButtonPanel(name);
 
@@ -121,20 +127,18 @@ public class PrincipalContainer extends BorderPane {
 
     private void showMap(Game game, VBox consoleContainer){
 
+        //AnchorPane root = new AnchorPane();
+
+        //game.showMap(this,root, consoleContainer,this.buttonMap, this.stackPaneMap);
 
 
-        AnchorPane root = new AnchorPane();
+        //this.centralConteiner = new VBox(root);
+        //this.centralConteiner.setMaxWidth(680);
+        //this.setCenter(this.centralConteiner);
 
-        game.showMap(this,root, consoleContainer,this.buttonMap, this.stackPaneMap);
+        //game.enemiesImages(this.buttonMap,  this.stackPaneMap);
 
-
-        this.centralConteiner = new VBox(root);
-        this.centralConteiner.setMaxWidth(680);
-        this.setCenter(this.centralConteiner);
-
-        game.enemiesImages(this.buttonMap,  this.stackPaneMap);
-
-        game.defensesImage(this.buttonMap,this.stackPaneMap);
+        //game.defensesImage(this.buttonMap,this.stackPaneMap);
 
         HBox life = new HBox(new Label("Life: " + game.remainingLife()));
         life.setStyle("-fx-background-color: Black; -fx-padding: 0 0 0 0");
@@ -176,5 +180,8 @@ public class PrincipalContainer extends BorderPane {
         this.setRight(consoleContainer);
     }
 
+    public void updateMap() {
+        this.mapView.updateEnemies();
+    }
 }
 

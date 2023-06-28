@@ -59,7 +59,7 @@ public class Ant extends LooteableEnemy {
     protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/ant.png";}
 
     protected String getType(){
-        return "Ant Life: " +  Double.toString(this.getLife());
+        return "Ant";
     }
     protected File soundFile(){
         return new File("src/main/java/edu/fiuba/algo3/View/Sounds/antSound.wav").getAbsoluteFile();

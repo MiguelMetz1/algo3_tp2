@@ -34,7 +34,7 @@ public class AboutButtonEventHandler implements EventHandler<ActionEvent> {
         Text finalGangwayText = new Text("Final Gangway");
         HBox finalGangwayBox = new HBox(finalGangwayImageView,finalGangwayText);
 
-        Image initialGangwayImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/redWool.png");
+        Image initialGangwayImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/initialGangway.png");
         ImageView initialGangwayImageView = new ImageView(initialGangwayImage);
         initialGangwayImageView.setFitHeight(20);
         initialGangwayImageView.setFitWidth(20);
@@ -55,7 +55,7 @@ public class AboutButtonEventHandler implements EventHandler<ActionEvent> {
         Text rockyText = new Text("Rocky");
         HBox rockyBox = new HBox(rockyImageView,rockyText);
 
-        Image gangwayImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/madera.jpg");
+        Image gangwayImage = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/gangway.jpg");
         ImageView gangwayImageView = new ImageView(gangwayImage);
         gangwayImageView.setFitHeight(20);
         gangwayImageView.setFitWidth(20);

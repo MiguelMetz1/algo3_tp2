@@ -28,11 +28,11 @@ public class Gangway extends Plot{
     }
 
     public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/madera.jpg");
+        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/gangway.jpg");
     }
 
     public String getName(){
-        return "Gangway" + this.coordinate.toIntString();
+        return "Gangway";
     }
 
     public void showRange(Coordinate coordinate, Button button){}

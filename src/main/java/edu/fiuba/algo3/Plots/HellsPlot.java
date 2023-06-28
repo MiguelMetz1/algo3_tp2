@@ -27,11 +27,11 @@ public class HellsPlot extends Plot{
     }
 
     public Image getImage(){
-        return null;
+        return new Image("hell.jpg");
     }
 
     public String getName(){
-        return null;
+        return "Hell";
     }
 
     public void showRange(Coordinate coordinate, Button button){}

@@ -14,7 +14,7 @@ public class FinalGangway extends Gangway {
     }
 
     public String getName(){
-        return "Final Gangway" + this.coordinate.toIntString();
+        return "Final Gangway";
     }
 
 }

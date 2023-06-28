@@ -35,7 +35,7 @@ public class Ground extends Plot{
     }
 
     public String getName(){
-        return "Ground" + this.coordinate.toIntString();
+        return "Ground";
     }
 
     public void showRange(Coordinate coordinate, Button button){
