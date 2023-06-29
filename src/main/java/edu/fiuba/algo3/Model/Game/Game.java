@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.Model.Interface;
+package edu.fiuba.algo3.Model.Game;
 
 import edu.fiuba.algo3.Model.Enemies.Enemy;
 import edu.fiuba.algo3.Model.Enemies.Loot.Looteable;

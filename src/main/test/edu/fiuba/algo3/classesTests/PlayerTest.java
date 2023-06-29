@@ -11,7 +11,6 @@ import edu.fiuba.algo3.Model.Parsers.ExternalResources;
 import edu.fiuba.algo3.Model.Players.Player;
 
 import edu.fiuba.algo3.Model.Plots.*;
-import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.Model.Shop.Provider.SandTrapProvider;
 import edu.fiuba.algo3.Model.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Model.Shop.Provider.WhiteTowerProvider;

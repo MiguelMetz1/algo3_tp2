@@ -2,7 +2,6 @@ package edu.fiuba.algo3.classesTests;
 
 
 import edu.fiuba.algo3.Model.Defenses.Towers.WhiteTower;
-import edu.fiuba.algo3.Enemies.*;
 import edu.fiuba.algo3.Model.Enemies.*;
 import edu.fiuba.algo3.Model.Exceptions.InsufficientCredits;
 import edu.fiuba.algo3.Model.Exceptions.NonExistentArticle;
@@ -11,7 +10,6 @@ import edu.fiuba.algo3.Model.GameMap.GameMap;
 import edu.fiuba.algo3.Model.Parsers.ExternalResources;
 import edu.fiuba.algo3.Model.Players.Player;
 import edu.fiuba.algo3.Model.Plots.*;
-import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.Model.Shop.Provider.SilverTowerProvider;
 import edu.fiuba.algo3.Model.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Model.Shop.Shop;

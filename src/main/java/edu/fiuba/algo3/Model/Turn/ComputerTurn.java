@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.Model.Turn;
 
-import edu.fiuba.algo3.Model.Interface.Game;
+import edu.fiuba.algo3.Model.Game.Game;
 
 public class ComputerTurn implements Turn{
 

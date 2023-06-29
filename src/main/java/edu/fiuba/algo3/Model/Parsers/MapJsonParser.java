@@ -3,7 +3,6 @@ package edu.fiuba.algo3.Model.Parsers;
 import edu.fiuba.algo3.Model.GameMap.GameMap;
 import edu.fiuba.algo3.Model.Exceptions.InvalidJson;
 import edu.fiuba.algo3.Model.Plots.*;
-import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.Model.TypeData.Coordinate.Coordinate;
 import org.json.JSONArray;
 import org.json.JSONException;

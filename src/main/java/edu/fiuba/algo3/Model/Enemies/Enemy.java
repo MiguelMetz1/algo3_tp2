@@ -14,7 +14,6 @@ import edu.fiuba.algo3.Model.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Model.GameMap.GameMap;
 import edu.fiuba.algo3.Model.Players.Player;
 import edu.fiuba.algo3.Model.Plots.*;
-import edu.fiuba.algo3.Plots.*;
 import edu.fiuba.algo3.Model.TypeData.Buff.Attribute;
 import edu.fiuba.algo3.Model.TypeData.Buff.Buff;
 import edu.fiuba.algo3.Model.TypeData.Coordinate.Coordinate;

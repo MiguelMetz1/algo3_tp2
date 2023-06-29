@@ -1,5 +1,4 @@
 @startuml
-@startuml
 'https://plantuml.com/component-diagram
 
 
@@ -17,7 +16,6 @@ package Model {
    package Shop
    package Turn
    package TypeData
-
 
 
 }
@@ -40,12 +38,13 @@ package Events
 
 
 
-
+Views ..> Sounds
+Views ..> Images
 Views ..> Game
-Sounds <.. Views
-Images <.. Views
 Events ..> Game
 Events ..> Turn
+Events ..> Views
+
 
 
 
@@ -54,5 +53,4 @@ Events ..> Turn
 View ..> Model
 Controller ..>Model'/
 
-@enduml
 @enduml

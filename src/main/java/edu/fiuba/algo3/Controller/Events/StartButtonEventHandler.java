@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.Controller.Events;
 
-import edu.fiuba.algo3.Model.Interface.Game;
+import edu.fiuba.algo3.Model.Game.Game;
 import edu.fiuba.algo3.Model.TypeData.Name.Name;
 import edu.fiuba.algo3.View.Views.PrincipalContainer;
 import javafx.event.ActionEvent;

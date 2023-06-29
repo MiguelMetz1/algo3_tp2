@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.View.Views;
 
-import edu.fiuba.algo3.Model.Interface.Game;
+import edu.fiuba.algo3.Model.Game.Game;
 import edu.fiuba.algo3.Model.TypeData.Coordinate.Coordinate;
 import javafx.scene.layout.*;
 

@@ -2,7 +2,7 @@ package edu.fiuba.algo3.Controller.Events;
 
 import edu.fiuba.algo3.Model.Exceptions.InsufficientCredits;
 import edu.fiuba.algo3.Model.Exceptions.NonExistentArticle;
-import edu.fiuba.algo3.Model.Interface.Game;
+import edu.fiuba.algo3.Model.Game.Game;
 import edu.fiuba.algo3.View.Views.PrincipalContainer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

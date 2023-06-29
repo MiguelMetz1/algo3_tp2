@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.classesTests;
 
-import edu.fiuba.algo3.Exceptions.*;
+
 import edu.fiuba.algo3.Model.Exceptions.InvalidJson;
 import edu.fiuba.algo3.Model.Parsers.ExternalResources;
 import edu.fiuba.algo3.Model.Parsers.EnemiesJsonParser;

@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.Model.Parsers;
 
-import edu.fiuba.algo3.Enemies.*;
+
 import edu.fiuba.algo3.Model.Enemies.Loot.LooteableEnemy;
 import edu.fiuba.algo3.Model.Enemies.*;
 import edu.fiuba.algo3.Model.Exceptions.InvalidEnemy;
@@ -10,7 +10,7 @@ import edu.fiuba.algo3.Model.TypeData.Distance.Distance;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import edu.fiuba.algo3.Exceptions.*;
+
 import java.util.*;
 
 public class EnemiesJsonParser extends JsonParser{
