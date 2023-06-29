@@ -1,22 +1,23 @@
 package edu.fiuba.algo3.classesTests;
 
-import edu.fiuba.algo3.Enemies.Enemy;
-import edu.fiuba.algo3.Enemies.Spider;
-import edu.fiuba.algo3.Exceptions.InsufficientCredits;
-import edu.fiuba.algo3.Exceptions.NonExistentArticle;
-import edu.fiuba.algo3.Exceptions.WrongPlace;
-import edu.fiuba.algo3.Exceptions.WrongPlayerName;
-import edu.fiuba.algo3.GameMap.GameMap;
-import edu.fiuba.algo3.Parsers.ExternalResources;
-import edu.fiuba.algo3.Players.Player;
+import edu.fiuba.algo3.Model.Enemies.Enemy;
+import edu.fiuba.algo3.Model.Enemies.Spider;
+import edu.fiuba.algo3.Model.Exceptions.InsufficientCredits;
+import edu.fiuba.algo3.Model.Exceptions.NonExistentArticle;
+import edu.fiuba.algo3.Model.Exceptions.WrongPlace;
+import edu.fiuba.algo3.Model.Exceptions.WrongPlayerName;
+import edu.fiuba.algo3.Model.GameMap.GameMap;
+import edu.fiuba.algo3.Model.Parsers.ExternalResources;
+import edu.fiuba.algo3.Model.Players.Player;
 
+import edu.fiuba.algo3.Model.Plots.*;
 import edu.fiuba.algo3.Plots.*;
-import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
-import edu.fiuba.algo3.Shop.Provider.SilverTowerProvider;
-import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
-import edu.fiuba.algo3.Shop.Shop;
-import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
-import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.Model.Shop.Provider.SandTrapProvider;
+import edu.fiuba.algo3.Model.Shop.Provider.SilverTowerProvider;
+import edu.fiuba.algo3.Model.Shop.Provider.WhiteTowerProvider;
+import edu.fiuba.algo3.Model.Shop.Shop;
+import edu.fiuba.algo3.Model.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.Model.TypeData.Name.Name;
 import edu.fiuba.algo3.classesTests.PathForTheTest.NormalPath;
 import org.junit.jupiter.api.Test;
 

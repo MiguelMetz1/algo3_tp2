@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.classesTests;
 
-import edu.fiuba.algo3.Interface.Game;
-import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.Model.Interface.Game;
+import edu.fiuba.algo3.Model.TypeData.Coordinate.Coordinate;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;

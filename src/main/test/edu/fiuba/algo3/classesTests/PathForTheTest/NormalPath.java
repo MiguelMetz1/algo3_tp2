@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.classesTests.PathForTheTest;
 
-import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.Model.TypeData.Coordinate.Coordinate;
 
 import java.util.LinkedList;
 import java.util.ListIterator;

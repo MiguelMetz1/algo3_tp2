@@ -1,11 +1,12 @@
 package edu.fiuba.algo3.classesTests;
 
 import edu.fiuba.algo3.Exceptions.*;
-import edu.fiuba.algo3.Parsers.ExternalResources;
-import edu.fiuba.algo3.Parsers.EnemiesJsonParser;
-import edu.fiuba.algo3.Parsers.MapJsonParser;
+import edu.fiuba.algo3.Model.Exceptions.InvalidJson;
+import edu.fiuba.algo3.Model.Parsers.ExternalResources;
+import edu.fiuba.algo3.Model.Parsers.EnemiesJsonParser;
+import edu.fiuba.algo3.Model.Parsers.MapJsonParser;
 
-import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.Model.TypeData.Coordinate.Coordinate;
 import org.junit.jupiter.api.Test;
 
 import java.util.Queue;
