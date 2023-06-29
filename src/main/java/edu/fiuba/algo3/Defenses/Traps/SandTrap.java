@@ -17,6 +17,7 @@ import edu.fiuba.algo3.TypeData.Buff.SpeedScalableBuff;
 import edu.fiuba.algo3.TypeData.Buff.SpeedScalableDamage;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
+import edu.fiuba.algo3.TypeData.Time;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,7 +31,6 @@ public class SandTrap extends Defense {
     private Deleter deleter;
 
     private Player player;
-
 
     public SandTrap( Player player){
         this.player = player;
@@ -46,7 +46,7 @@ public class SandTrap extends Defense {
 
     @Override
     protected int timeOfConstruction() {
-        return 1;
+        return 0;
     }
 
     @Override
@@ -56,7 +56,12 @@ public class SandTrap extends Defense {
 
     public void locateIn(Coordinate position, Plot plot) throws WrongPlace {
         super.locateIn(position, plot);
-        this.deleterBuilder = new UnderDestructionSandTrap( 3, this.player );
+        this.timeOfConstruction = new Time(timeOfConstruction());
+        this.deleterBuilder = new UnderDestructionSandTrap( new Time(3), this.player );
+    }
+
+    public void remainingTime(Time timeOfConstruction) {
+        timeOfConstruction.copy(new Time(3));
     }
 
     public void continueWithTheConstruction() {

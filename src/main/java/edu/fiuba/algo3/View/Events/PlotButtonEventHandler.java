@@ -4,6 +4,7 @@ import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.View.MapView;
+import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -14,10 +15,13 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
     MapView mapView;
 
     Coordinate coordinate;
-    public  PlotButtonEventHandler(Game game, MapView mapView, Coordinate coordinate){
+
+    PrincipalContainer principalContainer;
+    public  PlotButtonEventHandler(PrincipalContainer principalContainer, Game game, MapView mapView, Coordinate coordinate){
         this.game = game;
         this.mapView = mapView;
         this.coordinate = coordinate;
+        this.principalContainer = principalContainer;
     }
 
     @Override
@@ -25,6 +29,7 @@ public class PlotButtonEventHandler implements EventHandler<ActionEvent> {
         try {
             this.game.locateLastBoughtDefenseIn(this.coordinate);
             mapView.updateMap();
+            principalContainer.setUserInfoPanel(game);
         } catch (WrongPlace e) {
             throw new RuntimeException(e);
         }

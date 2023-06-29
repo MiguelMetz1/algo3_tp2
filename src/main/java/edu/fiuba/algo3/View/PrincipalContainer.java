@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -36,20 +35,24 @@ public class PrincipalContainer extends BorderPane {
 
     Map<Coordinate, StackPane> stackPaneMap;
 
+    int turn;
+
     MapView mapView;
     public PrincipalContainer(Stage stage, Game game, Name name){
         this.game = game;
         this.name = name;
         this.stackPaneMap = new HashMap<>();
         this.stage = stage;
+        this.turn = 0;
         this.setMessagePanel();
         AnchorPane grid = new AnchorPane();
         this.setCenter(grid);
-        this.mapView = new MapView(game, grid, this.consoleContainer);
-        this.showMap(game, this.consoleContainer);
+        this.mapView = new MapView( this, game, grid, this.consoleContainer );
+        this.setUserInfoPanel(game);
+
         BackgroundImage backgroundImage = new BackgroundImage(new Image("file:src/main/java/edu/fiuba/algo3/View/Images/principalBackgroundV2.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
-        //this.setButtonPanel(name);
+        this.setMenu(stage);
 
         //Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
         //BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
@@ -58,23 +61,23 @@ public class PrincipalContainer extends BorderPane {
 
     }
 
-    private void setButtonPanel(Name name, VBox userInfo) {
+    private void setButtonPanel(Name name, VBox userInfo, VBox entitiesInfo) {
         Button buyWhiteTower = new Button();
         buyWhiteTower.setText("Buy White Tower");
         setButtonStyle(buyWhiteTower);
-        BuyDefenseButtonEventHandler buyWhiteTowerButtonEventHandler = new BuyDefenseButtonEventHandler("White Tower",this.game);
+        BuyDefenseButtonEventHandler buyWhiteTowerButtonEventHandler = new BuyDefenseButtonEventHandler(this, "White Tower",this.game);
         buyWhiteTower.setOnAction(buyWhiteTowerButtonEventHandler);
 
         Button buySilverTower = new Button();
         buySilverTower.setText("Buy Silver Tower");
         setButtonStyle(buySilverTower);
-        BuyDefenseButtonEventHandler buySilverTowerButtonEventHandler = new BuyDefenseButtonEventHandler("Silver Tower",this.game);
+        BuyDefenseButtonEventHandler buySilverTowerButtonEventHandler = new BuyDefenseButtonEventHandler(this, "Silver Tower",this.game);
         buySilverTower.setOnAction(buySilverTowerButtonEventHandler);
 
         Button buySandTrap = new Button();
         buySandTrap.setText("Buy Sand Trap");
         setButtonStyle(buySandTrap);
-        BuyDefenseButtonEventHandler buySandTrapButtonEventHandler = new BuyDefenseButtonEventHandler("Sand Trap",this.game);
+        BuyDefenseButtonEventHandler buySandTrapButtonEventHandler = new BuyDefenseButtonEventHandler(this, "Sand Trap",this.game);
         buySandTrap.setOnAction(buySandTrapButtonEventHandler);
 
 
@@ -93,7 +96,7 @@ public class PrincipalContainer extends BorderPane {
         user.setStyle("-fx-background-color: #fafafa; -fx-font-family: 'Minecraft'; -fx-font-size: 16px; -fx-padding: 10px;-fx-background-radius: 4px;");
 
 
-        VBox verticalConteiner = new VBox(user,buyWhiteTower,buySandTrap,buySilverTower,endTurn, userInfo);
+        VBox verticalConteiner = new VBox(user,buyWhiteTower,buySandTrap,buySilverTower,endTurn, userInfo, entitiesInfo);
 
         verticalConteiner.setSpacing(10);
         verticalConteiner.setPadding(new Insets(15));
@@ -117,40 +120,27 @@ public class PrincipalContainer extends BorderPane {
         button.setMaxWidth(200);
     }
 
-    private void showMap(Game game, VBox consoleContainer){
-
-        //AnchorPane root = new AnchorPane();
-
-        //game.showMap(this,root, consoleContainer,this.buttonMap, this.stackPaneMap);
-
-
-        //this.centralConteiner = new VBox(root);
-        //this.centralConteiner.setMaxWidth(680);
-        //this.setCenter(this.centralConteiner);
-
-        //game.enemiesImages(this.buttonMap,  this.stackPaneMap);
-
-        //game.defensesImage(this.buttonMap,this.stackPaneMap);
-
-        HBox life = new HBox(new Label("Life: " + game.remainingLife()));
-        life.setStyle("-fx-background-color: Black; -fx-padding: 0 0 0 0");
-        HBox credits = new HBox(new Label("Credits: " + game.remainingCredits()));
-        credits.setStyle("-fx-background-color: Black; -fx-padding: 0 0 0 0");
-        VBox userInfo = new VBox(life,credits);
-        userInfo.setStyle("-fx-padding: 100px 0 0 0");
+    public void setUserInfoPanel(Game game){
+        Label lifeLabel = new Label("Life: " + game.remainingLife());
+        lifeLabel.setTextFill(Color.WHITE);
+        Label creditsLabel = new Label("Credits: " + game.remainingCredits());
+        creditsLabel.setTextFill(Color.WHITE);
+        Label turnLabel = new Label("Turn: " + this.turn);
+        turnLabel.setTextFill(Color.WHITE);
+        VBox userInfo = new VBox(lifeLabel,creditsLabel, turnLabel);
 
         userInfo.setAlignment(Pos.BOTTOM_CENTER);
 
-        this.setButtonPanel(this.name,userInfo);
+        VBox entitiesInfo = new VBox();
+        this.mapView.showEntitiesList(entitiesInfo);
+        entitiesInfo.setStyle("-fx-background-color: Black;");
+        entitiesInfo.setPrefHeight(200);
+        entitiesInfo.setAlignment(Pos.BOTTOM_CENTER);
+        this.setButtonPanel(this.name,userInfo, entitiesInfo);
+        userInfo.setStyle("-fx-background-color: Black;");
 
         this.stage.getScene().getWindow().setWidth(this.stage.getWidth());
 
-
-
-    }
-
-    public void showMap(){
-        this.showMap(this.game,this.consoleContainer);
     }
 
     private void setMenu(Stage stage) {
@@ -173,6 +163,7 @@ public class PrincipalContainer extends BorderPane {
     }
 
     public void updateMap() {
+        this.turn++;
         this.mapView.updateMap();
     }
 }

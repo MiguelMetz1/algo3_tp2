@@ -7,12 +7,13 @@ import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.TypeData.Buff.Buff;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
+import edu.fiuba.algo3.TypeData.Time;
 
 public class UnderDestructionSandTrap implements Builder<Deleter> {
 
     Buff debuff;
 
-    int timeOfConstruction;
+    Time timeOfConstruction;
 
     Coordinate position;
 
@@ -20,15 +21,16 @@ public class UnderDestructionSandTrap implements Builder<Deleter> {
 
     Player player;
 
-    public UnderDestructionSandTrap(int timeOfConstruction, Player player) {
+
+    public UnderDestructionSandTrap(Time timeOfConstruction, Player player) {
         this.timeOfConstruction = timeOfConstruction;
         this.player = player;
     }
 
     @Override
     public Deleter actualState() {
-        this.timeOfConstruction--;
-        if( this.timeOfConstruction <= 0 ){
+        this.timeOfConstruction.reduceIn(1);
+        if( this.timeOfConstruction.equals(new Time(0)) || this.timeOfConstruction.lower(new Time(0) ) ){
             return new SandTrapDeleter(player);
         }
         return new NullDeleter();

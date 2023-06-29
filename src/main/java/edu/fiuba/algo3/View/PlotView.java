@@ -18,7 +18,4 @@ public abstract class PlotView {
 
     protected abstract String getPlotStringImage();
 
-    public void getChildren() {
-
-    }
 }

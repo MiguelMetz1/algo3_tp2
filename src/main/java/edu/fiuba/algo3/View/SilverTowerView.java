@@ -1,12 +1,13 @@
 package edu.fiuba.algo3.View;
 
+import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import javafx.scene.layout.*;
 
-public class SilverTowerView extends TowerView {
+public class SilverTowerView extends DefenseView {
 
-    public SilverTowerView(AnchorPane grid, Coordinate coordinate) {
-        super(grid, coordinate);
+    public SilverTowerView(Game game, AnchorPane grid, Coordinate coordinate) {
+        super(game, grid, coordinate);
     }
 
     @Override

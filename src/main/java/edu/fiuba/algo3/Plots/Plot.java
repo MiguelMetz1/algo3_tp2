@@ -3,6 +3,7 @@ package edu.fiuba.algo3.Plots;
 import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import edu.fiuba.algo3.TypeData.Time;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -31,4 +32,8 @@ public abstract class Plot {
     public abstract String getName();
 
     public abstract void showRange(Coordinate coordinate, Button button);
+
+    public void defenseTime(Time timeOfConstruction) {
+        timeOfConstruction.copy(new Time(0));
+    }
 }

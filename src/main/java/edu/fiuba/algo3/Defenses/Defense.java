@@ -14,6 +14,7 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Coordinate.HellsCoordinate;
 import edu.fiuba.algo3.TypeData.Damage.AdditiveDamage;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
+import edu.fiuba.algo3.TypeData.Time;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,6 +36,8 @@ public abstract class Defense implements Placeable {
     protected Plot positionedPlot;
 
     protected Coordinate position;
+
+    protected Time timeOfConstruction;
 
     protected ArrayList< String > rightPlots;
 
@@ -68,9 +71,9 @@ public abstract class Defense implements Placeable {
         plot.receive(this);
         this.positionedPlot = plot;
         this.position.updateTo(position);
-
+        this.timeOfConstruction = new Time(timeOfConstruction());
         this.builder = new UnderConstructionAttacker(
-                timeOfConstruction(),
+                timeOfConstruction,
                 this.getBuff(),
                 this.position,
                 new Distance(range())
@@ -144,5 +147,9 @@ public abstract class Defense implements Placeable {
         ArrayList<String> types = coordinateType.getOrDefault(this.position, new ArrayList<>());
         types.add(this.toString());
         coordinateType.put(this.position, types);
+    }
+
+    public void remainingTime(Time timeOfConstruction) {
+        timeOfConstruction.copy(this.timeOfConstruction);
     }
 }

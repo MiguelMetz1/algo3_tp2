@@ -370,9 +370,21 @@ public class EnemiesTest {
         ArrayList<Enemy> enemies = new ArrayList<>();
 
         ArrayList<Player> players = new ArrayList<>();
-        ArrayList<Ant> deadAnts = new ArrayList<>();
 
         Player player = new Player(new Name("Fitzgerald"), map, resources.getPlayerCharacterCoordinate(), new LinkedList<>(), enemies);
+
+
+        players.add(player);
+
+        Shop shop = new Shop(player);
+        shop.addArticle("Silver Tower", new SilverTowerProvider());
+        shop.addArticle("White Tower", new WhiteTowerProvider());
+
+        assertDoesNotThrow(()->{shop.buy("Silver Tower");});
+        assertDoesNotThrow(()->{player.locateDefenses(new Coordinate(3, 1));});
+
+        ArrayList<Ant> deadAnts = new ArrayList<>();
+
         Spider spider = new Spider(map, new NormalPath().copyPath());
         Ant ant = new Ant(map, new NormalPath().copyPath() , deadAnts);
 
@@ -382,15 +394,18 @@ public class EnemiesTest {
 
         players.add(player);
 
-        SilverTower silverTower = new SilverTower();
-        assertDoesNotThrow( ()->map.locateEntityIn(silverTower, new Coordinate(3,1)) );
-        silverTower.continueWithTheConstruction();
-        silverTower.continueWithTheConstruction();
-        player.giveDefense(silverTower);
+        player.buildDefenses();
+        player.buildDefenses();
 
         spider.advance();
 
         player.makeDefensesAttack();
+
+        ArrayList<Enemy> deadEnemies = new ArrayList<>();
+
+        spider.finalizeYourWay(deadEnemies);
+
+        enemies.removeAll(deadEnemies);
 
         assertEquals( "Won.", player.won());
 
@@ -406,6 +421,9 @@ public class EnemiesTest {
         enemies.add(owl);
 
         player.makeDefensesAttack();
+        ant.finalizeYourWay(deadEnemies);
+        owl.finalizeYourWay(deadEnemies);
+        enemies.removeAll(deadEnemies);
         assertEquals("In game.", player.won());
     }
 

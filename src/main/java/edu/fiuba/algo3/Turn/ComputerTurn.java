@@ -13,6 +13,7 @@ public class ComputerTurn implements Turn{
 
     @Override
     public void executeTurn() {
+        game.makeEnemiesAttack();
         game.advanceEnemies();
         game.makeDefensesAttack();
         game.lootEnemies();

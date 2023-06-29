@@ -38,9 +38,8 @@ public class EndTurnButtonEventHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
        this.computerTurn.executeTurn();
-       //this.game.enemiesImages(this.buttonMap, this.stackPaneMap);
-       //this.principal.showMap();
         this.principal.updateMap();
+        this.principal.setUserInfoPanel(game);
        Alert endGameAlert = new Alert(Alert.AlertType.INFORMATION);
 
        endGameAlert.setHeaderText("You " + this.game.gameWon());

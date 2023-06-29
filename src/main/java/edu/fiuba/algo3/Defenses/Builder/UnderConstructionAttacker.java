@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Attacker.DefenseAttacker.TowerAttacker;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Buff.Buff;
+import edu.fiuba.algo3.TypeData.Time;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -14,7 +15,7 @@ import java.io.File;
 
 public class UnderConstructionAttacker implements Builder {
 
-    private int timeOfConstruction;
+    private Time timeOfConstruction;
 
     private Distance range;
 
@@ -29,7 +30,7 @@ public class UnderConstructionAttacker implements Builder {
         this.range = range;
     }*/
 
-    public UnderConstructionAttacker(int timeOfConstruction, Buff debuff, Coordinate position, Distance range) {
+    public UnderConstructionAttacker(Time timeOfConstruction, Buff debuff, Coordinate position, Distance range) {
         this.debuff = debuff;
         this.timeOfConstruction = timeOfConstruction;
         this.position = position;
@@ -38,26 +39,13 @@ public class UnderConstructionAttacker implements Builder {
 
     @Override
     public Attacker actualState() {
-        this.timeOfConstruction--;
-        if( this.timeOfConstruction == 0 ){
-            this.makeSound();
-        }
-        if( this.timeOfConstruction <= 0 ){
+        this.timeOfConstruction.reduceIn(1);
+        if( this.timeOfConstruction.equals(new Time(0)) || this.timeOfConstruction.lower(new Time(0))){
             return new TowerAttacker(debuff, position, range);
         }
 
         return new InConstructionAttacker();
     }
 
-    public void makeSound(){
-        AudioInputStream audioInputStream = null;
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File("src/main/java/edu/fiuba/algo3/View/Sounds/towerConstructed.wav").getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 }

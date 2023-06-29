@@ -5,6 +5,7 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.View.Events.PlotButtonEventHandler;
 import edu.fiuba.algo3.View.Events.PlotInfoEventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -19,11 +20,17 @@ public class MapView {
     private VBox consoleContainer;
 
     private ArrayList<Paintable> paintablesView;
-    public MapView(Game game, AnchorPane grid, VBox consoleContainer){
+
+    private PrincipalContainer principalContainer;
+
+
+
+    public MapView(PrincipalContainer principalContainer, Game game, AnchorPane grid, VBox consoleContainer){
         this.game = game;
         this.grid = grid;
         this.paintablesView = new ArrayList<>();
         this.consoleContainer = consoleContainer;
+        this.principalContainer = principalContainer;
         this.paint();
         this.updateMap();
     }
@@ -57,7 +64,7 @@ public class MapView {
                 PlotView plotView = this.plotViewByName(plotButton).get(plotString);
                 plotButton.setOnMouseEntered( new PlotInfoEventHandler(plotButton, actualCoordinate, consoleContainer, game));
                 plotButton.setOnMouseExited(event -> { plotButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));});
-                plotButton.setOnAction(new PlotButtonEventHandler(game, this, actualCoordinate));
+                plotButton.setOnAction(new PlotButtonEventHandler(principalContainer, game, this, actualCoordinate));
                 plotView.paint();
                 grid.getChildren().add(plotButton);
             }
@@ -72,14 +79,12 @@ public class MapView {
         paintablesViews.put("Owl", ()->{ ar.add(new OwlView(grid, coordinate));});
         paintablesViews.put("Spider", ()->{ ar.add(new SpiderView(grid, coordinate));});
         paintablesViews.put("Ant", ()->{ ar.add(new AntView(grid, coordinate));});
-        paintablesViews.put("White Tower", ()->{ ar.add(new WhiteTowerView(grid, coordinate));});
-        paintablesViews.put("Silver Tower", ()->{ ar.add(new SilverTowerView(grid, coordinate));});
-        paintablesViews.put("SandTrap", ()->{ ar.add(new SandTrapView(grid, coordinate));});
+        paintablesViews.put("White Tower", ()->{ ar.add(new WhiteTowerView(game, grid, coordinate));});
+        paintablesViews.put("Silver Tower", ()->{ ar.add(new SilverTowerView(game, grid, coordinate));});
+        paintablesViews.put("SandTrap", ()->{ ar.add(new SandTrapView(game, grid, coordinate));});
         paintablesViews.get(viewType).run();
         return ar.get(0);
     }
-
-
 
     public void updateMap(){
         this.erasePaintables();
@@ -87,10 +92,11 @@ public class MapView {
     }
 
     private void paintPaintables(){
-        HashMap<Coordinate, ArrayList<String>> enemiesInGame = game.findEntities();
+        HashMap<Coordinate, ArrayList<String>> entitiesInGame = game.findEntities();
         this.paintablesView = new ArrayList<>();
-        for( Coordinate coordinate: enemiesInGame.keySet() ){
-            ArrayList<String> enemiesInTheCoordinate = enemiesInGame.get(coordinate);
+
+        for( Coordinate coordinate: entitiesInGame.keySet() ){
+            ArrayList<String> enemiesInTheCoordinate = entitiesInGame.get(coordinate);
             for (String paintableType: enemiesInTheCoordinate){
                     Paintable paintableView = this.paintableByType(paintableType, grid, coordinate);
                     paintableView.paint();
@@ -98,6 +104,34 @@ public class MapView {
             }
         }
 
+    }
+
+    public void showEntitiesList( VBox userInfo ){
+        HashMap<Coordinate, ArrayList<String>> entitiesInGameWithCoordinates = game.findEntities();
+        ArrayList<String> entitiesInGame = new ArrayList<>();
+
+        for( ArrayList<String> entities: entitiesInGameWithCoordinates.values() ){
+            entitiesInGame.addAll(entities);
+        }
+
+        HashMap<String,Integer> typeAmountEntities = this.typeAmountEntities(entitiesInGame);
+
+        for ( String entity: typeAmountEntities.keySet() ){
+            Label entities = new Label( entity + ": " + typeAmountEntities.get( entity ) );
+            entities.setTextFill(Color.WHITE);
+            userInfo.getChildren().add(entities);
+        }
+
+    }
+
+    private HashMap<String, Integer> typeAmountEntities( ArrayList<String> entitiesInGame ){
+        HashMap<String, Integer> typeAmountEntities = new HashMap<>();
+
+        for( String entity : entitiesInGame ){
+            typeAmountEntities.put(entity, typeAmountEntities.getOrDefault(entity, 0) + 1);
+        }
+
+        return typeAmountEntities;
     }
 
     private void erasePaintables(){

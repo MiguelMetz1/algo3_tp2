@@ -14,6 +14,7 @@ import edu.fiuba.algo3.Shop.Provider.WhiteTowerProvider;
 import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
+import edu.fiuba.algo3.TypeData.Time;
 import edu.fiuba.algo3.View.PrincipalContainer;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -91,7 +92,7 @@ public class Game {
         this.enemies.removeAll(enemiesToRemove);
     }
 
-    private void makeEnemiesAttack() {
+    public void makeEnemiesAttack() {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player);
         for(Enemy enemy: enemies){
@@ -112,9 +113,6 @@ public class Game {
         for( Enemy enemy: enemies){
             enemy.advance();
         }
-
-
-        this.makeEnemiesAttack();
 
     }
 
@@ -184,6 +182,10 @@ public class Game {
         }
 
         return coordinateType;
+    }
+
+    public void remainingTime(Coordinate coordinate, Time timeOfConstruction) {
+        this.map.remainigTime(coordinate, timeOfConstruction);
     }
 
     /*public void updateMap(Map<Coordinate, Button> buttonMap) {

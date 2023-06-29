@@ -6,6 +6,7 @@ import edu.fiuba.algo3.Interface.Game;
 import edu.fiuba.algo3.Plots.Plot;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
+import edu.fiuba.algo3.TypeData.Time;
 import edu.fiuba.algo3.View.Events.PlotButtonEventHandler;
 import edu.fiuba.algo3.View.Events.PlotInfoEventHandler;
 import edu.fiuba.algo3.View.PrincipalContainer;
@@ -92,5 +93,9 @@ public class GameMap {
 
     public double getDimension() {
         return Math.pow(this.map.size(), 0.5);
+    }
+
+    public void remainigTime(Coordinate coordinate, Time timeOfConstruction) {
+        this.map.get(coordinate).defenseTime(timeOfConstruction);
     }
 }

@@ -1,11 +1,13 @@
 package edu.fiuba.algo3.View;
 
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 import java.util.ArrayList;
 
 public abstract class Paintable {
@@ -30,11 +32,24 @@ public abstract class Paintable {
         this.grid.getChildren().add(towerImageView);
     }
 
+    protected void makeSound(){
+
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(entitySound()).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void erasePaintables(){
         this.grid.getChildren().remove(this.towerImageView);
     }
 
     protected abstract String getPaintableImageView();
+
+    protected abstract String entitySound();
 
 
 
