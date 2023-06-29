@@ -76,6 +76,15 @@ abstract Plot{
     +remove(defense: Defense)
 }
 
+class Time{
+
+    +Time(pointsOfAttribute: double)
+    +copy(otherTime: Time)
+
+}
+
+Time "1"<-"1" Defense
+
 
 
 

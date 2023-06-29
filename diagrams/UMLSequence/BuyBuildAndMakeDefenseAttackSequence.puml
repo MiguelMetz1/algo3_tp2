@@ -23,7 +23,7 @@ Loop for each defense in construccion
 
 "player: Buyer" -> "defense: Defense": constinueWithTheConstruction()
 "defense: Defense" -> "UnderConstrunctionAttacker: Builder": actualState()
-"UnderConstrunctionAttacker: Builder" -> "UnderConstrunctionAttacker: Builder": timeOfConstruction - 1
+"UnderConstrunctionAttacker: Builder" -> "time: Time": reduceIn(1)
 create "InConstrunctionAttacker: Attacker"
 "UnderConstrunctionAttacker: Builder" -> "InConstrunctionAttacker: Attacker": InConstrunctionAttacker()
 "defense: Defense" <<- "UnderConstrunctionAttacker: Builder": InConstrunctionAttacker: Attacker
