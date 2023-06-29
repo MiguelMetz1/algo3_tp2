@@ -2,21 +2,20 @@
 'https://plantuml.com/state-diagram
 
 scale 350 width
-[*] --> UnadvancedKillableEnemy
+[*] --> UnadvancedEnemy
 
-state UnadvancedKillableEnemy {
+UnadvancedEnemy --> TargetableEnemy: advance
 
-}
-UnadvancedKillableEnemy --> TargetableEnemy: locateIn
-state TargetableEnemy {
-}
+UnadvancedEnemy --> KillableEnemy
 
-TargetableEnemy --> DeadEnemy : takeBuff
+TargetableEnemy --> FinalizedPathEnemy
 
-state DeadEnemy{
+KillableEnemy --> DeadEnemy : takeBuff
 
-}
- DeadEnemy--> [*] : finalizeYourWay
+KillableEnemy --> FinalizedPathEnemy: advance
 
+FinalizedPathEnemy--> [*] : finalizeYourWay
+
+DeadEnemy--> [*] : finalizeYourWay
 
 @enduml
