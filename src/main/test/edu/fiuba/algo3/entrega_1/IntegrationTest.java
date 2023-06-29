@@ -81,6 +81,7 @@ public class IntegrationTest {
         Game game = new Game("Fitzgerald");
 
         for( int i = 0; i < 36; i++ ) {
+            game.makeEnemiesAttack();
             game.advanceEnemies();
         }
 
