@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+[*] --> LiveEnemy
+
+state LiveEnemy {
+    LiveEnemy --> DeadEnemy : takeBuff
+}
+
+state DeadEnemy{
+
+}
+
+ DeadEnemy--> [*] : finalizeYourWay
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+[*] --> UnadvancedKillableEnemy
+
+state UnadvancedKillableEnemy {
+
+}
+UnadvancedKillableEnemy --> TargetableEnemy: locateIn
+state TargetableEnemy {
+}
+
+TargetableEnemy --> DeadEnemy : takeBuff
+
+state DeadEnemy{
+
+}
+ DeadEnemy--> [*] : finalizeYourWay
+
+
+@enduml
