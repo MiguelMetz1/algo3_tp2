@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+Create "game: Game"
+":TestCase" -> "game: Game": Game("Esteban")
+
+note over "game: Game"
+Here the game ask the ExternalResource
+all the things he need to
+create the game
+end note
+
+Create "computerTurn: ComputerTurn"
+":TestCase" -> "computerTurn: ComputerTurn": ComputerTurn(game: Game)
+
+
+":TestCase" -> "game: Game": buyDefense("White Tower")
+":TestCase" -> "game: Game": locateLastBoughDefenseIn((3,3): Coordinate)
+":TestCase" -> "game: Game": buyDefense("Silver Tower")
+":TestCase" -> "game: Game": locateLastBoughDefenseIn((10,7): Coordinate)
+":TestCase" -> "game: Game": buyDefense("Sand Trap")
+":TestCase" -> "game: Game": locateLastBoughDefenseIn((2,2): Coordinate)
+Loop for each interaction between the player and the game
+":TestCase" -> "computerTurn: ComputerTurn": executeTurn()
+Loop for each turn
+"computerTurn: ComputerTurn" -> "game: Game": makeEnemiesAttack()
+"computerTurn: ComputerTurn" -> "game: Game": makeDefensesAttack()
+"computerTurn: ComputerTurn" -> "game: Game": advanceEnemies()
+"computerTurn: ComputerTurn" -> "game: Game": lootEnemies()
+"computerTurn: ComputerTurn" -> "game: Game": buildDefenses()
+
+end loop
+
+loop for each time the player press the button end turn
+
+":TestCase" -> "game: Game": won()"
+":TestCase" <<-- "game: Game": "In game"
+
+note over ":TestCase"
+gameWon() happens when the player press
+ends turn button on the graphic interface
+end note
+
+
+end loop
+
+end lopp
+":TestCase" -> "game: Game": won()
+":TestCase" <<-- "game: Game": "You Won"
+
+
+@enduml

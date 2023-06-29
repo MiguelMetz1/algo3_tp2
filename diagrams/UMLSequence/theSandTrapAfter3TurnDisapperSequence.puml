@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+
+Create "sandTrap: SandTrap"
+":TestCase" -> "sandTrap: SandTrap": SandTrap(player)
+
+loop 2 times
+":TestCase" -> "player: Player": buildDefenses()
+"player: Player" -> "sandTrap: SandTrap": continueWithTheConstruction()
+end loop
+
+":TestCase" -> "player: Player": buildDefenses()
+"player: Player" -> "sandTrap: SandTrap": continueWithTheConstruction()
+"sandTrap: SandTrap" -> "underDestructionSandTrap: Deleter": actualState()
+note left "sandTrap: SandTrap"
+actualState() reduce the timeof life in 1
+deleter = deleter.actualState()
+end note
+"sandTrap: SandTrap" -> "underDestructionSandTrap: Deleter": delete(self, actualPlot)
+Create "nullDeleter: Deleter"
+"underDestructionSandTrap: Deleter" -> "nullDeleter: Deleter": NullDeleter()
+"underDestructionSandTrap: Deleter" -->>  "sandTrap: SandTrap":  NullDeleter()
+
+note left "sandTrap: SandTrap"
+Now the trap is deleted and cant
+deleted any more because of the new
+NullDeleter
+end note
+
+@enduml
