@@ -18,7 +18,7 @@ public class JsonParserTests {
 
     @Test
     public void correctMapIsCreatedWithoutExceptions() {
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/mapa.json";
         final MapJsonParser[] mapJsonParser = new MapJsonParser[1];
         assertDoesNotThrow(() -> {
             mapJsonParser[0] = new MapJsonParser(mapJsonFilename);}, "The json '"+mapJsonFilename+"' is invalid.");
@@ -35,7 +35,7 @@ public class JsonParserTests {
     
     @Test
     public void emptyMapThrowsInvalidJason() {
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/empty_json_map.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/empty_json_map.json";
         InvalidJson thrown = assertThrows(
            InvalidJson.class,
            () -> {
@@ -51,7 +51,7 @@ public class JsonParserTests {
 
     @Test
     public void IncompleteMapThrowsInvalidJson() {
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/incomplete_map.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/incomplete_map.json";
 
 
         InvalidJson thrown = assertThrows(
@@ -69,7 +69,7 @@ public class JsonParserTests {
 
     @Test
     public void MapWithArenaPlotThrowsInvalidJson() {
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/map_with_arena_plot.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/map_with_arena_plot.json";
         
         InvalidJson thrown = assertThrows(
            InvalidJson.class,
@@ -86,7 +86,7 @@ public class JsonParserTests {
 
     @Test
     public void MapWithoutMapaKeyThrowsInvalidJson() {
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/map_without_mapa_key.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/map_without_mapa_key.json";
         assertThrows(InvalidJson.class, () -> {
             MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
             mapJsonParser.get();
@@ -95,7 +95,7 @@ public class JsonParserTests {
 
     @Test
     public void MapWithInexistentRowNumberThrowsInvalidJson() {
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/map_with_inexistent_row_number.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/map_with_inexistent_row_number.json";
 
         assertThrows(InvalidJson.class, () -> {
             MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
@@ -105,8 +105,8 @@ public class JsonParserTests {
 
     @Test
     public void CorrectEnemiesJsonIsCreatedWithoutExceptions() {
-        String enemiesJsonFileName = "src/main/java/edu/fiuba/algo3/JsonFiles/enemigos.json";
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
+        String enemiesJsonFileName = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/enemigos.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/mapa.json";
         MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
 
         assertDoesNotThrow(() -> {
@@ -125,8 +125,8 @@ public class JsonParserTests {
 
     @Test
     public void EnemiesJsonWithEnemyNameWaspThrowsInvalidJson() {
-        String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/enemies_with_wasp_name.json";
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
+        String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/enemies_with_wasp_name.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/mapa.json";
         MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
 
         InvalidJson thrown = assertThrows(
@@ -144,8 +144,8 @@ public class JsonParserTests {
 
     @Test
     public void EnemiesJsonWithNumnberOfEnemiesLessThanZeroThrowsInvalidJson() {
-        String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/enemies_with_amount_LT_0_name.json";
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
+        String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/enemies_with_amount_LT_0_name.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/mapa.json";
         MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
         final Queue<Coordinate> path;
 
@@ -165,8 +165,8 @@ public class JsonParserTests {
 
     @Test
     public void EmptyEnemiesJsonThrowsInvalidJson() {
-        String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles//empty_enemies.json";
-        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/JsonFiles/mapa.json";
+        String enemiesJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles//empty_enemies.json";
+        String mapJsonFilename = "src/main/java/edu/fiuba/algo3/Model/JsonFiles/mapa.json";
         MapJsonParser mapJsonParser = new MapJsonParser(mapJsonFilename);
         
         InvalidJson thrown = assertThrows(
