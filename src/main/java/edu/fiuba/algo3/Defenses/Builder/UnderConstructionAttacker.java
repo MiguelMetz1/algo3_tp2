@@ -25,13 +25,6 @@ public class UnderConstructionAttacker implements Builder {
 
     private Buff debuff;
 
-    /*public UnderConstructionAttacker(int timeOfConstruction, Buff debuff, Plot position, Distance range) {
-        this.debuff = debuff;
-        this.timeOfConstruction = timeOfConstruction;
-        this.positionedPlace = position;
-        this.range = range;
-    }*/
-
     public UnderConstructionAttacker(Time timeOfConstruction, Buff debuff, Coordinate position, Distance range) {
         this.debuff = debuff;
         this.timeOfConstruction = timeOfConstruction;

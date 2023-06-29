@@ -13,8 +13,6 @@ public class Time extends Attribute {
     }
 
     public void copy(Time otherTime) {
-
         this.pointsOfAttribute = otherTime.pointsOfAttribute;
-
     }
 }

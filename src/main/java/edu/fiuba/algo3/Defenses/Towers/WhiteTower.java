@@ -20,9 +20,5 @@ public class WhiteTower extends Defense {
         return "White Tower";
     }
 
-    public String image(){
-        return "file:src/main/java/edu/fiuba/algo3/View/Images/whiteTower.png";
-    }
-
 }
 

@@ -43,13 +43,8 @@ public class Spider extends LooteableEnemy {
         return 10*(random);
     }
 
-    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/spider.png";}
-
     protected String getType(){
         return "Spider";
     }
 
-    protected File soundFile(){
-        return new File("src/main/java/edu/fiuba/algo3/View/Sounds/spiderSound.wav").getAbsoluteFile();
-    }
 }

@@ -89,7 +89,4 @@ public class SandTrap extends Defense {
         return "SandTrap";
     }
 
-    public String image(){
-        return "file:src/main/java/edu/fiuba/algo3/View/Images/sandTrap.jpeg";
-    }
 }

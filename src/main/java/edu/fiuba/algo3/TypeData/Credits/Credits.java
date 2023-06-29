@@ -30,11 +30,6 @@ public class Credits {
         return (this.credits < otherCredits.credits);
     }
 
-
-    public void showCredits(){
-        System.out.println("Remaining credits: " + this.credits);
-    }
-
     public String toString(){
         return Double.toString(credits);
     }

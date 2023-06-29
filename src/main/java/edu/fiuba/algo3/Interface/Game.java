@@ -124,31 +124,10 @@ public class Game {
             return this.player.won();
     }
 
-    public void showMap(PrincipalContainer principalContainer,AnchorPane root, VBox consoleContainer, Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
-        this.map.showMap(principalContainer,root, consoleContainer,this, buttonMap, stackPaneMap);
-    }
-
-    public void showPlayerCredist() {
-        this.player.showCredits();
-    }
-
     public Name getName() {
         return this.player.getName();
     }
 
-    public String lastDefenseImage() {
-        return this.player.lastDefenseImage();
-    }
-
-    public void enemiesImages(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
-         for(Enemy enemy:enemies){
-             enemy.addImage(buttonMap, stackPaneMap);
-         }
-    }
-
-    public void defensesImage(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
-        player.defenseImage(buttonMap,stackPaneMap);
-    }
 
     public String remainingLife() {
         return player.remainingLife();
@@ -188,14 +167,4 @@ public class Game {
         this.map.remainigTime(coordinate, timeOfConstruction);
     }
 
-    /*public void updateMap(Map<Coordinate, Button> buttonMap) {
-        mapReset(buttonMap);
-        this.enemiesImages(buttonMap);
-    }*/
-
-   /* private void mapReset(Map<Coordinate, Button> buttonMap) {
-        for(Button button: buttonMap.values()){
-            button = new Button();
-        }
-    }*/
 }

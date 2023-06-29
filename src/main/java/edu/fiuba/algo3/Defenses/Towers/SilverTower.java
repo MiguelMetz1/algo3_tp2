@@ -23,8 +23,5 @@ public class SilverTower extends Defense {
         return "Silver Tower";
     }
 
-    public String image(){
-        return "file:src/main/java/edu/fiuba/algo3/View/Images/silverTower.png";
-    }
 
 }

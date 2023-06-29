@@ -45,7 +45,4 @@ public class ExternalResources {
         return this.enemiesJsonParser.getLooteables();
     }
 
-    public ArrayList<Enemy> getAttackables(){
-        return this.enemiesJsonParser.getTargetableEnemies();
-    }
 }

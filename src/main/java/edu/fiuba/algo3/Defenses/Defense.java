@@ -60,10 +60,6 @@ public abstract class Defense implements Placeable {
         this.attacker = this.builder.actualState();
     }
 
-  /*  protected void setAttacker(Attacker attacker){
-        this.attacker = attacker;
-    }*/
-
     @Override
     public void locateIn( Coordinate position, Plot plot) throws WrongPlace {
         if( !this.isARightPlot(plot) ){
@@ -116,34 +112,6 @@ public abstract class Defense implements Placeable {
     public void destroyOn( LinkedList<Defense> activeDefenses ) {
         activeDefenses.remove(this);
         this.positionedPlot.remove(this);
-    }
-
-    public abstract String image();
-
-    public void addImage(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
-
-
-        Button button = buttonMap.get(this.position);
-        StackPane stackPane = stackPaneMap.get(this.position);
-
-        Image overlayImage1 = new Image(this.image());
-        ImageView overlayImageView1 = new ImageView(overlayImage1);
-        /*overlayImageView1.setStyle("-fx-max-height: 40px");
-        overlayImageView1.setStyle("-fx-max-width: 40px");*/
-        overlayImageView1.setFitHeight(30);
-        overlayImageView1.setFitWidth(30);
-
-
-        stackPane.getChildren().addAll(overlayImageView1);
-        overlayImageView1.toBack();
-
-        button.setGraphic(stackPane);
-    }
-
-    public void showRange(Coordinate coordinate, Button button) {
-        if(!( coordinate.distanceTo(this.position).higher( new Distance(range()) ) )){
-            button.setStyle("-fx-opacity: 0.8");
-        }
     }
 
     public void findPosition(HashMap<Coordinate, ArrayList<String>> coordinateType) {

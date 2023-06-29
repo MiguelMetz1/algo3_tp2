@@ -4,10 +4,6 @@ import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Time;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
-
 
 public class Gangway extends Plot{
 
@@ -32,13 +28,8 @@ public class Gangway extends Plot{
         ground.remove(defense);
     }
 
-    public Image getImage() {
-        return new Image("file:src/main/java/edu/fiuba/algo3/View/Images/gangway.jpg");
-    }
-
     public String getName(){
         return "Gangway";
     }
 
-    public void showRange(Coordinate coordinate, Button button){}
-}
+   }

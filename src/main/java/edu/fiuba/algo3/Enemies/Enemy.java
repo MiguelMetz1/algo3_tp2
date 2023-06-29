@@ -198,29 +198,6 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     protected abstract double getSpeed();
 
-    public void addImage( Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap){
-
-
-            Button button = buttonMap.get(this.actualPosition);
-            StackPane stackPane = stackPaneMap.get(this.actualPosition);
-            Image overlayImage1 = new Image(enemyImage());
-            ImageView overlayImageView1 = new ImageView(overlayImage1);
-            overlayImageView1.setFitHeight(30);
-            overlayImageView1.setFitWidth(30);
-
-            //System.out.println(stackPane.getChildren().size());
-
-            stackPane.getChildren().addAll(overlayImageView1);
-            overlayImageView1.toFront();
-
-            button.setGraphic(stackPane);
-
-            //stackPane.getChildren().remove(0);
-
-    }
-
-    protected abstract String enemyImage();
-
     public void inPosition(Coordinate coordinate, ArrayList<String> enemiesList) {
         if(this.actualPositionIs(coordinate))
             enemiesList.add(this.getType());
@@ -228,19 +205,6 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     protected abstract String getType();
 
-    public void makeSound(){
-        AudioInputStream audioInputStream = null;
-        try {
-            audioInputStream = AudioSystem.getAudioInputStream(this.soundFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    protected abstract File soundFile();
 
     public void findPosition(HashMap<Coordinate, ArrayList<String>> coordinateType) {
         ArrayList<String> types = coordinateType.getOrDefault(this.actualPosition, new ArrayList<>());

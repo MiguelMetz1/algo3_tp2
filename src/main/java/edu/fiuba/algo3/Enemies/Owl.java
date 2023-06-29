@@ -55,13 +55,8 @@ public class Owl extends KillableEnemy {
         return 5;
     }
 
-    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/owl.png";}
-
     protected String getType(){
         return "Owl";
     }
 
-    protected File soundFile(){
-        return new File("src/main/java/edu/fiuba/algo3/View/Sounds/owlSound.wav").getAbsoluteFile();
-    }
 }

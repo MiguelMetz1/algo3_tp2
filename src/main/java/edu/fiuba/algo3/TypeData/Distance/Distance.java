@@ -30,13 +30,6 @@ public class Distance {
         return new Distance( this.distance + otherDistance.distance );
     }
 
-    public void reduceIn(double i) {
-        this.distance -= i;
-        if( this.distance < 0){
-            this.distance = 0;
-        }
-    }
-
     public void reduceIn(Distance otherDistance) {
         this.distance -= otherDistance.distance;
     }

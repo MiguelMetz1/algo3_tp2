@@ -11,7 +11,6 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Ant extends LooteableEnemy {
 
@@ -56,12 +55,7 @@ public class Ant extends LooteableEnemy {
         return 1;
     }
 
-    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/ant.png";}
-
     protected String getType(){
         return "Ant";
-    }
-    protected File soundFile(){
-        return new File("src/main/java/edu/fiuba/algo3/View/Sounds/antSound.wav").getAbsoluteFile();
     }
 }

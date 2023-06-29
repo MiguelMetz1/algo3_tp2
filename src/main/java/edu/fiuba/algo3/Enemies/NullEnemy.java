@@ -18,17 +18,8 @@ public class NullEnemy extends Enemy{
     }
 
     @Override
-    protected String enemyImage() {
-        return "Nullenemy.jpg";
-    }
-
-    @Override
     protected String getType() {
         return "Null Enemy";
     }
 
-    @Override
-    protected File soundFile() {
-        return new File("null.wav");
-    }
 }

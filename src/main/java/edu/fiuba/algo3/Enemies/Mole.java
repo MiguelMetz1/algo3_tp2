@@ -69,14 +69,8 @@ public class Mole extends Enemy {
         return false;
     }
 
-    protected String enemyImage(){return "file:src/main/java/edu/fiuba/algo3/View/Images/mole.png";}
-
     protected String getType(){
         return "Mole";
-    }
-
-    protected File soundFile(){
-        return new File("src/main/java/edu/fiuba/algo3/View/Sounds/moleSound.wav").getAbsoluteFile();
     }
 
 }

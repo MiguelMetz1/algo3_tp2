@@ -54,11 +54,6 @@ public class PrincipalContainer extends BorderPane {
         this.setBackground(new Background(backgroundImage));
         this.setMenu(stage);
 
-        //Image image = new Image("file:src/main/java/edu/fiuba/algo3/View/Images/water.jpg");
-        //BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT,BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT,new BackgroundSize(30,30,false,false,false,true));
-        //this.setBackground(new Background(backgroundImage));
-
-
     }
 
     private void setButtonPanel(Name name, VBox userInfo, VBox entitiesInfo) {
@@ -153,9 +148,7 @@ public class PrincipalContainer extends BorderPane {
         label.setTextFill(Color.WHITE);
 
         this.consoleContainer = new VBox(label);
-        /*VBox consoleContainer = new VBox(label);*/
         consoleContainer.setSpacing(10);
-        //consoleContainer.setStyle("-fx-background-color: black");
         consoleContainer.setMinWidth(200);
         consoleContainer.setMinHeight(100);
 

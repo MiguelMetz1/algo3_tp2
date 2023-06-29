@@ -76,7 +76,6 @@ public class MapJsonParser extends JsonParser {
 
         for(rowNumber = 1; rowNumber <= this.numberOfRows; rowNumber++){
 
-            // System.out.print("\nRow number: " + rowNumber);
             String rowNumberString = Integer.toString(rowNumber);
             JSONArray rowArray;
             Iterator<Object> plotName;

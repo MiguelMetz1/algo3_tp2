@@ -17,8 +17,6 @@ import edu.fiuba.algo3.TypeData.Credits.Credits;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Life.Life;
 import edu.fiuba.algo3.TypeData.Name.Name;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -106,7 +104,6 @@ public class Player implements Target, Placeable, Buyer, Looter {
 
     public void attackFirstDefense() {
         int amountOfDefenses = this.activeDefenses.size();
-        System.out.println("----------------------------------Ataque a la torre---------------------------------");
         ArrayList<Defense> defensesCopy = new ArrayList<>(this.activeDefenses);
         Iterator<Defense> defenseIterator = defensesCopy.iterator();
         while ( defenseIterator.hasNext() && amountOfDefenses == this.activeDefenses.size() ) {
@@ -188,23 +185,9 @@ public class Player implements Target, Placeable, Buyer, Looter {
         this.activeDefenses.remove(defense);
     }
 
-    public void showCredits() {
-        this.credits.showCredits();
-    }
-
     public Name getName() {
 
         return this.name;
-    }
-
-    public String lastDefenseImage() {
-        return this.activeDefenses.getLast().image();
-    }
-
-    public void defenseImage(Map<Coordinate, Button> buttonMap, Map<Coordinate, StackPane> stackPaneMap) {
-        for(Defense defense: activeDefenses){
-            defense.addImage(buttonMap, stackPaneMap);
-        }
     }
 
     public String remainingLife() {
