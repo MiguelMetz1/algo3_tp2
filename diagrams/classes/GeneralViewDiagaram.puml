@@ -1,0 +1,123 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Game{
+
+    -enemies: ArrayList<Enemy>
+    -looteableEnemies: ArrayList<LooteableEnemies>
+    -troops: ArrayList<Enemy>
+
+
+    +Game(name: String)
+    +buyDefense(defenseName: String)
+    +locateLastBoughtDefense(coordinate: Coordinate)
+    +lootEnemies()
+    +makeDefenseAttack()
+    +advanceEnemies()
+    +buildDefence()
+
+}
+
+
+class Shop
+
+class Life{
+
+    -lifePoints: Double
+
+    +Life(lifePoints: Double)
+}
+class Coordinate
+
+
+class Player{
+
+    -activeDefenses: LinkedList<Defense>
+    -boughtDefenses: LinkedList<Defense>
+    -enemies: ArrayList<Enemy>
+    -troops: ArrayList<Enemy>
+
+
+    +Player(name: Name, map: GameMap, coordinate: Coordinate, troop: ArrayList<Enemy>, enemies: ArrayList<Enemy>)
+    +locateDefense(coordinate: Coordinate)
+    +takeBuff(buff: Buff)
+    +attackFirstDefense()
+    +makeDefenseAttack()
+    +locateIn(position: Coordinate, plot: Plot)
+    +buildDefenses()
+    +transferCredits(creditsToGive: Credits)
+    +giveDefense(defense: Defense)
+    +wasteCredits(amountToWaste: Credits)
+    +destroyDefense(defense: Defense)
+    +distanceToBiggerThan(position: Coordinate, attackDistance: Distance )
+}
+interface Looter{
+    + transferCredits(creditsToGive: Credits)
+}
+interface AttackReceiver{
+
+    +takeBuff(buff Buff)
+}
+
+interface Target{
+     +distanceToBiggerThan(position: Coordinate, attackDistance: Distance )
+}
+
+interface Placeable{
+    +locateIn(position: Coordinate, plot: Plot)
+}
+
+interface Buyer{
+ +giveDefense(defense: Defense)
+ +wasteCredits(amountToWaste: Credits)
+
+}
+
+abstract Attribute{
+}
+
+AttackReceiver <|-- Target
+
+Target <|.. Player
+Placeable <|.. Player
+Buyer <|.. Player
+Looter <|.. Player
+Coordinate "1" <-- "1" Player
+
+
+
+Life "1" <- "1" Player
+Attribute "0..*" <---"1" Player
+
+class GameMap{
+
+    -map: HashMap<Coordinate: Plot>
+
+    +GameMap(map: HashMap<Coordinate: Plot>)
+    +locateEntityIn(entity: Placeable, destination: Coordinate)
+
+}
+
+GameMap "1" --* "1" Game
+Player "1" --* "1" Game
+Shop "1" --* "1" Game
+
+interface Turn{
+
+    +executeTurn()
+}
+
+class ComputerTurn{
+
+    +ComputerTurn(game: Game)
+    +executeTurn()
+}
+
+Turn <|.. ComputerTurn
+Game "1" <-- "1" ComputerTurn
+
+
+
+
+
+@enduml

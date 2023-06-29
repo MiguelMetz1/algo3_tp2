@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+
+package Model {
+   package Attacker
+   package Defenses
+   package Enemies
+   package Exeptions
+   package GameMap
+   package Game
+   package JsonFiles
+   package Parsers
+   package Players
+   package Plots
+   package Shop
+   package Turn
+   package TypeData
+
+
+}
+
+package View {
+package Images
+package Sounds
+package Views
+
+
+}
+
+package Controller {
+
+package Events
+
+
+}
+
+
+
+
+Views ..> Sounds
+Views ..> Images
+Views ..> Game
+Events ..> Game
+Events ..> Turn
+Events ..> Views
+
+
+
+
+
+/'View ..> Controller
+View ..> Model
+Controller ..>Model'/
+
+@enduml

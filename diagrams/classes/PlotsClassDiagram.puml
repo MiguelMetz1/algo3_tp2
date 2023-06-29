@@ -1,0 +1,91 @@
+@startuml
+'https://plantuml.com/class-diagram
+class Coordinate{
+    -x: double
+    -y: double
+
+    +Coordinate(x: double, y: double)
+    +equals(coordinate: Coordinate): Bool
+
+}
+Coordinate "1"<--"1" Plot
+
+abstract Plot{
+
+    +Plot(coordinate: Coordinate)
+    +receive(defense: Defense)
+    +hasType(type: String): Bool
+    +remove(defense: Defense)
+
+}
+
+class Gangway{
+
+    +Gangway(coordinate: Coordinate)
+    +receive(defense: Defense)
+    +remove(defense: Defense)
+
+}
+
+class FinalGangway{
+
+   +FinalGangway(coordinate: Coordinate)
+
+}
+
+class InitialGangway{
+
+   +InitialGangway(coordinate: Coordinate)
+
+}
+
+class NullPlot{
+
+    +NullPlot(coordinate: Coordinate)
+    +receive(defense: Defense)
+    +remove(defense: Defense)
+
+}
+
+class Rocky{
+
+    +Rocky(coordinate: Coordinate)
+    +receive(defense: Defense)
+    +remove(defense: Defense)
+
+}
+
+class HellsPlot{
+
+    +HellsPlot(coordinate: Coordinate)
+    +receive(defense: Defense)
+    +remove(defense: Defense)
+
+}
+
+class Ground{
+
+    -defenses: ArrayList<Defense>
+
+    +Ground(coordinate: Coordinate)
+    +receive(defense: Defense)
+    +remove(defense: Defense)
+
+}
+
+Plot <|-- Gangway
+Gangway <|-- FinalGangway
+Gangway <|-- InitialGangway
+Plot <|-- Ground
+Plot <|-- NullPlot
+Plot <|-- Rocky
+Plot <|-- HellsPlot
+
+NullPlot "1"*--"1" HellsPlot
+Gangway "1" *-- "1" Ground
+
+
+
+
+
+@enduml

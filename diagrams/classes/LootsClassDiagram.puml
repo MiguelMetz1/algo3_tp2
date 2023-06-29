@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Looteable{
+
+    +transferLootTo(player: Looter)
+}
+
+class AvailableToLootCredits{
+
+    +AvailableToLootCredits(credits: Credits)
+    +transferLootTo(player: Looter)
+}
+
+class LooteableEnemy{
+
+   -looteable: Looteable
+
+   +LooteableEnemy(map: GameMap, path: LikedList<Coordinate>)
+
+}
+
+class LooteableMOB{
+
+    -loot: Looteable
+
+    +LooteableMOB(credits: Credits)
+    +transferLootTo(player: Looter)
+}
+
+
+class NullLooteable{
+
+    +transferLootTo(player: Looter)
+}
+
+
+Looteable <|.. AvailableToLootCredits
+Looteable <|... LooteableEnemy
+Looteable <|... LooteableMOB
+Looteable <|.. NullLooteable
+
+class Credits{
+
+    -credits: Double
+
+    +Credits(credits: double)
+    +wasteCredist(credits: Credits)
+    +transferCreditsTo(credits: Credits)
+}
+
+
+Credits"1" <-- "1"LooteableEnemy
+Credits"1" <-- "1"AvailableToLootCredits
+
+@enduml

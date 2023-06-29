@@ -1,0 +1,155 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract LooteableEnemy{
+
+    +LooteableEnemy(map: GameMap, path: LikedList<Coordinate>)
+    +transferLootTo(player: Looter)
+}
+abstract KillableEnemy{
+
+    +KillableEnemy(map: GameMap, path: LinkedList<Coordinate>)
+    +attack(targets: ArrayList<Player>)
+    +finalizeYourWay(finalWaysEnemies: ArrayList<Enemy> )
+    +advance()
+}
+
+Enemy <|-- KillableEnemy
+interface Looteable{
+
+    +transferLootTo(player: Looter)
+}
+
+
+
+abstract Enemy{
+
+    -attacker: Attacker
+
+    +attack(targets ArrayList<Player>)
+    +advance()
+    +locateIn(actualPosition: Coordinate, plot: Plot)
+    +finalizeYourWay(finalWaysEnemies" ArrayList<Enemy>)
+    +takeBuff(buff Buff)
+    +distanceToBiggerThan(position: Coordinate, attackDistance: Distance): Bool
+
+}
+class Mole{
+
+    -advances: int
+
+    +Mole(map GameMap, path LinkedList<Coordinate>)
+    +advance()
+
+}
+
+
+class Owl{
+
+    -finalGangway: Coordinate
+
+    +Owl(map: GameMap, path: LinkedList<Coordinate>, finalGangway: Coordinate)
+    +takeBuff(Buff)
+
+}
+
+
+class Spider{
+
+    +spider(map: GameMap, path: LikedList<Coordinate>)
+
+}
+
+
+class Ant{
+
+    -deadAnts: Arraylist<Ant>
+
+    +Ant(map: GameMap, path: LikedList<Coordinate>, deadAnts: Arraylist<Ant>)
+    +takeBuff(Buff buff)
+    +transferLootTo(player: Looter)
+
+
+}
+
+KillableEnemy <|-- Owl
+Enemy <|-- Mole
+
+LooteableEnemy <|-- Spider
+LooteableEnemy <|-- Ant
+
+
+KillableEnemy <|-- LooteableEnemy
+Looteable <.. LooteableEnemy
+
+interface Attacker {
+
+    +attack(ArrayList attackables)
+}
+
+
+abstract Advancer{
+
+    +advance()
+}
+
+class Speed{
+
+    +Speed(speed: double)
+    +inDistancePerTurn(): Distance
+
+}
+
+class Energy{
+
+    +Energy(EnergyPoints: double)
+}
+
+class Coordinate{
+    -x: double
+    -y: double
+
+    +Coordinate(x: double, y: double)
+    +equals(coordinate: Coordinate): Bool
+
+}
+
+class GameMap{
+
+    -map: HashMap<Coordinate, Plot>
+
+    +GameMap(map: HashMap<Coordinate, Plot>)
+    +locateEntityIn(entity: Placeable,destinationPlace: Coordinate)
+
+
+}
+
+
+Attacker <|.. Enemy
+Advancer "1"<-- "1"Enemy
+
+
+Speed "1"<-- "1"Enemy
+Energy"1" <-- "1"KillableEnemy
+Coordinate "1"<--"1" Enemy
+GameMap "1"<-- "1"Enemy
+
+interface Advanceable{
+
+    +advance()
+
+}
+
+interface Target{
+
+   +distanceToBiggerThan(position: Coordinate, attackDistance: Distance): Bool
+}
+
+
+Target <|. Enemy
+Advanceable <|.. Enemy
+
+
+
+
+@enduml

@@ -1,0 +1,98 @@
+@startuml
+
+abstract Defense{
+
+    #position: Coordinate
+    #rightPlots: Arraylist<Strings>
+
+    +attack(ArrayList<enemy> Enemies)
+    +continueWithTheConstruction()
+    +locateIn(Coordinate position, Plot plot)
+    +destroyOn(LikedList<Defense> activeDefense)
+
+    ~range()
+    ~timeOfConstruction()
+    ~damage()
+
+
+
+
+
+}
+
+class SandTrap {
+    -player: Player
+    -deleter: Deleter
+
+    +SandTrap(Player player)
+    +locateIn(Coordinate position, Plot plot)
+    +continueWithTheConstruction()
+
+    ~range()
+    ~timeOfConstruction()
+    ~damage()
+
+
+}
+
+class WhiteTower{
+    ~range()
+    ~timeOfConstruction()
+    ~damage()
+}
+
+class SilverTower{
+    ~range()
+    ~timeOfConstruction()
+    ~damage()
+}
+
+Defense <|-- SandTrap
+Defense <|-- WhiteTower
+Defense <|-- SilverTower
+
+
+interface Attacker {
+
+    +attack(ArrayList attackables)
+}
+
+
+Defense"1" *--- "1"Attacker
+
+
+interface Builder{
+    +actualState(): Attacker
+}
+
+Defense"1" *---"1" Builder
+
+
+abstract Plot{
+    #coordinte: Coordinate
+
+    +Plot(coordinate: Coordinate)
+    +receive(defense: Defense)
+    +remove(defense: Defense)
+
+}
+
+class Time{
+
+    +Time(pointsOfAttribute: double)
+    +copy(otherTime: Time)
+
+}
+
+Time "1"<-"1" Defense
+
+
+
+
+Defense "1" o-- "1"Plot
+
+
+
+
+
+@enduml

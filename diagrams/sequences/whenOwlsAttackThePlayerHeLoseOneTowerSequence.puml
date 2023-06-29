@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Create "owl: Owl"
+Loop 6 times
+":TestCase" -> "owl: Owl": advance()
+"owl: Owl" -> "liveAdvancer: Advancer": advance()
+end Loop
+
+":TestCase" -> "owl: Owl": attack()
+
+"owl: Owl" -> "owlAttacker: Attacker": attack(player)
+
+"owlAttacker: Attacker" -> "player: Player": attackFirstDefense()
+note left: the player delete his defense from active defenses
+
+":TestCase" -> "player: Player": makeDefensesAttack()
+note left: no defense so cant attack enemies
+
+@enduml

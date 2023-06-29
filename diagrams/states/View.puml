@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+[*] --> NotShootingView
+
+state NotShootingView {
+}
+
+NotShootingView --> WelcomeView
+
+state WelcomeView{
+}
+
+WelcomeView --> PrincipalView : handle
+
+state PrincipalView{
+}
+    PrincipalView --> GameFinalizedView
+
+state GameFinalizedView{
+
+}
+
+GameFinalizedView --> [*]
+
+}
+@enduml

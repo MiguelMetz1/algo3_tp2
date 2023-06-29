@@ -1,0 +1,80 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Attacker{
+    +attack(attackables: ArrayList<Target>)
+}
+
+class NullAttacker{
+     +attack(enemy: ArrayList<Target>)
+
+}
+
+class InConstructionAttacker{
+      +attack(enemy: ArrayList<Target>)
+}
+class TowerAttacker{
+
+    -attackDistance: Distance
+    -position: Coordinate
+    -Buff buff;
+
+    +TowerAttacker(buff: Buff, position: Coordinate, attackDistance Distance)
+    +attack(attackables: ArrayList<Enemy>)
+
+}
+
+class TrapAttacker{
+
+    -attackDistance: Distance
+    -position: Coordinate
+    -buff: Buff
+
+    +TrapAttacker(buff: Buff, position: Coordinate, attackDistance Distance)
+    +attack(attackables: ArrayList<Enemy>)
+
+}
+
+
+class EnemiesAttacker{
+
+    -attackDistance: Distance
+    -position: Coordinate
+    -buff: Buff
+
+    +EnemiesAttacker(buff: Buff, position: Coordinate, attackDistance Distance)
+    +attack(players: ArrayList<Player>)
+
+}
+
+class LifeAttacker{
+
+    -damage: Damage
+
+    +LifeAttacker(actualPostion: Coordinate, damagePoints: double)
+    +attack(enemies: ArrayList<Player>)
+}
+
+class OwlAttacker{
+
+    -position: Coordinate
+
+    +OwlAttacker(position: Coordinate, attackDistance Distance)
+    +attack(players: ArrayList<Player>)
+
+}
+
+Attacker <|.. NullAttacker
+Attacker <|... InConstructionAttacker
+Attacker <|.... TowerAttacker
+Attacker <|..... TrapAttacker
+Attacker <|.... EnemiesAttacker
+Attacker <|... LifeAttacker
+Attacker <|.. OwlAttacker
+
+
+
+
+
+
+@enduml

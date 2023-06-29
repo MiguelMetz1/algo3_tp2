@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+Create "sandTrap: SandTrap"
+":TestCase" -> "sandTrap: SandTrap": SandTrap(player)
+Create "ant: Ant"
+":TestCase" -> "ant: Ant": Ant(map, path, deadAnts)
+":TestCase" -> "ant: Ant": advance()
+
+":TestCase" -> "map: GameMap": locateEntityIn(Coordinates)
+":TestCase" -> "player: Player": buildDefenses()
+"player: Player" -> "sandTrap: SandTrap": continueWithTheConstruction()
+
+":TestCase" -> "ant: Ant": advance()
+":TestCase" -> "ant: Ant": advance()
+":TestCase" -> "player: Player": makeDefensesAttack()
+"player: Player" -> "sandTrap: SandTrap": attack(enemies)
+"sandTrap: SandTrap" -> "trapAttacker: trapAttacker": attack(enemies)
+
+"trapAttacker: trapAttacker" -> "ant: Ant": take(SpeedScalableBuff: Buff)
+"ant: Ant" -> "LiveAttackReceiver: AttackReceiver": takeBuff(SpeedScalableBuff: Buff)
+
+loop for each attribute buffeable the ant have (in this case only the speed)
+"LiveAttackReceiver: AttackReceiver" -> "attribute: Attribute": applyBuff(SpeedScalableBuff: Buff)
+"speed: Attribute" -> "SpeedScalableBuff: Buff": applyBuffIn(self, activeBuffs: List)
+"SpeedScalableBuff: Buff" -> "SpeedScalableDamage: Damage": applyDamage(speed)
+"SpeedScalableDamage: Damage" -> "speed: Attribute": changeInScale(scale)
+end loop
+
+":TestCase" -> "ant: Ant": advance()
+"ant: Ant" -> "advancer: Advancer": advance()
+"advancer: Advancer" -> "speed: Attribute": quitBuffs()
+
+
+@enduml

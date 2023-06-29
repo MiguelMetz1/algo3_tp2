@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+Loop 5 times
+":TestCase" -> "shop: Shop": buy("Silver Tower)"
+":TestCase" -> "player: Player": locateDefenses(Coordinate: (x,y))
+end
+Loop 2 times
+":TestCase" -> "player: Player": buildDefenses()
+
+Loop for each defense
+"player: Player" -> ":Defense": continueWithTheConstruction()
+
+end
+end
+
+Loop for each Ant
+Create ":Enemy"
+":TestCase" -> ":Enemy": enemy(path, (deadEnemies: List))
+":TestCase" -> ":TestCase": enemies.add(:Enemy)
+":TestCase" -> ":Enemy": advance()
+":TestCase" -> "player: Player": makeDefenseAttack();
+":TestCase" -> ":Enemy": transferLootTo(player: Player)
+":Enemy" -> ":Looteable": transferLootTo(player: Player)
+":Looteable" -> ":loot": transferLootTo(player: Player)
+":loot" -> "player: Player": transferCredits(creditsToGive: Credtis)
+":TestCase" -> ":Ant": finalizeYourWay(deadEnemies: List)
+":TestCase" -> ":TestCase": enemies.removeAll(deadEnemies: List))
+
+end
+
+
+
+
+@enduml

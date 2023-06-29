@@ -1,0 +1,57 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Shop{
+
+    -buyer: Buyer
+
+    +Shop(buyer: Buyer)
+    +buy(article: String)
+    +addArticle(articleName: String, provider: Provider)
+
+}
+
+interface Buyer{
+
+    +waterCredits(cost: Credits)
+    +giveDefense(defense: Defense)
+
+}
+
+Buyer <|.. Shop
+
+interface Provider{
+
+    +newArticle(): Defense
+    +articleCost: Credits
+}
+
+class SandTrapProvider{
+
+    -player: Player
+
+    +SandTrapProvider(player: Player)
+    +newArticle(): Defense
+    +articleCost: Credits
+
+}
+class SilverTowerProvider{
+
+    +newArticle(): Defense
+    +articleCost: Credits
+
+}
+class WhiteTowerProvider{
+
+    +newArticle(): Defense
+    +articleCost: Credits
+
+}
+
+Provider <|.. SandTrapProvider
+Provider <|.. SilverTowerProvider
+Provider <|.. WhiteTowerProvider
+
+Provider "0..*" <-- "1" Shop
+
+@enduml

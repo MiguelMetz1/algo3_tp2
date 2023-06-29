@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+create "shop: Shop"
+":TestCase" -> "shop: Shop": Shop(player: Buyer)
+":TestCase" -> "shop: Shop": addArticle(articleName, provider)
+"shop: Shop" -> "provider: Provider": articleCost()
+"shop: Shop" <<-- "provider: Provider": productCost: int
+"shop: Shop" -> "shop: Shop": add article in the shop
+":TestCase" -> "shop: Shop": buy(articleName)
+"shop: Shop" -> "player: Buyer": wasteCredits(cost: Credits)
+"player: Buyer" -> "credits: Credits": wasterCredits(amountToWaste: Credits)
+"shop: Shop" -> "player: Buyer": giveDefence(defense: Defense)
+"player: Buyer" -> "player: Buyer": add defense in boughtDefenses
+
+":TestCase" -> "player: Buyer": locateDefense(Coordinate)
+"player: Buyer" -> "map: GameMap": locateEntityIn(defense, Coordinate)
+note left: Verify if is the correct plot and is empty
+"map: GameMap" -> "defense: Defense": locateIn(destinationPlace: Coordinate, destinationPlot: Plot)
+":TestCase" -> "player: Buyer": buildDefenses()
+
+Loop for each defense in construccion
+
+"player: Buyer" -> "defense: Defense": constinueWithTheConstruction()
+"defense: Defense" -> "UnderConstrunctionAttacker: Builder": actualState()
+"UnderConstrunctionAttacker: Builder" -> "time: Time": reduceIn(1)
+create "InConstrunctionAttacker: Attacker"
+"UnderConstrunctionAttacker: Builder" -> "InConstrunctionAttacker: Attacker": InConstrunctionAttacker()
+"defense: Defense" <<- "UnderConstrunctionAttacker: Builder": InConstrunctionAttacker: Attacker
+
+end
+
+":TestCase" -> "player: Buyer": makeDefensesAttack()
+
+Loop for each defense ready to attack
+"player: Buyer" -> "defense: Defense": attack(enemies: List)
+
+note left: check first enemy in enemies within rage to attack
+"defense: Defense" -> "attacker: Attacker": attack(enemies: List)
+"attacker: Attacker" -> "enemy:Enemy": takeBuff(buff: Buff)
+"enemy:Enemy" -> "LiveAttackReceiver: AttackReceiver": takeBuff(buff: Buff)
+
+
+
+end
+
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+
+
+Create "owl: Owl"
+":TestCase" -> "owl: Owl": advance()
+"owl: Owl" -> "liveAdvancer: Advancer": advance()
+
+
+":TestCase" -> "player: Player": makeDefensesAttack()
+Loop for each defense player have
+
+"player: Player" -> "defense: Defense": defense.attack(enemies)
+
+note right: now owls life is lees than 50%
+"defense: Defense" -> "attacker: Attacker": attack(enemies)
+Loop for each enemy in enemies (now only have the owl)
+"attacker: Attacker" -> "owl: Owl": takeBuff(buff)
+Create "DamagedOwlAdvancer: Advancer"
+"owl: Owl" -> "DamagedOwlAdvancer: Advancer":  DamagedOwlAdvancer(owl, map, actualPosition, speed, finalGangway)
+"owl: Owl" -> "owl: Owl": replace his old advancer to damagedOwlAdvancer
+
+
+@enduml

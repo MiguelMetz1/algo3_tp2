@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+scale 350 width
+[*] --> UnboughtDefense
+
+state UnboughtDefense {
+}
+  UnboughtDefense --> UnlocatedDefense: locateIn
+
+state UnlocatedDefense {
+
+
+}
+    UnlocatedDefense --> ReadyToAttackDefense: continueWithTheConstruction
+
+state  ReadyToAttackDefense{
+
+}
+
+ReadyToAttackDefense --> DestroyedDefense: remove
+
+DestroyedDefense --> [*]
+
+@enduml
