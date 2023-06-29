@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega_1.PathForTheTest;
+package edu.fiuba.algo3.classesTests.PathForTheTest;
 
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 

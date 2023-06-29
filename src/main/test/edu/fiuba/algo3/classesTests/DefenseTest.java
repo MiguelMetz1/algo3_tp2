@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega_1;
+package edu.fiuba.algo3.classesTests;
 
 import edu.fiuba.algo3.Defenses.Towers.SilverTower;
 import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
@@ -17,8 +17,8 @@ import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 import edu.fiuba.algo3.TypeData.Name.Name;
-import edu.fiuba.algo3.entrega_1.PathForTheTest.NormalPath;
-import edu.fiuba.algo3.entrega_1.PathForTheTest.PathFromTheOwl;
+import edu.fiuba.algo3.classesTests.PathForTheTest.NormalPath;
+import edu.fiuba.algo3.classesTests.PathForTheTest.PathFromTheOwl;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

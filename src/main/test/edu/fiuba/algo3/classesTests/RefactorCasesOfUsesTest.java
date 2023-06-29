@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.entrega_1;
+package edu.fiuba.algo3.classesTests;
 
 import org.junit.jupiter.api.Test;
 
