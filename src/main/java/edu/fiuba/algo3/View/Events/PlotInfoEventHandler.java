@@ -18,7 +18,6 @@ public class PlotInfoEventHandler implements EventHandler<MouseEvent> {
     private Game game;
     private VBox consoleContainer;
     private Coordinate coordinate;
-
     private Button button;
 
     public PlotInfoEventHandler( Button button, Coordinate coordinate, VBox consoleContainer, Game game) {

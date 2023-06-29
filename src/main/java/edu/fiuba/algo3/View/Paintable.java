@@ -1,28 +1,37 @@
 package edu.fiuba.algo3.View;
 
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
+import java.util.ArrayList;
+
 public abstract class Paintable {
-    StackPane stackPane;
+    protected AnchorPane grid;
 
-    protected ImageView paintableImageView;
+    protected ImageView towerImageView;
 
-    public Paintable(StackPane stackPane){
-        this.paintableImageView = new ImageView(new Image(getPaintableImageView()));
-        this.stackPane = stackPane;
-    }
+    protected ArrayList<Double> positions;
 
-    public void erasePaintables(){
-        this.stackPane.getChildren().clear();
+    public Paintable(AnchorPane grid, Coordinate coordinate) {
+        this.grid = grid;
+        positions = new ArrayList<>();
+        coordinate.fillPositions(positions);
     }
 
     public void paint(){
-        paintableImageView.setFitHeight(30);
-        paintableImageView.setFitWidth(30);
-        this.stackPane.getChildren().addAll(paintableImageView);
-        paintableImageView.toFront();
+        this.towerImageView = new ImageView(getPaintableImageView());
+        towerImageView.setLayoutX( positions.get(0) * 45 );
+        towerImageView.setLayoutY( positions.get(1) * 45 );
+        towerImageView.setFitHeight(45);
+        towerImageView.setFitWidth(45);
+        this.grid.getChildren().add(towerImageView);
+    }
+
+    public void erasePaintables(){
+        this.grid.getChildren().remove(this.towerImageView);
     }
 
     protected abstract String getPaintableImageView();

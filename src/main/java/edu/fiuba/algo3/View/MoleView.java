@@ -1,11 +1,14 @@
 package edu.fiuba.algo3.View;
 
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 public class MoleView extends Paintable {
 
-    public MoleView(StackPane stackPane) {
-        super(stackPane);
+
+    public MoleView(AnchorPane grid, Coordinate coordinate) {
+        super(grid, coordinate);
     }
 
     @Override

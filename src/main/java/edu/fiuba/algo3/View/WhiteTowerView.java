@@ -1,10 +1,17 @@
 package edu.fiuba.algo3.View;
 
-import javafx.scene.layout.StackPane;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import javafx.scene.layout.AnchorPane;
 
-public class WhiteTowerView extends Paintable{
-    public WhiteTowerView(StackPane stackPane) {
-        super(stackPane);
+public class WhiteTowerView extends TowerView{
+
+    public WhiteTowerView(AnchorPane grid, Coordinate coordinate) {
+        super(grid, coordinate);
+    }
+
+    @Override
+    protected double range() {
+        return 3;
     }
 
     @Override

@@ -106,6 +106,7 @@ public class Player implements Target, Placeable, Buyer, Looter {
 
     public void attackFirstDefense() {
         int amountOfDefenses = this.activeDefenses.size();
+        System.out.println("----------------------------------Ataque a la torre---------------------------------");
         ArrayList<Defense> defensesCopy = new ArrayList<>(this.activeDefenses);
         Iterator<Defense> defenseIterator = defensesCopy.iterator();
         while ( defenseIterator.hasNext() && amountOfDefenses == this.activeDefenses.size() ) {

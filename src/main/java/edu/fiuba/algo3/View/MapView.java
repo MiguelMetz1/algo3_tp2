@@ -16,18 +16,12 @@ public class MapView {
     private Game game;
     private AnchorPane grid;
 
-    private HashMap<Coordinate, StackPane> stackPanes;
-
-    private HashMap<Coordinate, Button> buttons;
-
     private VBox consoleContainer;
 
     private ArrayList<Paintable> paintablesView;
     public MapView(Game game, AnchorPane grid, VBox consoleContainer){
         this.game = game;
         this.grid = grid;
-        this.stackPanes = new HashMap<>();
-        this.buttons = new HashMap<>();
         this.paintablesView = new ArrayList<>();
         this.consoleContainer = consoleContainer;
         this.paint();
@@ -61,8 +55,6 @@ public class MapView {
                 plotButton.setGraphic(stackPane);
                 plotButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
                 PlotView plotView = this.plotViewByName(plotButton).get(plotString);
-                stackPanes.put(actualCoordinate, stackPane);
-                this.buttons.put(actualCoordinate, plotButton);
                 plotButton.setOnMouseEntered( new PlotInfoEventHandler(plotButton, actualCoordinate, consoleContainer, game));
                 plotButton.setOnMouseExited(event -> { plotButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));});
                 plotButton.setOnAction(new PlotButtonEventHandler(game, this, actualCoordinate));
@@ -73,17 +65,21 @@ public class MapView {
 
     }
 
-    private HashMap<String, Paintable> paintableByType(StackPane stackPane, AnchorPane grid, Button button, Coordinate coordinate){
-        HashMap<String, Paintable> paintablesViews = new HashMap<>();
-        paintablesViews.put("Mole", new MoleView(stackPane));
-        paintablesViews.put("Owl", new OwlView(stackPane));
-        paintablesViews.put("Spider", new SpiderView(stackPane));
-        paintablesViews.put("Ant", new AntView(stackPane));
-        paintablesViews.put("White Tower", new WhiteTowerView(stackPane));
-        paintablesViews.put("Silver Tower", new SilverTowerView(stackPane, grid, button, coordinate));
-        paintablesViews.put("SandTrap", new SandTrapView(stackPane));
-        return paintablesViews;
+    private Paintable paintableByType(String viewType, AnchorPane grid, Coordinate coordinate){
+        HashMap<String, Runnable> paintablesViews = new HashMap<>();
+        ArrayList<Paintable> ar = new ArrayList<>();
+        paintablesViews.put("Mole", ()->{ ar.add(new MoleView(grid, coordinate));});
+        paintablesViews.put("Owl", ()->{ ar.add(new OwlView(grid, coordinate));});
+        paintablesViews.put("Spider", ()->{ ar.add(new SpiderView(grid, coordinate));});
+        paintablesViews.put("Ant", ()->{ ar.add(new AntView(grid, coordinate));});
+        paintablesViews.put("White Tower", ()->{ ar.add(new WhiteTowerView(grid, coordinate));});
+        paintablesViews.put("Silver Tower", ()->{ ar.add(new SilverTowerView(grid, coordinate));});
+        paintablesViews.put("SandTrap", ()->{ ar.add(new SandTrapView(grid, coordinate));});
+        paintablesViews.get(viewType).run();
+        return ar.get(0);
     }
+
+
 
     public void updateMap(){
         this.erasePaintables();
@@ -95,13 +91,10 @@ public class MapView {
         this.paintablesView = new ArrayList<>();
         for( Coordinate coordinate: enemiesInGame.keySet() ){
             ArrayList<String> enemiesInTheCoordinate = enemiesInGame.get(coordinate);
-            for (String enemyType: enemiesInTheCoordinate){
-                if( this.stackPanes.containsKey(coordinate) ) {
-                    StackPane enemyStackPane = this.stackPanes.get(coordinate);
-                    Paintable paintableView = this.paintableByType(enemyStackPane, grid, buttons.get(coordinate), coordinate).get(enemyType);
+            for (String paintableType: enemiesInTheCoordinate){
+                    Paintable paintableView = this.paintableByType(paintableType, grid, coordinate);
                     paintableView.paint();
                     this.paintablesView.add(paintableView);
-                }
             }
         }
 

@@ -1,12 +1,13 @@
 package edu.fiuba.algo3.View;
 
-import javafx.scene.layout.StackPane;
+import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
+import javafx.scene.layout.AnchorPane;
 
 public class AntView extends Paintable {
 
 
-    public AntView(StackPane stackPane) {
-        super(stackPane);
+    public AntView(AnchorPane grid, Coordinate coordinate) {
+        super(grid, coordinate);
     }
 
     @Override
