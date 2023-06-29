@@ -50,7 +50,7 @@ public class PrincipalContainer extends BorderPane {
         this.mapView = new MapView( this, game, grid, this.consoleContainer );
         this.setUserInfoPanel(game);
 
-        BackgroundImage backgroundImage = new BackgroundImage(new Image("file:src/main/java/edu/fiuba/algo3/View/Images/principalBackgroundV2.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        BackgroundImage backgroundImage = new BackgroundImage(new Image("file:src/main/java/edu/fiuba/algo3/View/Images/principalBackground.png"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         this.setBackground(new Background(backgroundImage));
         this.setMenu(stage);
 
