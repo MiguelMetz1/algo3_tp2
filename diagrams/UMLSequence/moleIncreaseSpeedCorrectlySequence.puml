@@ -1,0 +1,54 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+create "mole: Mole"
+Loop for 5 turns
+":TestCase" -> "mole: Mole": advance()
+"mole: Mole" -> "lifeAdvancer: Advancer": advance()
+"lifeAdvancer: Advancer" -> "continousAdvancer: Advancer": advance()
+
+"continousAdvancer: Advancer" -> "speed:Speed": inDistancePerTurn().plus(remainingDistance)
+"continousAdvancer: Advancer" -> "currenPosition: Coordinate": updateTo(next coordinate)
+"continousAdvancer: Advancer" -> "reaminingDistance: Distance": reduceIn(distance: Distance)
+"continousAdvancer: Advancer" -> "continousAdvancer: Advancer": locateTheEntity(position)
+"continousAdvancer: Advancer" -> "map: GameMap": locateEntityIn(mole: Mole, position)
+"map: GameMap" -> "mole: Mole": locateIn(destinationPlace: Coordinate, destinationPlot: Plot)
+create "continousAdvancer2: Advancer"
+"continousAdvancer: Advancer" -> "continousAdvancer2: Advancer": new continousAdvancer2(map, speedToReach, actualPosition, path, mole)
+
+"mole: Mole" -> "mole: Mole": incrementSpeed()
+note right: is not turn 5 so the moles still with speed 1
+"mole: Mole" -> "mole: Mole": changeAttacker()
+note right
+here its create a new LifeAttacker a set to his attacker
+with the curren position.
+end note
+end Loop
+
+":TestCase" -> "mole: Mole": advance()
+note over "mole: Mole"
+same sequence
+end note
+"mole: Mole" -> "mole: Mole": incrementSpeed()
+note right: now speed is 2
+
+
+Loop for 5 turns
+":TestCase" -> "mole: Mole": advance()
+note over "mole: Mole"
+same sequence
+end note
+end
+
+":TestCase" -> "mole: Mole": advance()
+note over "mole: Mole"
+same sequence
+end note
+"mole: Mole" -> "mole: Mole": incrementSpeed()
+note right: now speed is 3
+
+
+
+
+
+@enduml
