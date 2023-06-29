@@ -11,6 +11,7 @@ public class IntegrationTest {
 
     @Test
     public void whenAllEnemiesAreDeadTheUserWinsTheGame() {
+
         Game game = new Game("Fitzgerald");
 
         assertDoesNotThrow(()->game.buyDefense("Silver Tower"));

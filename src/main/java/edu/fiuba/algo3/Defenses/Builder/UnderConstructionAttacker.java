@@ -12,6 +12,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UnderConstructionAttacker implements Builder {
 
@@ -41,6 +43,7 @@ public class UnderConstructionAttacker implements Builder {
     public Attacker actualState() {
         this.timeOfConstruction.reduceIn(1);
         if( this.timeOfConstruction.equals(new Time(0)) || this.timeOfConstruction.lower(new Time(0))){
+            Logger.getLogger("Builder").log(Level.INFO, "The Defense has been constructed.");
             return new TowerAttacker(debuff, position, range);
         }
 

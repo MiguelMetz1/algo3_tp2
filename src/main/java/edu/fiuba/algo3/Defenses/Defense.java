@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public abstract class Defense implements Placeable {
@@ -67,6 +69,7 @@ public abstract class Defense implements Placeable {
         if( !this.isARightPlot(plot) ){
             throw new WrongPlace("The defense cant be located in this plot.");
         }
+        Logger.getLogger("Placeable").log(Level.INFO, "A Tower has");
 
         plot.receive(this);
         this.positionedPlot = plot;
