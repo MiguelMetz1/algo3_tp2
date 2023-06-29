@@ -74,6 +74,7 @@ abstract Plot{
     +Plot(coordinate: Coordinate)
     +receive(defense: Defense)
     +remove(defense: Defense)
+
 }
 
 class Time{

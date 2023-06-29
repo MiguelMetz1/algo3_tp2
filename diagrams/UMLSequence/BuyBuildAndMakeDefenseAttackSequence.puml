@@ -41,6 +41,7 @@ note left: check first enemy in enemies within rage to attack
 "enemy:Enemy" -> "LiveAttackReceiver: AttackReceiver": takeBuff(buff: Buff)
 
 
+
 end
 
 
