@@ -15,17 +15,13 @@ import edu.fiuba.algo3.Shop.Shop;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Name.Name;
 import edu.fiuba.algo3.TypeData.Time;
-import edu.fiuba.algo3.View.PrincipalContainer;
-import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import edu.fiuba.algo3.Shop.Provider.SandTrapProvider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Game {
 
@@ -51,9 +47,10 @@ public class Game {
 
 
     private void chargeShop(){
-            this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
-            this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
-            this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.player));
+        this.shop.addArticle(this.whiteTowerKey(), new WhiteTowerProvider());
+        this.shop.addArticle(this.silverTowerKey(), new SilverTowerProvider());
+        this.shop.addArticle(this.sandTrapKey(), new SandTrapProvider(this.player));
+        Logger.getLogger("Shop").log(Level.INFO, "There are new articles in the shop.");
     }
 
     private String sandTrapKey() {
@@ -70,6 +67,7 @@ public class Game {
 
     public void buyDefense( String defense ) throws InsuficientCredits, NonExistentArticle {
         this.shop.buy(defense);
+        Logger.getLogger("Shop").log(Level.INFO, "The player has bought a defense.");
     }
 
     public void locateLastBoughtDefenseIn( Coordinate coordinate ) throws WrongPlace {
@@ -95,6 +93,7 @@ public class Game {
     public void makeEnemiesAttack() {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player);
+        Logger.getLogger("Game").log(Level.INFO, "Enemies in the map are trying to attack.");
         for(Enemy enemy: enemies){
             enemy.attack(players);
         }
@@ -102,6 +101,7 @@ public class Game {
     }
 
     public void makeDefensesAttack() {
+        Logger.getLogger("Defenses").log(Level.INFO, "Defenses in the map are trying to attack.");
         player.makeDefensesAttack();
     }
 
@@ -113,6 +113,7 @@ public class Game {
         for( Enemy enemy: enemies){
             enemy.advance();
         }
+        Logger.getLogger("Game").log(Level.INFO, "The enemies in the map are trying to advance.");
 
     }
 
@@ -121,7 +122,9 @@ public class Game {
     }
 
     public String gameWon(){
-            return this.player.won();
+        String gameWon = this.player.won();
+        Logger.getLogger("Game").log(Level.INFO, "The game has " + gameWon );
+        return gameWon;
     }
 
     public Name getName() {
@@ -164,7 +167,7 @@ public class Game {
     }
 
     public void remainingTime(Coordinate coordinate, Time timeOfConstruction) {
-        this.map.remainigTime(coordinate, timeOfConstruction);
+        this.map.remainingTime(coordinate, timeOfConstruction);
     }
 
 }

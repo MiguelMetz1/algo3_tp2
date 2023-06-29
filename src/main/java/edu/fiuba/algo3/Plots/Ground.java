@@ -5,6 +5,8 @@ import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Time;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Ground extends Plot{
 
@@ -24,7 +26,10 @@ public class Ground extends Plot{
     }
 
     public void remove( Defense defense ){
-        this.defenses.remove(defense);
+        if( !defenses.isEmpty() ) {
+            this.defenses.remove(defense);
+            Logger.getLogger("Remover").log(Level.INFO, "A defense in " + this.coordinate.toString() + "has been destroyed.");
+        }
     }
 
     public void defenseTime(Time timeOfConstruction) {

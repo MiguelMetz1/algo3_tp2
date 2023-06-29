@@ -32,7 +32,7 @@ public class PlotInfoEventHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent mouseEvent) {
         consoleContainer.getChildren().clear();
         Label label = new Label();
-        label.setText(coordinate.toIntString());
+        label.setText(coordinate.toString());
         label.setStyle("-fx-padding: 10px;-fx-font-size: 20px; -fx-font-weight: bold");
         label.setTextFill(Color.WHITE);
 

@@ -63,13 +63,13 @@ public abstract class Defense implements Placeable {
     @Override
     public void locateIn( Coordinate position, Plot plot) throws WrongPlace {
         if( !this.isARightPlot(plot) ){
-            throw new WrongPlace("The defense cant be located in this plot.");
+            throw new WrongPlace("The " + this + " cant be located in this plot.");
         }
-        Logger.getLogger("Placeable").log(Level.INFO, "A Tower has");
 
         plot.receive(this);
         this.positionedPlot = plot;
         this.position.updateTo(position);
+        Logger.getLogger("Placeable").log(Level.INFO, "A "+ this +" has been located in " + position.toString());
         this.timeOfConstruction = new Time(timeOfConstruction());
         this.builder = new UnderConstructionAttacker(
                 timeOfConstruction,

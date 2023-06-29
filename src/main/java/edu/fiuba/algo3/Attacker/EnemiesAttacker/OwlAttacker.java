@@ -6,6 +6,8 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OwlAttacker implements Attacker<Player> {
 
@@ -21,7 +23,7 @@ public class OwlAttacker implements Attacker<Player> {
         for ( Player player : players) {
 
             if( !player.distanceToBiggerThan( position, new Distance(0) ) ) {
-
+                Logger.getLogger("Attacker").log(Level.INFO, "A owl has attacked a tower.");
                 player.attackFirstDefense();
 
             }

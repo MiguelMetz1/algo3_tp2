@@ -31,7 +31,7 @@ public class GameMap {
         return Math.pow(this.map.size(), 0.5);
     }
 
-    public void remainigTime(Coordinate coordinate, Time timeOfConstruction) {
+    public void remainingTime(Coordinate coordinate, Time timeOfConstruction) {
         this.map.get(coordinate).defenseTime(timeOfConstruction);
     }
 }

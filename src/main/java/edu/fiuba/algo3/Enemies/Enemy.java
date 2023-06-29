@@ -30,6 +30,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
     Advancer advancer;
@@ -131,6 +133,7 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
             throw new WrongPlace("The enemy can't walk on this plot.");
         }
         this.actualPosition.updateTo(actualPosition);
+        Logger.getLogger("Advancer").log(Level.INFO, "A "  + this.getType() + " has advanced to " + actualPosition);
         this.positionedPlace = plot;
     }
 
@@ -153,6 +156,7 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
 
     public void finalizeYourWay(ArrayList<Enemy> finalWaysEnemies ){
         if( this.reachedTheFinal() ){
+            Logger.getLogger("Enemies").log(Level.INFO, "A "+ this.getType() +" in " + actualPosition + " has reached the goal.");
             finalWaysEnemies.add(this);
         }
     }
@@ -160,9 +164,10 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
     @Override
     public void takeBuff(Buff buff) {
         AttackReceiver attackReceiver = this.attackReceiver;
-
         if( !this.isAvailableToReceiveAttack() ) {
             attackReceiver = new NullAttackReceiver();
+        }else{
+            Logger.getLogger("AttackReceiver").log(Level.INFO, "A " + this.getType() + " in " + this.actualPosition.toString() + " has received an attack.");
         }
 
         attackReceiver.takeBuff(buff);
@@ -211,4 +216,5 @@ public abstract class Enemy implements Advanceable, Attacker<Player>, Target {
         types.add(this.getType());
         coordinateType.put(this.actualPosition, types);
     }
+
 }

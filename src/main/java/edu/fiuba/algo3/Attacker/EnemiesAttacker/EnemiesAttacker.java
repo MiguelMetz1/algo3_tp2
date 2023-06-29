@@ -8,6 +8,8 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EnemiesAttacker implements Attacker<Player> {
     Distance attackDistance;
@@ -25,6 +27,7 @@ public class EnemiesAttacker implements Attacker<Player> {
     public void attack( ArrayList<Player> players ){
         for ( Player player : players) {
             if( !player.distanceToBiggerThan( position, new Distance(0) ) ) {
+                Logger.getLogger("Attacker").log(Level.INFO, "A enemy has attacked the player.");
                 player.takeBuff(buff);
             }
 

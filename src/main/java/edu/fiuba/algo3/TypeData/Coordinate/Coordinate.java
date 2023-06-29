@@ -96,12 +96,6 @@ public class Coordinate {
         return ("("+this.x+","+this.y+")");
     }
 
-
-    public String toIntString(){
-        return ("("+this.x+","+this.y+")");
-    }
-
-
     public void fillPositions(ArrayList<Double> positions) {
         positions.add(this.x);
         positions.add(this.y);

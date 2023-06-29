@@ -92,6 +92,7 @@ public class Player implements Target, Placeable, Buyer, Looter {
             for (Attribute attribute : attributes) {
                 attribute.applyBuff(buff);
             }
+            Logger.getLogger("Player").log(Level.INFO, "The player has received an attack, actual life: " + this.life);
         }
 
     }
@@ -160,11 +161,13 @@ public class Player implements Target, Placeable, Buyer, Looter {
             return "Won.";
         }
         return "In game.";
+
     }
 
     @Override
     public void transferCredits(Credits creditsToGive) {
         creditsToGive.transferCreditsTo(this.credits);
+        Logger.getLogger("Player").log(Level.INFO, "Credits was transferred to player, actual credits: " + this.credits);
     }
 
     @Override
@@ -173,6 +176,7 @@ public class Player implements Target, Placeable, Buyer, Looter {
             throw new InsuficientCredits("The player has not got sufficient credits.");
         }
         this.credits.wasteCredits(amountToWaste);
+        Logger.getLogger("Player").log(Level.INFO, "The player wasted credits, remaining creits: " + this.credits);
     }
 
     public ArrayList<String> passablePlots() {

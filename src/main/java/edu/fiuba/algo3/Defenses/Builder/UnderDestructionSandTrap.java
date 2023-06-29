@@ -6,6 +6,9 @@ import edu.fiuba.algo3.Defenses.Deleter.SandTrapDeleter;
 import edu.fiuba.algo3.Players.Player;
 import edu.fiuba.algo3.TypeData.Time;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class UnderDestructionSandTrap implements Builder<Deleter> {
 
     Time timeOfConstruction;
@@ -21,7 +24,9 @@ public class UnderDestructionSandTrap implements Builder<Deleter> {
     @Override
     public Deleter actualState() {
         this.timeOfConstruction.reduceIn(1);
+        Logger.getLogger("Builder").log(Level.INFO, "A trap has increasing the time of destruction in 1.");
         if( this.timeOfConstruction.equals(new Time(0)) || this.timeOfConstruction.lower(new Time(0) ) ){
+            Logger.getLogger("Builder").log(Level.INFO, "A trap has been deleted.");
             return new SandTrapDeleter(player);
         }
         return new NullDeleter();

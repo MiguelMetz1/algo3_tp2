@@ -7,6 +7,8 @@ import edu.fiuba.algo3.TypeData.Coordinate.Coordinate;
 import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TowerAttacker implements Attacker<Enemy> {
 
@@ -28,6 +30,7 @@ public class TowerAttacker implements Attacker<Enemy> {
         for( int i = 0; i < attackables.size() && !hasAttacked; i++) {
             Enemy enemy = Enemy.returnOneLifeDamageableBetween(enemies);
             if (!enemy.distanceToBiggerThan(position, attackDistance)) {
+                Logger.getLogger("Attacker").log(Level.INFO, "A tower in " + position.toString() + " attacked an enemy." );
                 enemy.takeBuff(this.buff);
                 hasAttacked = true;
             }

@@ -81,7 +81,7 @@ public class SandTrap extends Defense {
     }
 
     public void destroyOn(LinkedList<Defense> activeDefenses ) {
-        Logger.getLogger("AttackReceiver").log(Level.INFO, "A sand trap can't be destroyed.");
+        Logger.getLogger("AttackReceiver").log(Level.INFO, "A owl try to destroy a  sand trap, it fails..");
     }
 
     @Override

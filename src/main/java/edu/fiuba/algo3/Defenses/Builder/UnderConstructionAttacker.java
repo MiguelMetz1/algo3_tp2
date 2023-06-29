@@ -35,8 +35,9 @@ public class UnderConstructionAttacker implements Builder {
     @Override
     public Attacker actualState() {
         this.timeOfConstruction.reduceIn(1);
+        Logger.getLogger("Builer").log(Level.INFO, "The tower in " + position.toString() + " has reduced the time of construction.");
         if( this.timeOfConstruction.equals(new Time(0)) || this.timeOfConstruction.lower(new Time(0))){
-            Logger.getLogger("Builder").log(Level.INFO, "The Defense has been constructed.");
+            Logger.getLogger("Builder").log(Level.INFO, "The tower in " + position.toString() + " has finalized the construction.");
             return new TowerAttacker(debuff, position, range);
         }
 

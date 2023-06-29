@@ -8,6 +8,8 @@ import edu.fiuba.algo3.TypeData.Distance.Distance;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TrapAttacker implements Attacker<Enemy> {
     Distance attackDistance;
@@ -29,6 +31,7 @@ public class TrapAttacker implements Attacker<Enemy> {
         while (enemyIterator.hasNext() && !hasAttacked){
             Enemy enemy = enemyIterator.next();
             if (!enemy.distanceToBiggerThan(position, attackDistance)) {
+                Logger.getLogger("Attacker").log(Level.INFO, "A trap in " + position.toString() + " attacked an enemy." );
                 enemy.takeBuff(this.buff);
                 hasAttacked = true;
             }

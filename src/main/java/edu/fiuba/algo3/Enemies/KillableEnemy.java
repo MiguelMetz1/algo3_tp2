@@ -11,6 +11,8 @@ import edu.fiuba.algo3.TypeData.Energy.Energy;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class KillableEnemy extends Enemy {
     private Energy life;
@@ -40,6 +42,7 @@ public abstract class KillableEnemy extends Enemy {
         super.finalizeYourWay(finalWaysEnemies);
         if( this.isDead() ){
             finalWaysEnemies.add(this);
+            Logger.getLogger("Enemies").log(Level.INFO, "A " + this.getType() + " in " + actualPosition + " has dead.");
         }
     }
 
