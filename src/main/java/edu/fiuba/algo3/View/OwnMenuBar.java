@@ -4,6 +4,7 @@ package edu.fiuba.algo3.View;
 import edu.fiuba.algo3.View.Events.AboutButtonEventHandler;
 import edu.fiuba.algo3.View.Events.ExitButtonEventHandler;
 import edu.fiuba.algo3.View.Events.FullScreenButtonEventHandler;
+import edu.fiuba.algo3.View.Events.RestartButtonEventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -20,7 +21,7 @@ public class OwnMenuBar extends MenuBar {
         Menu helpMenu = new Menu("Help");
 
         MenuItem exitOption = new MenuItem("Exit");
-        MenuItem openOption = new MenuItem("Open");
+        MenuItem restartOption = new MenuItem("Restart");
         MenuItem aboutOption = new MenuItem("About...");
 
         ExitButtonEventHandler exitButtonEventHandler = new ExitButtonEventHandler();
@@ -29,13 +30,16 @@ public class OwnMenuBar extends MenuBar {
         AboutButtonEventHandler aboutButtonEventHandler = new AboutButtonEventHandler();
         aboutOption.setOnAction(aboutButtonEventHandler);
 
+        RestartButtonEventHandler restartButtonEventHandler = new RestartButtonEventHandler(stage);
+        restartOption.setOnAction(restartButtonEventHandler);
+
         FullScreenButtonEventHandler fullScreenButtonEventHandler = new FullScreenButtonEventHandler(stage, this.fullScreenOption);
         this.fullScreenOption.setOnAction(fullScreenButtonEventHandler);
 
 
         this.fullScreenOption.setDisable(false);
 
-        fileMenu.getItems().addAll(exitOption, new SeparatorMenuItem(),openOption);
+        fileMenu.getItems().addAll(exitOption, new SeparatorMenuItem(),restartOption);
         helpMenu.getItems().addAll(aboutOption);
         viewMenu.getItems().addAll(this.fullScreenOption);
 
