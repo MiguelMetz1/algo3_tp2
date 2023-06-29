@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.Shop;
 
 import edu.fiuba.algo3.Defenses.Defense;
-import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Exceptions.InsufficientCredits;
 import edu.fiuba.algo3.Shop.Provider.Provider;
 import edu.fiuba.algo3.TypeData.Credits.Credits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
@@ -18,7 +18,7 @@ public class Shop {
         this.buyer = buyer;
     }
 
-    public void buy(String article) throws InsuficientCredits, NonExistentArticle {
+    public void buy(String article) throws InsufficientCredits, NonExistentArticle {
 
         if( !this.providers.containsKey(article) ) {
             throw new NonExistentArticle("The article that you wanted is not in the shop.");

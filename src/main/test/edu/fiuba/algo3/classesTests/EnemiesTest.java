@@ -3,7 +3,7 @@ package edu.fiuba.algo3.classesTests;
 
 import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
 import edu.fiuba.algo3.Enemies.*;
-import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Exceptions.InsufficientCredits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
@@ -465,7 +465,7 @@ public class EnemiesTest {
 
 
     @Test
-    public void spidersGivesTheCorrectAmountOfCredits() throws InsuficientCredits, NonExistentArticle, WrongPlace {
+    public void spidersGivesTheCorrectAmountOfCredits() throws InsufficientCredits, NonExistentArticle, WrongPlace {
 
 
         ExternalResources resources = new ExternalResources();
@@ -499,7 +499,7 @@ public class EnemiesTest {
         player.buildDefenses();
         player.buildDefenses();
 
-        assertThrows(InsuficientCredits.class, () -> {
+        assertThrows(InsufficientCredits.class, () -> {
             shop.buy("Silver Tower");
         });
 
@@ -522,7 +522,7 @@ public class EnemiesTest {
     }
 
     @Test
-    public void antsGivesTheCorrectAmountOfCredits() throws InsuficientCredits, NonExistentArticle, WrongPlace {
+    public void antsGivesTheCorrectAmountOfCredits() throws InsufficientCredits, NonExistentArticle, WrongPlace {
 
 
         ExternalResources resources = new ExternalResources();
@@ -554,7 +554,7 @@ public class EnemiesTest {
         player.buildDefenses();
         player.buildDefenses();
 
-        assertThrows(InsuficientCredits.class, () -> {
+        assertThrows(InsufficientCredits.class, () -> {
             shop.buy("Silver Tower");
         });
 
@@ -575,7 +575,7 @@ public class EnemiesTest {
         player.locateDefenses(new Coordinate(3, 3));
         player.buildDefenses();
 
-        assertThrows(InsuficientCredits.class, () -> shop.buy("White Tower"));
+        assertThrows(InsufficientCredits.class, () -> shop.buy("White Tower"));
 
 
         for (int i = 0; i < 5; i++) {
@@ -592,7 +592,7 @@ public class EnemiesTest {
         player.locateDefenses(new Coordinate(4, 3));
         player.buildDefenses();
 
-        assertThrows(InsuficientCredits.class, () -> {
+        assertThrows(InsufficientCredits.class, () -> {
             shop.buy("White Tower");
         });
     }
@@ -681,7 +681,7 @@ public class EnemiesTest {
 
 
     @Test
-    public void mobsCanBeLootedOnlyOneTime() throws InsuficientCredits, NonExistentArticle {
+    public void mobsCanBeLootedOnlyOneTime() throws InsufficientCredits, NonExistentArticle {
 
 
         ExternalResources resources = new ExternalResources();
@@ -710,7 +710,7 @@ public class EnemiesTest {
         player.buildDefenses();
         player.buildDefenses();
 
-        assertThrows(InsuficientCredits.class, () -> {
+        assertThrows(InsufficientCredits.class, () -> {
             shop.buy("Silver Tower");
         });
 
@@ -726,7 +726,7 @@ public class EnemiesTest {
 
 
 
-        assertThrows(InsuficientCredits.class, () -> {
+        assertThrows(InsufficientCredits.class, () -> {
             shop.buy("Silver Tower");
         });
 

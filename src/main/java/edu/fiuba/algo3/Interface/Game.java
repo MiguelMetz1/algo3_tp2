@@ -3,7 +3,7 @@ package edu.fiuba.algo3.Interface;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Loot.Looteable;
 import edu.fiuba.algo3.Enemies.Loot.LooteableEnemy;
-import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Exceptions.InsufficientCredits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
@@ -65,7 +65,7 @@ public class Game {
         return "Silver Tower";
     }
 
-    public void buyDefense( String defense ) throws InsuficientCredits, NonExistentArticle {
+    public void buyDefense( String defense ) throws InsufficientCredits, NonExistentArticle {
         this.shop.buy(defense);
         Logger.getLogger("Shop").log(Level.INFO, "The player has bought a defense.");
     }

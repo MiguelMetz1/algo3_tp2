@@ -2,7 +2,7 @@ package edu.fiuba.algo3.classesTests;
 
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Spider;
-import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Exceptions.InsufficientCredits;
 import edu.fiuba.algo3.Exceptions.NonExistentArticle;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Exceptions.WrongPlayerName;
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlayerTest {
 
     @Test
-    public void playerStartsWithCorrespondingCredits() throws InsuficientCredits, NonExistentArticle {
+    public void playerStartsWithCorrespondingCredits() throws InsufficientCredits, NonExistentArticle {
 
         //Life:20     Credits:100
 
@@ -47,7 +47,7 @@ public class PlayerTest {
 
         }
 
-        assertThrows(InsuficientCredits.class, () -> {
+        assertThrows(InsufficientCredits.class, () -> {
                 shop.buy("White Tower");
         });
 

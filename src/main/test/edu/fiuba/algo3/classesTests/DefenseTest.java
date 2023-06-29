@@ -4,7 +4,7 @@ import edu.fiuba.algo3.Defenses.Towers.SilverTower;
 import edu.fiuba.algo3.Defenses.Towers.WhiteTower;
 import edu.fiuba.algo3.Defenses.Traps.SandTrap;
 import edu.fiuba.algo3.Enemies.*;
-import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Exceptions.InsufficientCredits;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.GameMap.GameMap;
 import edu.fiuba.algo3.Parsers.ExternalResources;
@@ -53,7 +53,7 @@ public class DefenseTest {
             }, "The player hasn't got sufficient credits.");
         }
 
-        assertThrows( InsuficientCredits.class, () ->  shop.buy( "White Tower") );
+        assertThrows( InsufficientCredits.class, () ->  shop.buy( "White Tower") );
 
 
     }
@@ -81,7 +81,7 @@ public class DefenseTest {
             }, "The player hasn't got sufficient credits.");
         }
 
-        assertThrows( InsuficientCredits.class, () ->  shop.buy( "Silver Tower") );
+        assertThrows( InsufficientCredits.class, () ->  shop.buy( "Silver Tower") );
 
 
     }
@@ -107,7 +107,7 @@ public class DefenseTest {
             }, "The player hasn't got sufficient credits.");
         }
 
-        assertThrows( InsuficientCredits.class, () ->  shop.buy( "Sand Trap") );
+        assertThrows( InsufficientCredits.class, () ->  shop.buy( "Sand Trap") );
 
 
     }

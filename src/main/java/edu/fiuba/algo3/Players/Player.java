@@ -3,7 +3,7 @@ import edu.fiuba.algo3.Defenses.Defense;
 import edu.fiuba.algo3.Enemies.Interface.Placeable;
 import edu.fiuba.algo3.Enemies.Enemy;
 import edu.fiuba.algo3.Enemies.Interface.Target;
-import edu.fiuba.algo3.Exceptions.InsuficientCredits;
+import edu.fiuba.algo3.Exceptions.InsufficientCredits;
 import edu.fiuba.algo3.Exceptions.WrongPlace;
 import edu.fiuba.algo3.Exceptions.WrongPlayerName;
 import edu.fiuba.algo3.GameMap.GameMap;
@@ -171,9 +171,9 @@ public class Player implements Target, Placeable, Buyer, Looter {
     }
 
     @Override
-    public void wasteCredits(Credits amountToWaste) throws InsuficientCredits {
+    public void wasteCredits(Credits amountToWaste) throws InsufficientCredits {
         if (amountToWaste.higherCreditsThan(this.credits)) {
-            throw new InsuficientCredits("The player has not got sufficient credits.");
+            throw new InsufficientCredits("The player has not got sufficient credits.");
         }
         this.credits.wasteCredits(amountToWaste);
         Logger.getLogger("Player").log(Level.INFO, "The player wasted credits, remaining creits: " + this.credits);

@@ -42,15 +42,23 @@ public class PrincipalContainer extends BorderPane {
     int turn;
 
     MapView mapView;
+
+    VBox notificationsContainer;
     public PrincipalContainer(Stage stage, Game game, Name name){
         this.game = game;
         this.name = name;
         this.stackPaneMap = new HashMap<>();
         this.stage = stage;
         this.turn = 0;
+
+        this.notificationsContainer = new VBox();
         this.setMessagePanel();
+        this.setRight(this.consoleContainer);
+        this.consoleContainer.setAlignment(Pos.CENTER);
         AnchorPane grid = new AnchorPane();
         this.setCenter(grid);
+        this.setBottomContainer("");
+        this.setBottom(notificationsContainer);
         this.mapView = new MapView( this, game, grid, this.consoleContainer );
         this.setUserInfoPanel(game);
 
@@ -58,9 +66,19 @@ public class PrincipalContainer extends BorderPane {
         this.setBackground(new Background(backgroundImage));
         this.setMenu(stage);
 
+    }
 
-
-
+    public void setBottomContainer(String message) {
+        notificationsContainer.getChildren().clear();
+        Label notificationLabel = new Label(message);
+        notificationsContainer.setStyle("-fx-text-fill: white;-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-border-width: 2px; -fx-border-color: black");
+        notificationLabel.setStyle("-fx-padding: 10px;-fx-font-size: 20px; -fx-font-weight: bold");
+        notificationsContainer.setAlignment(Pos.TOP_CENTER);
+        notificationLabel.setTextFill(Color.WHITE);
+        notificationsContainer.prefHeight(50);
+        notificationsContainer.prefWidth(10);
+        notificationsContainer.getChildren().add(notificationLabel);
+        notificationsContainer.toFront();
     }
 
     private void setButtonPanel(Name name, VBox userInfo, VBox entitiesInfo) {
@@ -92,8 +110,6 @@ public class PrincipalContainer extends BorderPane {
         EndTurnButtonEventHandler endTurnButtonEventHandler = new EndTurnButtonEventHandler(this.stage,this,this.game, this.stackPaneMap);
         endTurn.setOnAction(endTurnButtonEventHandler);
 
-
-
         Label userName = new Label("User:" + name.getName());
 
         userName.setStyle("-fx-text-fill: white;-fx-padding: 10px;-fx-font-size: 20px; -fx-font-weight: bold ");
@@ -105,18 +121,17 @@ public class PrincipalContainer extends BorderPane {
         VBox containerImage = new VBox(userImageView);
         containerImage.setPadding(new Insets(10));
 
-
         HBox user = new HBox(containerImage, userName);
         user.setStyle("-fx-text-fill: white;-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-border-width: 2px; -fx-border-color: black");
         user.prefHeight(50);
 
 
-        VBox verticalConteiner = new VBox(user,buyWhiteTower,buySandTrap,buySilverTower,endTurn, userInfo, entitiesInfo);
+        VBox verticalContainer = new VBox(user,buyWhiteTower,buySandTrap,buySilverTower,endTurn, userInfo, entitiesInfo);
 
-        verticalConteiner.setSpacing(10);
-        verticalConteiner.setPadding(new Insets(15));
+        verticalContainer.setSpacing(10);
+        verticalContainer.setPadding(new Insets(15));
 
-        this.setLeft(verticalConteiner);
+        this.setLeft(verticalContainer);
     }
 
     private void setButtonStyle(Button button) {
@@ -174,7 +189,7 @@ public class PrincipalContainer extends BorderPane {
         entitiesInfo.setStyle("-fx-font-size: 20px;-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-border-width: 2px; -fx-border-color: black");
         this.setButtonPanel(this.name,userInfo, entitiesInfo);
 
-        this.stage.getScene().getWindow().setWidth(this.stage.getWidth());
+        //this.stage.getScene().getWindow().setWidth(this.stage.getWidth());
 
     }
 
@@ -193,11 +208,10 @@ public class PrincipalContainer extends BorderPane {
         //consoleContainer.setStyle("-fx-background-color: black");
         this.consoleContainer.setStyle("-fx-border-radius: 10px;-fx-background-radius: 10px;-fx-background-color: #7a5b3e; -fx-border-width: 2px; -fx-border-color: black");
         this.consoleContainer.setPrefHeight(200);
-        this.consoleContainer.setPrefWidth(200);
-        VBox verticalConsole = new VBox(this.consoleContainer);
-        this.consoleContainer.setAlignment(Pos.CENTER);
-        this.setRight(verticalConsole);
-        verticalConsole.setAlignment(Pos.CENTER);
+        this.consoleContainer.setPrefWidth(150);
+
+        //VBox verticalConsole = new VBox(this.consoleContainer);
+        //this.consoleContainer.setAlignment(Pos.CENTER);
 
 
     }
