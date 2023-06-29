@@ -33,16 +33,19 @@ public class PlotInfoEventHandler implements EventHandler<MouseEvent> {
         consoleContainer.getChildren().clear();
         Label label = new Label();
         label.setText(coordinate.toIntString());
-        label.setStyle("-fx-font-size: 20; -fx-padding: 0 50 0 0px;");
+        label.setStyle("-fx-padding: 10px;-fx-font-size: 20px; -fx-font-weight: bold");
+        label.setTextFill(Color.WHITE);
+
 
         consoleContainer.getChildren().addAll(label);
 
         ArrayList<String> enemies = this.game.enemiesInPlot(this.coordinate);
 
         for (String name: enemies){
-
-            this.consoleContainer.getChildren().add(new Text(name));
-
+            Text nameText = new Text(name);
+            nameText.setStyle("-fx-padding: 10px;-fx-font-size: 20px; -fx-font-weight: bold");
+            nameText.setFill(Color.WHITE);
+            this.consoleContainer.getChildren().add(nameText);
         }
         this.button.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     }

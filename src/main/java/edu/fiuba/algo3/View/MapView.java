@@ -118,6 +118,7 @@ public class MapView {
 
         for ( String entity: typeAmountEntities.keySet() ){
             Label entities = new Label( entity + ": " + typeAmountEntities.get( entity ) );
+            entities.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
             entities.setTextFill(Color.WHITE);
             userInfo.getChildren().add(entities);
         }
