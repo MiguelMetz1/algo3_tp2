@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+->  ":Enemy": transferLootTo(player)
+":Enemy" -> "looteable: LooteableMOB": transferLootTo(player: Player)
+"looteable: LooteableMOB" -> "loot: AvailableToLootCredits": transferLootTo(player: Player)
+"loot: AvailableToLootCredits" -> "player: Player": transferCredits(creditsToGive: Credits)
+"player: Player" -> "creditsToGive: Credits": tranferCrditsTo(credits: int)
+
+
+Create "loot: NullLooteable"
+"loot: AvailableToLootCredits" -> "loot: NullLooteable": NullLooteable()
+"loot: AvailableToLootCredits" -> "loot: AvailableToLootCredits": self = NullLooteable
+
+
+@enduml

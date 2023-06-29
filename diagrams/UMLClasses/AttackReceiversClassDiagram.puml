@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface AttackReceiver{
+    +takeBuff(buff: Buff)
+}
+
+class LiveAttackReceiver{
+
+    +LiveAttackReceiver(attributes: ArrayList<Attribute>)
+    +takeBuff(buff: Buff)
+
+}
+
+class NullAttackReceiver{
+
+    +takeBuff(buff: Buff)
+}
+
+AttackReceiver <|.. LiveAttackReceiver
+AttackReceiver <|.. NullAttackReceiver
+
+@enduml

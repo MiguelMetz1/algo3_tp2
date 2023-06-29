@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+create "iresource: InternalResource"
+":TestCase" -> "iresource: InternalResource": InternalResource()
+
+
+":TestCase" -> "iresource: InternalResource": getMap()
+
+create "players: ArrayList"
+":TestCase" -> "players: ArrayList": ArrayList()
+
+create "enemies: ArrayList"
+":TestCase" -> "enemies: ArrayList": ArrayList()
+
+create "deadAnts: ArrayList"
+":TestCase" -> "deadAnts: ArrayList": ArrayList()
+
+create "troops: ArrayList"
+":TestCase" -> "troops: ArrayList": ArrayList()
+
+create "player: Player"
+":TestCase" -> "player: Player": Player(name: "Pedro",GameMap: map,Coordinate: coordinate,ArryList: troops, ArrayList: Enemies)
+
+create "shop: Shop"
+":TestCase" -> "shop: Shop": Shop(player: Player)
+
+":TestCase" -> "shop: Shop": addArticle(name: "Silver Tower", new SilverTowerProvider)
+":TestCase" -> "shop: Shop": addArticle(name: "White Tower", new WhiteTowerProvider)
+":TestCase" -> "shop: Shop": addArticle(name: "Sand Trap", new SandTrapProvider)
+
+
+
+@enduml

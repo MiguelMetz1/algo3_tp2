@@ -1,0 +1,75 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface Advancer{
+
+    +advance()
+}
+
+class ContinousAdvancer{
+
+    -speedToReach: Speed
+    -path: Queue<Coordinate>
+    -entityToAdvance: Placeable
+    -map: GameMap
+    -currentPosition: Coordinate
+    -remainingDistance: Distance
+
+    +ContinousAdvancer(map, speedToReach, currentPosition, path, entityToAdvance)
+    +advance()
+
+}
+
+class DamagedOwlAdvancer{
+
+    -owl: Placeable
+    -actualPosition: Coordinate
+    -speed: Speed
+    -map: GameMap
+    -destination: Coordinate
+
+    +DamagedOwlAdvancer(owl, map, actualPosition, speed, destination)
+    +advance()
+
+}
+
+class FirstEnemyAdvancer{
+
+    -firstAdvanceCoordinate: Coordinate
+    -entityToAdvance: Placeable
+    -map: GameMap
+    -actualPosition: Coordinate
+
+    +DamagedOwlAdvancer(map, actualPosition, firstAdvanceCoordinate, entityToAdvance)
+    +advance()
+
+}
+
+class LifeAdvancer{
+
+    -speedToReach: Speed
+    -path: Queue<Coordinate>
+    -entityToAdvance: Placeable
+    -map: GameMap
+    -actualPosition: Coordinate
+    -advancer: Advancer
+
+    +LifeAdvancer(map, speedToReach, actualPosition, path, entityToAdvance)
+    +advance()
+
+}
+
+class NullAdvancer{
+
+    +advance()
+}
+
+Advancer <|.. ContinousAdvancer
+Advancer <|... DamagedOwlAdvancer
+Advancer <|.... FirstEnemyAdvancer
+Advancer <|... LifeAdvancer
+Advancer <|.. NullAdvancer
+
+
+
+@enduml
